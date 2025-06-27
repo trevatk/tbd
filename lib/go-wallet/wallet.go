@@ -10,8 +10,10 @@ import (
 	"go.dedis.ch/kyber/v4"
 )
 
+// ErrNotExists path does not exist
 var ErrNotExists = errors.New("path does not exist")
 
+// Suite crpyto suite
 type Suite interface {
 	kyber.Group
 	kyber.Encoding
@@ -23,12 +25,13 @@ type basicSig struct {
 	R kyber.Scalar // response
 }
 
+// Wallet ...
 type Wallet struct {
 	p kyber.Scalar // private key
 	P kyber.Point  // public key
 }
 
-// NewV1
+// NewV1 return new wallet v1
 func NewV1(suite Suite) Wallet {
 	// TODO
 	// generate randmom using crypto
@@ -43,7 +46,7 @@ func NewV1(suite Suite) Wallet {
 	}
 }
 
-// Import
+// Import from file
 func Import(suite Suite, filePath string) (Wallet, error) {
 	fp := filepath.Clean(filePath)
 	f, err := os.OpenFile(fp, os.O_RDONLY, os.ModePerm)
@@ -53,7 +56,7 @@ func Import(suite Suite, filePath string) (Wallet, error) {
 		}
 		return Wallet{}, fmt.Errorf("failed to open file: %s %w", fp, err)
 	}
-	defer f.Close()
+	defer func() { _ = f.Close() }()
 
 	dec := json.NewDecoder(f)
 	dec.DisallowUnknownFields()
@@ -82,21 +85,26 @@ func Import(suite Suite, filePath string) (Wallet, error) {
 	}, nil
 }
 
-// Addr
+// Addr generate wallet address
 func (w Wallet) Addr() (string, error) {
 	return "", nil
 }
 
-// Sign
-// HashSchnorrV1
+// Sign hashSchnorrV1 signature
 func (w Wallet) Sign(suite Suite, message []byte) (kyber.Scalar, error) {
+	// temp fix unused basic signature
+	_ = basicSig{}
+
 	pb, err := w.P.MarshalBinary()
 	if err != nil {
 		return nil, fmt.Errorf("kyber.Point marshal binary: %w", err)
 	}
 
 	c := suite.XOF(pb)
-	c.Write(message)
+	_, err = c.Write(message)
+	if err != nil {
+		return nil, fmt.Errorf("c.Write: %w", err)
+	}
 
 	return suite.Scalar().Pick(c), nil
 }
@@ -110,7 +118,6 @@ type exportWallet struct {
 
 // Export to file
 func (w Wallet) Export(filePath string) error {
-
 	Pb, err := w.P.MarshalBinary()
 	if err != nil {
 		return fmt.Errorf("failed to marshal public key: %w", err)
@@ -136,7 +143,7 @@ func (w Wallet) Export(filePath string) error {
 	if err != nil {
 		return fmt.Errorf("failed to open file: %w", err)
 	}
-	defer f.Close()
+	defer func() { _ = f.Close() }()
 
 	_, err = f.Write(eb)
 	if err != nil {

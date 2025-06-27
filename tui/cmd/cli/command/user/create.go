@@ -18,14 +18,14 @@ var (
 )
 
 type (
-	createStatusMsg int
+	createStatusMsg uint32
 
 	createUserModel struct {
 		ctx        context.Context
 		serverAddr string
 		email      string
 
-		statusCode int
+		statusCode codes.Code
 		err        error
 	}
 
@@ -46,7 +46,7 @@ func (m createUserModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			return m, nil
 		}
 	case createStatusMsg:
-		m.statusCode = int(msg)
+		m.statusCode = codes.Code(msg)
 		return m, tea.Quit
 	case errMsg:
 		m.err = msg
@@ -61,13 +61,13 @@ func (m createUserModel) View() string {
 	s := fmt.Sprintf("create user %s...", m.email)
 	if m.err != nil {
 		s += fmt.Sprintf("error occured %s", m.err)
-	} else if m.statusCode != 0 {
+	} else if m.statusCode != codes.OK {
 		s += fmt.Sprintf("%d %s", m.statusCode, codes.Code(m.statusCode).String())
 	}
 	return s
 }
 
-func createUser(ctx context.Context, addr, email string) tea.Cmd {
+func createUser(_ context.Context, addr, _ string) tea.Cmd {
 	return func() tea.Msg {
 		conn, err := protocol.NewConn(addr)
 		if err != nil {

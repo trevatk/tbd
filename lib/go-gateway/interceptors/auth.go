@@ -11,7 +11,12 @@ import (
 	"google.golang.org/grpc/status"
 )
 
-// CustomClaims
+const (
+	// rename emptyAuthorizations
+	minAuthorization = 0
+)
+
+// CustomClaims token claims
 type CustomClaims struct {
 	jwt.RegisteredClaims
 }
@@ -19,37 +24,41 @@ type CustomClaims struct {
 type contextKey string
 
 const (
-	// User
+	// User context key
 	User contextKey = "user"
-
+	// Anon anonymous user
 	Anon = "anonymous"
 )
 
-// Verifier
+// Verifier auth token validator
 type Verifier interface {
 	Verify(string) (map[string]interface{}, error)
 	SignWithClaims(map[string]interface{}) (string, error)
 }
 
-// Auth
+// Auth gRPC interceptor wrapper to include service verifier
 type Auth struct {
 	v Verifier
 }
 
-// NewAuth
+// NewAuth return new auth verifier
 func NewAuth(verifier Verifier) *Auth {
 	return &Auth{
 		v: verifier,
 	}
 }
 
-// ValidToken
+// ValidToken gRPC unary auth interceptor
 func (a *Auth) ValidToken() grpc.UnaryServerInterceptor {
-	return func(ctx context.Context, req any, info *grpc.UnaryServerInfo, handler grpc.UnaryHandler) (resp any, err error) {
+	return func(ctx context.Context, req any,
+		info *grpc.UnaryServerInfo, handler grpc.UnaryHandler) (resp any, err error) {
+		// auth interceptor
+		// check for bearer token to validate
+		// if token is not included anonymous user is assumed
 		md, _ := metadata.FromIncomingContext(ctx)
 
 		authorization := md.Get("Authorization")
-		if len(authorization) > 0 {
+		if len(authorization) > minAuthorization {
 			userHash, ok := a.valid(authorization)
 			if !ok {
 				return nil, status.Error(codes.Unauthenticated, codes.Unauthenticated.String())
@@ -64,7 +73,7 @@ func (a *Auth) ValidToken() grpc.UnaryServerInterceptor {
 }
 
 func (a *Auth) valid(authorization []string) (string, bool) {
-	if len(authorization) < 1 {
+	if len(authorization) == minAuthorization {
 		return "", false
 	}
 	token := strings.TrimPrefix(authorization[0], "Bearer ")

@@ -7,7 +7,7 @@ import (
 	"google.golang.org/grpc"
 )
 
-// LoggerUnary
+// LoggerUnary gRPC unary logger interceptor
 func LoggerUnary(logger *zap.Logger) grpc.UnaryServerInterceptor {
 	return func(ctx context.Context, req any, info *grpc.UnaryServerInfo, handler grpc.UnaryHandler) (any, error) {
 		logger.Info("request handler", zap.String("method", info.FullMethod))

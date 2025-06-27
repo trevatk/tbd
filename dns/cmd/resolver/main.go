@@ -3,7 +3,6 @@ package main
 import (
 	"context"
 	"log/slog"
-	"os"
 	"os/signal"
 	"syscall"
 
@@ -26,8 +25,6 @@ func main() {
 	if err := realMain(ctx); err != nil {
 		slog.ErrorContext(ctx, "start resolver", "error", err)
 	}
-
-	os.Exit(0)
 }
 
 func realMain(ctx context.Context) error {

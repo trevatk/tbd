@@ -9,9 +9,14 @@ import (
 	"github.com/spf13/cobra"
 )
 
+const (
+	defaultTimeout = 15
+)
+
 var (
 	configFile string
 
+	// RootCmd base cobra cli command
 	RootCmd = &cobra.Command{
 		Use: "zero",
 		PreRunE: func(cmd *cobra.Command, args []string) error {
@@ -24,12 +29,12 @@ func init() {
 	RootCmd.Flags().StringVarP(&configFile, "config-file", "c", "$HOME/.zerodot", "config file")
 }
 
+// Execute root cmd
 func Execute(ctx context.Context) {
-	timeout, cancel := context.WithTimeout(ctx, time.Second*15)
+	timeout, cancel := context.WithTimeout(ctx, time.Second*defaultTimeout)
 	defer cancel()
 
 	if err := RootCmd.ExecuteContext(timeout); err != nil {
-		fmt.Fprintf(os.Stderr, "failed to execute cli %v\n", err)
-		os.Exit(1)
+		_, _ = fmt.Fprintf(os.Stderr, "failed to execute cli %v\n", err)
 	}
 }

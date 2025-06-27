@@ -26,7 +26,7 @@ func TestResolve(t *testing.T) {
 	// cache miss
 	mockCache.EXPECT().Get(
 		testDomain+":"+testRecordType,
-	).Return(nil, ErrKeyNotFound).MaxTimes(1)
+	).Return(nil, ErrKeyNotFound).MaxTimes(numZero + 1)
 	// cache hit
 	// mockCache.EXPECT().Get("cache:hit").Return().MaxTimes(1)
 

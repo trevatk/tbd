@@ -6,10 +6,10 @@ import (
 	"strings"
 )
 
-// New
+// New logger
 func New(level string) *slog.Logger {
-
 	var leveler slog.Leveler
+
 	switch strings.ToLower(level) {
 	case "info":
 		leveler = slog.LevelInfo

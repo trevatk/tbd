@@ -8,6 +8,6 @@ projects:
   - dapp
   - dns
   - docs
-  - identities
+  - idp
   - tui
   - wellknown

@@ -17,6 +17,9 @@ type dht interface {
 	getValue(key string) error
 }
 
+// temp fix unused
+var _ dht = (nil)
+
 type grpcTransport struct {
 	pbk.UnimplementedKademliaServiceServer
 	pba.UnimplementedAuthoritativeServiceServer
@@ -31,7 +34,7 @@ var _ pbk.KademliaServiceServer = (*grpcTransport)(nil)
 var _ pba.AuthoritativeServiceServer = (*grpcTransport)(nil)
 var _ pbr.DNSResolverServiceServer = (*grpcTransport)(nil)
 
-// NewTransport
+// NewTransport return new authoritative transport implementation
 func NewTransport(logger *slog.Logger, kademlia *kademlia) []gateway.Transport {
 	tr := &grpcTransport{
 		logger: logger,

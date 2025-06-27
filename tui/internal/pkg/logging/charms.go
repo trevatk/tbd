@@ -7,7 +7,7 @@ import (
 	"github.com/charmbracelet/log"
 )
 
-// New
+// New return new charms logger with slog
 func New() *slog.Logger {
 	handler := log.New(os.Stderr)
 	return slog.New(handler)

@@ -6,8 +6,6 @@ type: 'application'
 tasks:
   tidy:
     command: go mod tidy
-  lint:
-    command: golangci-lint run ./...
   dev:
     env:
       GW_HOST: localhost
@@ -17,5 +15,7 @@ tasks:
     local: true
   test:
     command: go test -v ./...
+  lint:
+    command: golangci-lint run ./... -c ../.golangci.yml
   vuls:
     command: trivy fs .
