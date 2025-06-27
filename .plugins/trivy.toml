@@ -1,0 +1,20 @@
+name = "trivy"
+type = "cli"
+
+[platform.linux]
+download-file = "trivy_{version}_Linux-{arch}.tar.gz"
+
+[platform.macos]
+download-file = "trivy_{version}_macos-{arch}.tar.gz"
+
+[platform.windows]
+download-file = "trivy_{version}_windows-{arch}.zip"
+
+[install]
+download-url = "https://github.com/aquasecurity/trivy/releases/download/v{version}/{download_file}"
+
+[install.arch]
+x86_64 = "64bit"
+
+[resolve]
+git-url = "https://github.com/aquasecurity/trivy"

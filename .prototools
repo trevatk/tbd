@@ -1,0 +1,33 @@
+air = "1.62.0"
+bun = "1.2.13"
+go = "1.24.4"
+moon = "1.36.3"
+proto = "0.49.4"
+python = "3.13.3"
+sqlc = "1.29.0"
+trivy = "0.63.0"
+uv = "0.7.12"
+
+[plugins]
+air = "file://.plugins/air.toml"
+buf = "file://.plugins/buf.toml"
+golangci-lint = "file://.plugins/golangci-lint.toml"
+helm = "file://.plugins/helm.toml"
+kubectl = "file://.plugins/kubectl.toml"
+migrate = "file://.plugins/migrate.toml"
+protoc = "file://.plugins/protoc.toml"
+ruff = "file://.plugins/ruff.toml"
+sqlc = "file://.plugins/sqlc.toml"
+trivy = "file://.plugins/trivy.toml"
+uv = "file://.plugins/uv.toml"
+
+[settings]
+auto-clean = true
+detect-strategy = "first-available"
+pin-latest = "local"
+telemetry = false
+
+[settings.http]
+allow-invalid-certs = false
+proxies = []
+secure-proxies = []

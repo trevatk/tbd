@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+package dns.did.v1;
+
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/structx/tbd/lib/protocol/dns/did/v1";
+
+message Document {
+  string context = 1;
+  string id = 2;
+
+  message KeyIDs {
+    repeated string key = 1;
+  }
+
+  oneof authentication {
+    MultiKey multi_key = 3;
+    KeyIDs key_ids = 4;
+  }
+  repeated VerificationMethod verification_method = 5;
+}
+
+enum VERIFICATIONMETHOD {
+  VERIFICATIONMETHOD_UNSPECIFIED = 0;
+  VERIFICATIONMETHOD_MULTIKEY = 1;
+  VERIFICATIONMETHOD_JSON_WEB_KEY = 2;
+}
+
+message MultiKey {}
+
+message VerificationMethod {
+  string id = 1;
+  VerificationMethod type = 2;
+  string controller = 3;
+  google.protobuf.Timestamp expires = 4;
+  string public_key_multibase = 5;
+}

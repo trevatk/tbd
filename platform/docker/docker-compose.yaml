@@ -1,0 +1,10 @@
+---
+version: '3.9'
+
+services:
+  authority:
+    container_name: authority
+    image: tbd/authority:latest
+  resolver:
+    container_name: resolver
+    image: tbd/resolver:latest

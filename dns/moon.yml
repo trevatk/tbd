@@ -1,0 +1,29 @@
+$schema: 'https://moonrepo.dev/schemas/project.json'
+
+language: 'go'
+type: 'application'
+
+dependsOn:
+  - api
+
+tasks:
+  tidy:
+    deps: 
+      - api:dns
+    command: go mod tidy
+  lint: 
+    command: golangci-lint run ./... -c ../.golangci.yml
+  authority:
+    env:
+      GW_HOST: localhost
+      GW_PORT: "5300"
+      LOG_LEVEL: DEBUG
+    command: air -c .air.authority.toml
+    local: true
+  resolver:
+    env:
+    command: air -c .air.resolver.toml
+  test:
+    command: go test -v ./...
+  vuls:
+    command: trivy fs .

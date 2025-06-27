@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package wellknown.v1;
+
+option go_package = "github.com/structx/tbd/lib/protocol/wellknown/v1";
+
+service WellKnownService {
+  rpc Verify(VerifyRequest) returns (VerifyResponse) {}
+}
+
+message VerifyRequest {}
+
+message VerifyResponse {}

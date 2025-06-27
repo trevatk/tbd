@@ -1,0 +1,146 @@
+version: "2"
+
+run:
+  timeout: 3m
+
+linters:
+  enable:
+    - govet
+    - gosec
+    - errcheck
+    - staticcheck
+    - revive
+    - errorlint
+    - lll
+    - funlen
+    - gocognit
+    - cyclop
+    - mnd
+    - whitespace
+    - sloglint
+  disable:
+    - exhaustruct
+    - nlreturn
+    - wrapcheck
+    - godox
+    - dupl
+    - depguard
+    - wsl
+    - ireturn
+    - promlinter
+    - testpackage
+    - noctx
+    - nolintlint
+    - godot
+    - decorder
+    - nonamedreturns
+    - nosprintfhostport
+  settings:
+    govet:
+      disable:
+        - fieldalignment
+        - structtag
+    gosec:
+      severity: high
+      confidence: medium
+      excludes:
+        - G104
+        - G307
+    lll:
+      line-length: 120
+    funlen:
+      lines: 50
+      statements: 30
+    gocognit:
+      min-complexity: 12
+    cyclop:
+      max-complexity: 12
+    mnd:
+      ignored-numbers:
+        - "0"
+        - "1"
+        - "-1"
+        - "2"
+        - "3"
+        - "4"
+        - "5"
+        - "7"
+        - "8"
+        - "10"
+        - "100"
+        - "1000"
+        - "24"
+        - "60"
+        - "3600"
+        - "86400"
+        - "1024"
+        - "200"
+        - "400"
+        - "401"
+        - "403"
+        - "404"
+        - "500"
+        - "4"
+    revive:
+      rules:
+        - name: var-declaration
+          severity: error
+          arguments: ["-allow-common-initialisms", "-allow-leading-underscores"]
+        - name: package-comments
+          severity: error
+        - name: exported
+          severity: error
+        - name: unhandled-error
+          severity: error
+        - name: error-return
+          severity: error
+        - name: empty-block
+          severity: error
+        - name: superfluous-else
+          severity: error
+        - name: early-return
+          severity: error
+        - name: atomic
+          severity: error
+        - name: modifies-parameter
+          severity: error
+        - name: bare-return
+          severity: error
+        - name: identical-branches
+          severity: error
+        - name: defer
+          severity: error
+        - name: indent-error-flow
+          severity: error
+        - name: add-constant
+          severity: error
+        - name: import-alias-naming
+          severity: error
+        - name: context-as-argument
+          severity: error
+        - name: cyclomatic
+          severity: error
+    staticcheck:
+      checks: ["all"]
+
+formatters:
+  enable:
+    - golines
+    - gofmt
+    - goimports
+  settings:
+    golines:
+      max-len: 120
+      tab-len: 4
+      shorten-comments: true
+      reformat-tags: true
+      chain-split-dots: true
+    gofmt:
+      simplify: true
+    goimports:
+      local-prefixes:
+        - github.com/structx/tbd
+  
+issues:
+  max-issues-per-linter: 0
+  max-same-issues: 0

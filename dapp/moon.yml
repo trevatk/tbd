@@ -1,0 +1,21 @@
+$schema: 'https://moonrepo.dev/schemas/project.json'
+
+language: 'go'
+type: 'application'
+
+tasks:
+  tidy:
+    command: go mod tidy
+  lint:
+    command: golangci-lint run ./...
+  dev:
+    env:
+      GW_HOST: localhost
+      GW_PORT: "8000"
+      LOG_LEVEL: DEBUG
+    command: air
+    local: true
+  test:
+    command: go test -v ./...
+  vuls:
+    command: trivy fs .

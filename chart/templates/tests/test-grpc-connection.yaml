@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: wellknown-health-probe
+  labels:
+    {{- include "chart.labels" . | nindent 4 }}
+  annoations:
+    "helm.sh/hook": test
+spec:
+  containers:
+    - name: busybox
+      image: tbd/busybox:latest
+      command: [ "grpc_health_probe" ]
+      args: [ "-addr=wellknown:{{ .Values.wellknown.gateway.port }}" ]
+  restartPolicy: Never

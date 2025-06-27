@@ -1,0 +1,91 @@
+syntax = "proto3";
+
+package dns.kademlia.v1;
+
+option go_package = "github.com/structx/tbd/lib/protocol/dns/kademlia/v1";
+
+service KademliaService {
+  rpc Ping(PingRequest) returns (PingResponse) {}
+  rpc Store(StoreRequest) returns (StoreResponse) {}
+  rpc FindNode(FindNodeRequest) returns (FindNodeResponse) {}
+  rpc FindValue(FindValueRequest) returns (FindValueResponse) {}
+
+  rpc Join(JoinRequest) returns (JoinResponse) {}
+}
+
+message Node {
+  string node_id = 1;
+  string ip_or_domain = 2;
+  uint32 port = 3;
+}
+
+message Record {
+  string id = 1;
+  string domain = 2;
+  string record_type = 3;
+  string value = 4;
+  int64 ttl = 5;
+}
+
+message PingRequest {
+  Node sender = 1;
+  string request_id = 2;
+}
+
+message PingResponse {
+  Node sender = 1;
+  string request_id = 2;
+}
+
+message StoreRequest {
+  Node sender = 1;
+  string request_id = 2;
+  Record record = 3;
+}
+
+message StoreResponse {
+  Node sender = 1;
+  string request_id = 2;
+  bool success = 3;
+}
+
+message FindNodeRequest {
+  Node sender = 1;
+  string request_id = 2;
+  string target_node_id = 3;
+}
+
+message FindNodeResponse {
+  Node sender = 1;
+  string request_id = 2;
+  repeated Node closest_nodes = 3;
+}
+
+message FindValueRequest {
+  Node sender = 1;
+  string request_id = 2;
+  string key = 3;
+}
+
+message ClosestNodes {
+  repeated Node nodes = 1;
+}
+
+message FindValueResponse {
+  Node sender = 1;
+  string request_id = 2;
+  oneof result {
+    Record record = 3;
+    ClosestNodes closest_nodes = 4;
+  }
+}
+
+message JoinRequest {
+  string ip_or_domain = 1;
+  uint32 port = 2;
+}
+
+message JoinResponse {
+  Node sender = 1;
+  Node node = 2;
+}

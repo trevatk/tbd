@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package lsm.v1;
+
+option go_package = "soft.structx.io/idp/api/gen/go/lsm/v1";
+
+message Index {
+  string sorted_string_table = 1;
+  string value = 2;
+}
+
+message KeyValue {
+  string key = 1;
+  bytes value = 2;
+  int64 ttl = 3;
+}

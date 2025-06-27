@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package chat.v1;
+
+option go_package = "github.com/structx/tbd/lib/protocol/chat/v1";
+
+service ChatService {
+  rpc CreateThread(CreateThreadRequest) returns (CreateThreadResponse) {}
+}
+
+message CreateThreadRequest {
+  string display_name = 1;
+}
+
+message CreateThreadResponse {
+  string id = 1;
+  string display_name = 2;
+}

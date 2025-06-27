@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package vault.v1;
+
+option go_package = "soft.structx.io/idp/api/vault/v1";
+
+service VaultService {
+  rpc Unseal(UnsealRequest) returns (UnsealResponse) {}
+}
+
+message UnsealRequest {
+    
+}
+
+message UnsealResponse {}

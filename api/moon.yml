@@ -1,0 +1,48 @@
+
+tasks:
+  deps:
+    command: |
+      go install google.golang.org/protobuf/cmd/protoc-gen-go@latest && \
+      go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
+    toolchain: 'go'
+  lint:
+    command: buf lint
+  models:
+    toolchain: 'go'
+    deps:
+      - ^:deps
+      - ^:lint
+    inputs: 
+      - proto/lsm/v1/lsm.proto
+      - proto/cache/v1/cache.proto
+    command: buf generate --template buf.gen.models.yaml
+  dns:
+    toolchain: 'go'
+    deps: 
+      - ^:lint
+    command: buf generate --template buf.gen.dns.grpc.yaml
+  grpc:
+    toolchain: 'go'
+    deps:
+      - ^:lint
+    inputs:
+      - proto/audit/v1/audit_service.proto
+      - proto/identities/v1/identities_service.proto
+      - proto/vault/v1/vault_service.proto
+      - proto/chat/v1/chat_service.proto
+    command: buf generate --template buf.gen.grpc.yaml
+  generate:
+    toolchain: 'go'
+    deps: 
+      - ^:lint
+      - ^:models
+      - ^:dns
+      - ^:grpc
+  py-generate:
+    command: |
+      python -m grpc_tools.protoc -Iproto \
+        --python_out=gen/py \
+        --pyi_out=gen/py \
+        --grpc_python_out=gen/py \
+        proto/auth/v1/auth_service.proto
+    toolchain: 'python'

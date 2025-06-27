@@ -1,0 +1,83 @@
+syntax = "proto3";
+
+package dns.resolver.v1;
+
+option go_package = "github.com/structx/tbd/lib/protocol/dns/resolver/v1";
+
+service DNSResolverService {
+  rpc Resolve(ResolveRequest) returns (ResolveResponse) {}
+}
+
+enum RecordType {
+  RECORD_TYPE_UNSPECIFIED = 0;
+  RECORD_TYPE_NS = 1;
+  RECORD_TYPE_A = 2;
+  RECORD_TYPE_AAA = 3;
+  RECORD_TYPE_CNAME = 4;
+  RECORD_TYPE_TXT = 5;
+  RECORD_TYPE_MX = 6;
+  RECORD_TYPE_DID = 7;
+}
+
+message Q {
+  string domain = 1;
+  RecordType record_type = 2;
+}
+
+message ResolveRequest {
+  Q question = 1;
+  string did_to_resolve = 2;
+}
+
+message RecordData {
+  message ARecord {
+    bytes ipv4_address = 1;
+  }
+
+  message NSRecord {
+    string domain = 1;
+  }
+
+  message DIDRecord {
+    string url = 1;
+    string did_document_json = 2;
+    string proof_digest = 3;
+  }
+
+  oneof raw_data_type {
+    NSRecord ns = 1;
+    ARecord a = 2;
+    DIDRecord did = 3;
+  }
+}
+
+message Record {
+  string domain = 1;
+  RecordType record_type = 2;
+  int64 ttl = 3;
+}
+
+message ResolveResponse {
+  repeated Record answer = 1;
+  repeated Record authority = 2; // ns records
+  repeated Record additional = 3; // a records
+
+  enum ResponseStatus {
+    RESPONSE_STATUS_UNSPECIFIED = 0;
+    RESPONSE_STATUS_SUCCESS = 1;
+    RESPONSE_STATUS_NAME_ERROR = 2;
+    RESPONSE_STATUS_NOT_IMPLEMENTED = 3;
+    RESPONSE_STATUS_REFUSED = 4;
+    RESPONSE_STATUS_NO_DATA = 5;
+    RESPONSE_STATUS_TIMEOUT = 6;
+    RESPONSE_STATUS_DID_NOT_FOUND = 7;
+    RESPONSE_STATUS_DID_RESOLUTION_ERROR = 8;
+  }
+
+  ResponseStatus status = 4;
+  string error_message = 5;
+
+  bool authoritative_answer = 6;
+
+  string resolved_did_document_json = 7;
+}

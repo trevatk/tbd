@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package dns.authoritative.v1;
+
+option go_package = "github.structx/tbd/lib/protocol/dns/authoritative/v1";
+
+service AuthoritativeService {
+  rpc CreateZone(CreateZoneRequest) returns (CreateZoneResponse) {}
+  rpc CreateRecord(CreateRecordRequest) returns (CreateRecordResponse) {}
+}
+
+message CreateZoneRequest {}
+
+message CreateZoneResponse {}
+
+message CreateRecordRequest {}
+
+message CreateRecordResponse {}

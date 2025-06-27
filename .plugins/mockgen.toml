@@ -1,0 +1,21 @@
+name = "mockgen"
+type = "cli"
+
+[platform.linux]
+download-file = "mockgen_{version}_Linux_{arch}.tar.gz"
+
+[platform.macos]
+download-file = "mockgen_{version}_Darwin_{arch}.tar.gz"
+
+[platform.windows]
+download-file = "mockgen_{version}_Windows_{arch}.tar.gz"
+
+[install]
+download-url = "https://github.com/uber-go/mock/releases/download/v{version}/{download_file}"
+unpack = true
+
+[install.arch]
+aarch64 = "arm64"
+
+[resolve]
+git-url = "https://github.com/uber-go/mock"

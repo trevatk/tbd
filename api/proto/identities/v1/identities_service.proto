@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+package identities.v1;
+
+import "buf/validate/validate.proto";
+
+option go_package = "github.com/structx/idp/api/identities/v1";
+
+service IdentitiesService {
+  rpc CreateRealm(CreateRealmRequest) returns (CreateRealmResponse) {}
+  rpc CreateUser(CreateUserRequest) returns (CreateUserResponse) {}
+}
+
+message RealmCreate {
+  string display_name = 1;
+}
+
+message CreateRealmRequest {
+  RealmCreate create = 1;
+}
+
+message Realm {
+  string hash = 1;
+  string display_name = 2;
+}
+
+message CreateRealmResponse {
+  Realm realm = 1;
+}
+
+message CreateUserRequest {
+  string email = 1 [(buf.validate.field).string.email = true];
+  string realm_hash = 2;
+}
+
+message CreateUserResponse {
+  string hash = 1;
+}
