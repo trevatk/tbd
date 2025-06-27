@@ -3,11 +3,15 @@ package foundations
 import (
 	"context"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestFindClosestNodes(t *testing.T) {
 	ctx, cancel := context.WithCancel(context.Background())
 	cancel()
+
+	assert := assert.New(t)
 
 	dht := NewDHT("127.0.0.1", "53")
 	t.Run("empty", func(t *testing.T) {
@@ -22,9 +26,10 @@ func TestFindClosestNodes(t *testing.T) {
 		domain:     "ns1.structx.io",
 		recordType: "A",
 		value:      "127.0.0.1",
-		ttl:        -1,
+		ttl:        numNeg1,
 	}
-	dht.routingTable[0].addNode(ctx, n1)
+
+	assert.NoError(dht.routingTable[0].addNode(ctx, n1))
 	t.Run("1", func(t *testing.T) {
 		expected := 1
 		ns := dht.findClosestNodes("127.0.0.1:53")

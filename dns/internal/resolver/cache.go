@@ -11,11 +11,15 @@ import (
 )
 
 var (
-	// ErrKeyNotFound
+	// ErrKeyNotFound key not found
 	ErrKeyNotFound = errors.New("key not found")
 )
 
-// Cache
+const (
+	defaultInterval = 3
+)
+
+// Cache ...
 //
 //go:generate mockgen -destination mock_cache_test.go -package resolver . Cache
 type Cache interface {
@@ -37,13 +41,13 @@ type memCache struct {
 // interface compliance
 var _ Cache = (*memCache)(nil)
 
-// NewCache
+// NewCache return new in memory cache implementation
 func NewCache() Cache {
 	return &memCache{
 		mu:       &sync.RWMutex{},
 		entries:  make(map[string]*pb.Entry),
 		cleanUp:  make(chan struct{}),
-		interval: 3,
+		interval: defaultInterval,
 	}
 }
 
@@ -93,7 +97,7 @@ func (m *memCache) Set(key string, value []byte, ttl int) error {
 		Value: value,
 		Ttl:   nil,
 	}
-	if ttl > 0 {
+	if ttl > numZero {
 		ttlAsTime := time.Now().Add(time.Second * time.Duration(ttl))
 		entry.Ttl = timestamppb.New(ttlAsTime)
 	}

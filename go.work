@@ -1,13 +1,14 @@
 go 1.24.4
 
 use (
-	./dns
-    ./identities
 	./dapp
-	./tui
+	./dns
+	./idp
 	./lib/go-gateway
 	./lib/go-logging
 	./lib/go-setup
 	./lib/go-wallet
 	./lib/protocol
+	./tui
+	./wellknown
 )

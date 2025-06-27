@@ -12,6 +12,10 @@ import (
 	"github.com/structx/tbd/tui/internal/pkg/logging"
 )
 
+const (
+	defaultTimeout = 250
+)
+
 var (
 	createCmd = &cobra.Command{
 		Use: "create",
@@ -22,7 +26,7 @@ var (
 			if err != nil {
 				return fmt.Errorf("failed to create client: %w", err)
 			}
-			timeout, cancel := context.WithTimeout(ctx, time.Millisecond*250)
+			timeout, cancel := context.WithTimeout(ctx, time.Millisecond*defaultTimeout)
 			defer cancel()
 
 			resp, err := client.CreateThread(timeout, &pb.CreateThreadRequest{

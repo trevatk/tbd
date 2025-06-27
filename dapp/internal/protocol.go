@@ -1,3 +1,4 @@
+// Package internal dapp application and controller layers
 package internal
 
 import (
@@ -30,7 +31,7 @@ type transport struct {
 	threads map[string]thread
 }
 
-// NewTransport
+// NewTransport return dapp specific gateway transport implementation
 func NewTransport(logger *slog.Logger) (*grpc.ServiceDesc, pb.ChatServiceServer) {
 	return &pb.ChatService_ServiceDesc, &transport{
 		logger:  logger,

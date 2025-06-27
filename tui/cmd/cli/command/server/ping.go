@@ -3,10 +3,10 @@ package server
 import (
 	"context"
 	"fmt"
-	"net/http"
 
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/spf13/cobra"
+	"google.golang.org/grpc/codes"
 )
 
 const (
@@ -14,14 +14,14 @@ const (
 )
 
 type (
-	statusMsg int
+	statusMsg uint32
 
 	errMsg struct{ error }
 
 	pingModel struct {
 		ctx context.Context
 
-		statusCode int
+		statusCode codes.Code
 		err        error
 	}
 )
@@ -41,7 +41,7 @@ func (m pingModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		}
 
 	case statusMsg:
-		m.statusCode = int(msg)
+		m.statusCode = codes.Code(msg)
 		return m, tea.Quit
 
 	case errMsg:
@@ -57,15 +57,15 @@ func (m pingModel) View() string {
 	s := fmt.Sprintf("check url %s...", url)
 	if m.err != nil {
 		s += fmt.Sprintf("something went wrong %s", m.err)
-	} else if m.statusCode != 0 {
-		s += fmt.Sprintf("%d %s", m.statusCode, http.StatusText(m.statusCode))
+	} else if m.statusCode != codes.OK {
+		s += fmt.Sprintf("%d %s", m.statusCode, m.statusCode.String())
 	}
 	return s + "\n"
 }
 
-func checkServerWithContext(ctx context.Context) tea.Cmd {
+func checkServerWithContext(_ context.Context) tea.Cmd {
 	return func() tea.Msg {
-		return statusMsg(0)
+		return statusMsg(codes.OK)
 	}
 }
 
@@ -76,7 +76,7 @@ var (
 			p := tea.NewProgram(pingModel{ctx: cmd.Context()})
 			_, err := p.Run()
 			if err != nil {
-
+				return fmt.Errorf("failed to create tea program: %w", err)
 			}
 			return nil
 		},

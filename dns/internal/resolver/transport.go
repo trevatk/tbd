@@ -13,6 +13,11 @@ import (
 	pb "github.com/structx/tbd/lib/protocol/dns/resolver/v1"
 )
 
+const (
+	numZero = 0
+	errAttr = "error"
+)
+
 type transport struct {
 	pb.UnimplementedDNSResolverServiceServer
 
@@ -26,7 +31,7 @@ type transport struct {
 // interface compliance
 var _ pb.DNSResolverServiceServer = (*transport)(nil)
 
-// NewTransport
+// NewTransport return new resolver implementation of gateway transport
 func NewTransport(logger *slog.Logger, nameservers []string, cache Cache) gateway.Transport {
 	tr := &transport{
 		logger: logger,
@@ -53,19 +58,19 @@ func (t *transport) Resolve(ctx context.Context, in *pb.ResolveRequest) (*pb.Res
 		var rr pb.ResolveResponse
 		err = proto.Unmarshal(value, &rr)
 		if err != nil {
-			t.logger.ErrorContext(ctx, "proto.Unmarshal", "error", err)
+			t.logger.ErrorContext(ctx, "proto.Unmarshal", slog.String(errAttr, err.Error()))
 		}
 		return &rr, nil
 	} else if !errors.Is(err, ErrKeyNotFound) {
 		// uncaught cache error
-		t.logger.ErrorContext(ctx, "uncaught cache error", "error", err)
+		t.logger.ErrorContext(ctx, "failed to get cache value", slog.String(errAttr, err.Error()))
 	}
 
 	var didJSON []byte
-	if len(in.DidToResolve) > 0 {
+	if len(in.DidToResolve) > numZero {
 		didJSON, err = resolveDID(in.DidToResolve)
 		if err != nil {
-			t.logger.ErrorContext(ctx, "failed to resolve did", "error", err)
+			t.logger.ErrorContext(ctx, "failed to resolve did", slog.String(errAttr, err.Error()))
 			return nil, gateway.ErrInternal()
 		}
 	}

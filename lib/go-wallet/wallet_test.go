@@ -36,7 +36,7 @@ func TestExport(t *testing.T) {
 	if err != nil {
 		t.Fatalf("failed to setup test: %v", err)
 	}
-	defer teardownTest()
+	defer func() { _ = teardownTest() }()
 
 	rng := blake2xb.New(nil)
 	suite := edwards25519.NewBlakeSHA256Ed25519WithRand(rng)
@@ -52,7 +52,7 @@ func TestImport(t *testing.T) {
 	if err != nil {
 		t.Fatalf("failed to setup test: %v", err)
 	}
-	defer teardownTest()
+	defer func() { _ = teardownTest() }()
 
 	rng := blake2xb.New(nil)
 	suite := edwards25519.NewBlakeSHA256Ed25519WithRand(rng)
@@ -72,7 +72,7 @@ func TestImport(t *testing.T) {
 	t.Run("not found", func(t *testing.T) {
 		expected := ErrNotExists
 		_, err = Import(suite, filePath+"2")
-		if err != expected {
+		if !errors.Is(err, expected) {
 			t.Fatalf("unexpected error %v expected %v", err, expected)
 		}
 	})

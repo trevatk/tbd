@@ -15,13 +15,13 @@ var (
 )
 
 type (
-	listStatusMsg int
+	listStatusMsg uint32
 
 	listModel struct {
 		ctx        context.Context
 		serverAddr string
 
-		statusCode int
+		statusCode codes.Code
 		err        error
 	}
 
@@ -42,7 +42,7 @@ func (m listModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			return m, nil
 		}
 	case listStatusMsg:
-		m.statusCode = int(msg)
+		m.statusCode = codes.Code(msg)
 		return m, tea.Quit
 	case errMsg:
 		m.err = msg
@@ -54,16 +54,16 @@ func (m listModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 }
 
 func (m listModel) View() string {
-	s := fmt.Sprintf("list transactions...")
+	s := "list transactions..."
 	if m.err != nil {
 		s += fmt.Sprintf("error occured %s", m.err)
-	} else if m.statusCode != 0 {
+	} else if m.statusCode != codes.OK {
 		s += fmt.Sprintf("%d %s", m.statusCode, codes.Code(m.statusCode).String())
 	}
 	return s
 }
 
-func listTxs(ctx context.Context, addr string, limit, offset int64) tea.Cmd {
+func listTxs(_ context.Context, _ string, _, _ int64) tea.Cmd {
 	return func() tea.Msg {
 		// client, err := audit.NewClient(addr)
 		// if err != nil {
@@ -75,7 +75,7 @@ func listTxs(ctx context.Context, addr string, limit, offset int64) tea.Cmd {
 		// 	return errMsg{err}
 		// }
 		// fmt.Println(txs)
-		return listStatusMsg(0)
+		return listStatusMsg(codes.OK)
 	}
 }
 

@@ -2,13 +2,13 @@ package resolver
 
 import "google.golang.org/grpc/resolver"
 
-// Builder
+// Builder gRPC resolver builder
 type Builder struct {
 	scheme      string
 	serviceName string
 }
 
-// NewBuilder
+// NewBuilder returns new gRPC resolver builder
 func NewBuilder(scheme, serviceName string) *Builder {
 	builder := &Builder{
 		scheme:      scheme,
@@ -18,7 +18,7 @@ func NewBuilder(scheme, serviceName string) *Builder {
 	return builder
 }
 
-// Build
+// Build gRPC resolver
 func (b *Builder) Build(
 	target resolver.Target,
 	oc resolver.ClientConn,
@@ -29,7 +29,7 @@ func (b *Builder) Build(
 	return r, nil
 }
 
-// Scheme
+// Scheme getter scheme
 func (b *Builder) Scheme() string {
 	return b.scheme
 }
@@ -46,7 +46,7 @@ func (r *nameResolver) start() {
 	for i, addr := range addrStrs {
 		addrs[i] = resolver.Address{Addr: addr}
 	}
-	r.cc.UpdateState(resolver.State{Addresses: addrs})
+	_ = r.cc.UpdateState(resolver.State{Addresses: addrs})
 }
 
 func (r *nameResolver) ResolveNow(resolver.ResolveNowOptions) {}

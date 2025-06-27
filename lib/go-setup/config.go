@@ -10,10 +10,11 @@ const (
 
 	defaultSigningKey = "supersecret"
 
-	defaultNameserver1 = ""
-	defaultNameserver2 = ""
+	defaultNameserver1 = "ns1.structx.io"
+	defaultNameserver2 = "ns2.structx.io"
 )
 
+// Config service configuration
 type Config struct {
 	Auth       Auth
 	Gateway    Gateway
@@ -22,7 +23,7 @@ type Config struct {
 	Nameserver Nameserver
 }
 
-// UnmarshalConfig
+// UnmarshalConfig read service config from env variables
 func UnmarshalConfig() *Config {
 	return &Config{
 		Auth: Auth{

@@ -7,6 +7,7 @@ import (
 )
 
 var (
+	// ChatCmd chase cobra cli command
 	ChatCmd = &cobra.Command{
 		Use: "chat",
 	}

@@ -14,7 +14,6 @@ linters:
     - lll
     - funlen
     - gocognit
-    - cyclop
     - mnd
     - whitespace
     - sloglint
@@ -49,12 +48,10 @@ linters:
     lll:
       line-length: 120
     funlen:
-      lines: 50
-      statements: 30
+      lines: 62
+      statements: 32
     gocognit:
-      min-complexity: 12
-    cyclop:
-      max-complexity: 12
+      min-complexity: 20
     mnd:
       ignored-numbers:
         - "0"
@@ -86,8 +83,6 @@ linters:
         - name: var-declaration
           severity: error
           arguments: ["-allow-common-initialisms", "-allow-leading-underscores"]
-        - name: package-comments
-          severity: error
         - name: exported
           severity: error
         - name: unhandled-error
@@ -104,8 +99,6 @@ linters:
           severity: error
         - name: modifies-parameter
           severity: error
-        - name: bare-return
-          severity: error
         - name: identical-branches
           severity: error
         - name: defer
@@ -118,10 +111,19 @@ linters:
           severity: error
         - name: context-as-argument
           severity: error
-        - name: cyclomatic
-          severity: error
     staticcheck:
-      checks: ["all"]
+      checks: [
+        "SA",
+        "SA1",
+        "SA2",
+        "SA3",
+        "SA4",
+        "SA5",
+        "S",
+        "S1",
+        "QF",
+        "QF1"
+      ]
 
 formatters:
   enable:

@@ -1,3 +1,4 @@
+// Package main entrypoint for dapp server
 package main
 
 import (
@@ -6,10 +7,11 @@ import (
 	"os/signal"
 	"syscall"
 
+	"github.structx/tbd/dapp/internal"
+
 	"github.com/structx/tbd/lib/gateway"
 	"github.com/structx/tbd/lib/logging"
 	"github.com/structx/tbd/lib/setup"
-	"github.structx/tbd/dapp/internal"
 )
 
 func main() {

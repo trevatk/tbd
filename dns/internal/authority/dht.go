@@ -3,20 +3,19 @@ package foundations
 import (
 	"context"
 	"crypto/sha1"
-	"fmt"
 	"math/big"
 	"net"
 	"sort"
 	"sync"
-
-	"github.com/structx/tbd/lib/protocol"
-	pb "github.com/structx/tbd/lib/protocol/dns/kademlia/v1"
 )
 
 const (
 	kademliaK   = 3 // replication factor
 	nodeLength  = sha1.Size
 	bitsInBytes = 8
+
+	numZero = 0
+	numNeg1 = -1
 )
 
 type nodeID [nodeLength]byte
@@ -51,7 +50,7 @@ type node struct {
 }
 
 type kBucket struct {
-	nn   networkNode
+	_    networkNode
 	head *node
 }
 
@@ -62,6 +61,7 @@ type kademlia struct {
 	routingTable []*kBucket
 }
 
+// NewDHT return new kademlia implementation of dht
 func NewDHT(host, port string) *kademlia {
 	totalKBuckets := nodeLength * bitsInBytes
 	routingTable := make([]*kBucket, totalKBuckets)
@@ -88,7 +88,7 @@ func (ka *kademlia) findClosestNodes(key string) []*node {
 
 	var (
 		nodeID     = newNodeID(key)
-		candidates = make([]*node, 0)
+		candidates = make([]*node, numZero)
 	)
 
 	// iterate over all nodes in every bucket
@@ -97,7 +97,7 @@ func (ka *kademlia) findClosestNodes(key string) []*node {
 		candidates = append(candidates, kb.inOrder()...)
 	}
 
-	if len(candidates) == 0 {
+	if len(candidates) == numZero {
 		return []*node{}
 	}
 
@@ -105,7 +105,7 @@ func (ka *kademlia) findClosestNodes(key string) []*node {
 	sort.Slice(candidates, func(i, j int) bool {
 		a := candidates[i].key.xor(nodeID)
 		b := candidates[j].key.xor(nodeID)
-		return a.Cmp(b) == -1
+		return a.Cmp(b) == numNeg1
 	})
 
 	// determine the nodes of nodes to return
@@ -154,20 +154,20 @@ func (kb *kBucket) addNode(ctx context.Context, newNode newNode) error {
 	for {
 		distance := n.key.xor(nodeID)
 
-		result := distance.Cmp(big.NewInt(0))
+		result := distance.Cmp(big.NewInt(numZero))
 		switch result {
-		case 0:
+		case numZero:
 
 			// if ping fails then insert the new node
-			addr := net.JoinHostPort(kb.nn.ip, kb.nn.port)
-			err := pingNode(ctx, addr)
-			if err != nil {
-				n = nn
-				return fmt.Errorf("failed to ping node: %w", err)
-			}
+			// addr := net.JoinHostPort(kb.nn.ip, kb.nn.port)
+			// err := pingNode(ctx, addr)
+			// if err != nil {
+			// 	n = nn
+			// 	return fmt.Errorf("failed to ping node: %w", err)
+			// }
 
 			return nil
-		case -1:
+		case numNeg1:
 			if n.left == nil {
 				n.left = nn
 				return nil
@@ -184,7 +184,7 @@ func (kb *kBucket) addNode(ctx context.Context, newNode newNode) error {
 }
 
 func (kb *kBucket) inOrder() []*node {
-	ns := make([]*node, 0)
+	ns := make([]*node, numZero)
 	if kb.head == nil {
 		return ns
 	}
@@ -203,21 +203,21 @@ func (kb *kBucket) inOrder() []*node {
 	return ns
 }
 
-func pingNode(ctx context.Context, target string) error {
-	conn, err := protocol.NewConn(target)
-	if err != nil {
-		return fmt.Errorf("failed to create new client connection: %w", err)
-	}
+// func pingNode(ctx context.Context, target string) error {
+// 	conn, err := protocol.NewConn(target)
+// 	if err != nil {
+// 		return fmt.Errorf("failed to create new client connection: %w", err)
+// 	}
 
-	resp, err := pb.NewKademliaServiceClient(conn).Ping(ctx, &pb.PingRequest{})
-	if err != nil {
-		return fmt.Errorf("failed to execute ping command: %w", err)
-	}
+// 	resp, err := pb.NewKademliaServiceClient(conn).Ping(ctx, &pb.PingRequest{})
+// 	if err != nil {
+// 		return fmt.Errorf("failed to execute ping command: %w", err)
+// 	}
 
-	// TODO
-	// check if sender exists in nodes
-	// if not add to node list
-	_ = resp
+// 	// TODO
+// 	// check if sender exists in nodes
+// 	// if not add to node list
+// 	_ = resp
 
-	return nil
-}
+// 	return nil
+// }

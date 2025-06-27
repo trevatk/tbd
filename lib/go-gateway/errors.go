@@ -6,17 +6,17 @@ import (
 	"google.golang.org/protobuf/types/known/emptypb"
 )
 
-// ErrInvalidArugment
+// ErrInvalidArgument ...
 func ErrInvalidArgument() error {
 	return status.Error(codes.InvalidArgument, codes.InvalidArgument.String())
 }
 
-// ErrInternal
+// ErrInternal ...
 func ErrInternal() error {
 	return status.Error(codes.Internal, codes.Internal.String())
 }
 
-// NewEmptyResponse
+// NewEmptyResponse ...
 func NewEmptyResponse() *emptypb.Empty {
 	return &emptypb.Empty{}
 }
