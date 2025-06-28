@@ -6,7 +6,8 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/structx/tbd/dns/internal/resolver"
+	"github.com/trevatk/tbd/dns/internal/resolver"
+
 	"github.com/structx/tbd/lib/gateway"
 	"github.com/structx/tbd/lib/logging"
 	"github.com/structx/tbd/lib/setup"

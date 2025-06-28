@@ -29,6 +29,10 @@ jobs:
           run: echo "modules=$(go list -m -json | jq -s '.' | jq -c '[.[].Dir]')" >> $GITHUB_OUTPUT
 
   scan:
+    permissions:
+      contents: read
+      security-events: write
+      actions: read 
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout code

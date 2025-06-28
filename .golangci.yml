@@ -141,6 +141,7 @@ formatters:
       simplify: true
     goimports:
       local-prefixes:
+        - github.com/trevatk/tbd
         - github.com/structx/tbd
   
 issues:

@@ -13,12 +13,12 @@ tasks:
     command: go mod tidy
   lint: 
     command: golangci-lint run ./... -c ../.golangci.yml
-  authority:
+  authoritative:
     env:
       GW_HOST: localhost
       GW_PORT: "5300"
       LOG_LEVEL: DEBUG
-    command: air -c .air.authority.toml
+    command: air -c ../.air/dns.authoritative.toml
     local: true
   resolver:
     env:

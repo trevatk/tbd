@@ -6,7 +6,8 @@ import (
 	"os/signal"
 	"syscall"
 
-	foundations "github.com/structx/tbd/dns/internal/authority"
+	"github.com/trevatk/tbd/dns/internal/authoritative"
+
 	"github.com/structx/tbd/lib/gateway"
 	"github.com/structx/tbd/lib/logging"
 	"github.com/structx/tbd/lib/setup"
@@ -31,8 +32,9 @@ func realMain(ctx context.Context) error {
 	cfg := setup.UnmarshalConfig()
 	logger := logging.New(cfg.Logger.Level)
 
-	dht := foundations.NewDHT(cfg.Gateway.Host, cfg.Gateway.Port)
-	trs := foundations.NewTransport(logger, dht)
+	kv := authoritative.NewKv()
+	dht := authoritative.NewDHT(kv, cfg.Gateway.Host, cfg.Gateway.Port)
+	trs := authoritative.NewTransport(logger, dht)
 
 	opts := []gateway.Option{
 		gateway.WithHost(cfg.Gateway.Host),

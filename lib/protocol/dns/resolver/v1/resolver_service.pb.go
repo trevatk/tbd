@@ -358,7 +358,8 @@ type Record struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Domain        string                 `protobuf:"bytes,1,opt,name=domain,proto3" json:"domain,omitempty"`
 	RecordType    RecordType             `protobuf:"varint,2,opt,name=record_type,json=recordType,proto3,enum=dns.resolver.v1.RecordType" json:"record_type,omitempty"`
-	Ttl           int64                  `protobuf:"varint,3,opt,name=ttl,proto3" json:"ttl,omitempty"`
+	Value         string                 `protobuf:"bytes,3,opt,name=value,proto3" json:"value,omitempty"`
+	Ttl           int64                  `protobuf:"varint,4,opt,name=ttl,proto3" json:"ttl,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -405,6 +406,13 @@ func (x *Record) GetRecordType() RecordType {
 		return x.RecordType
 	}
 	return RecordType_RECORD_TYPE_UNSPECIFIED
+}
+
+func (x *Record) GetValue() string {
+	if x != nil {
+		return x.Value
+	}
+	return ""
 }
 
 func (x *Record) GetTtl() int64 {
@@ -679,12 +687,13 @@ const file_dns_resolver_v1_resolver_service_proto_rawDesc = "" +
 	"\x03url\x18\x01 \x01(\tR\x03url\x12*\n" +
 	"\x11did_document_json\x18\x02 \x01(\tR\x0fdidDocumentJson\x12!\n" +
 	"\fproof_digest\x18\x03 \x01(\tR\vproofDigestB\x0f\n" +
-	"\rraw_data_type\"p\n" +
+	"\rraw_data_type\"\x86\x01\n" +
 	"\x06Record\x12\x16\n" +
 	"\x06domain\x18\x01 \x01(\tR\x06domain\x12<\n" +
 	"\vrecord_type\x18\x02 \x01(\x0e2\x1b.dns.resolver.v1.RecordTypeR\n" +
-	"recordType\x12\x10\n" +
-	"\x03ttl\x18\x03 \x01(\x03R\x03ttl\"\xca\x05\n" +
+	"recordType\x12\x14\n" +
+	"\x05value\x18\x03 \x01(\tR\x05value\x12\x10\n" +
+	"\x03ttl\x18\x04 \x01(\x03R\x03ttl\"\xca\x05\n" +
 	"\x0fResolveResponse\x12/\n" +
 	"\x06answer\x18\x01 \x03(\v2\x17.dns.resolver.v1.RecordR\x06answer\x125\n" +
 	"\tauthority\x18\x02 \x03(\v2\x17.dns.resolver.v1.RecordR\tauthority\x127\n" +

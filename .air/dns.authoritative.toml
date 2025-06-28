@@ -1,11 +1,10 @@
 root = "."
-testdata_dir = "internal/authority/testfiles"
-tmp_dir = ".air"
+tmp_dir = "../tmp"
 
 [build]
   args_bin = []
-  bin = "./.air/authority"
-  cmd = "go build -o ./.air/authority ./cmd/authority"
+  bin = "../tmp/authoritative"
+  cmd = "go build -o ../tmp/authoritative ../dns/cmd/authoritative"
   delay = 1000
   exclude_dir = ["assets", ".air", "vendor", "testfiles"]
   exclude_file = []
@@ -28,7 +27,7 @@ tmp_dir = ".air"
   stop_on_error = false
 
 [color]
-  app = ""
+  app = "authoritative"
   build = "yellow"
   main = "magenta"
   runner = "green"
@@ -46,5 +45,5 @@ tmp_dir = ".air"
   enabled = false
 
 [screen]
-  clear_on_rebuild = false
+  clear_on_rebuild = true
   keep_scroll = true

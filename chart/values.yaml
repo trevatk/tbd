@@ -1,5 +1,25 @@
 
+namespaceOverride: ""
+
+serviceAccount:
+  create: false
+  name: ""
+
+authoritative:
+  enabled: false
+  ingress:
+    enabled: false
+  gateway:
+    host:
+    port: 50051
+  
 wellknown:
+  enabled: false
+  fullnameOverride: ""
+  image:
+    registry:
+    repository:
+    tag: 
   gateway:
     host: 
     port: 50051
