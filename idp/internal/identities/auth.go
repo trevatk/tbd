@@ -6,7 +6,7 @@ import (
 
 	"github.com/golang-jwt/jwt/v5"
 
-	"github.com/structx/tbd/lib/gateway/interceptors"
+	"github.com/structx/tbd/lib/protocol/interceptors"
 )
 
 type auth struct {

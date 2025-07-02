@@ -6,7 +6,7 @@ replace (
 	github.com/structx/tbd/dns/resolver => ../dns/resolver
 	github.com/structx/tbd/lib/gateway => ../lib/go-gateway
 	github.com/structx/tbd/lib/logging => ../lib/go-logging
-	github.com/structx/tbd/lib/protocol => ../lib/protocol
+	github.com/structx/tbd/lib/protocol => ../lib/go-protocol
 	github.com/structx/tbd/lib/setup => ../lib/go-setup
 )
 
@@ -20,10 +20,11 @@ require (
 )
 
 require (
-	buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go v1.36.6-20250613105001-9f2d3c737feb.1 // indirect
+	buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go v1.36.6-20250625184727-c923a0c2a132.1 // indirect
 	buf.build/go/protovalidate v0.13.1 // indirect
 	cel.dev/expr v0.23.1 // indirect
 	github.com/antlr4-go/antlr/v4 v4.13.0 // indirect
+	github.com/golang-jwt/jwt/v5 v5.2.2 // indirect
 	github.com/google/cel-go v0.25.0 // indirect
 	github.com/stoewer/go-strcase v1.3.0 // indirect
 	golang.org/x/exp v0.0.0-20240325151524-a685a6edb6d8 // indirect

@@ -11,7 +11,6 @@ import (
 
 	"github.com/google/uuid"
 
-	"github.com/structx/tbd/lib/gateway"
 	"github.com/structx/tbd/lib/protocol"
 	pb "github.com/structx/tbd/lib/protocol/chat/v1"
 )
@@ -45,7 +44,7 @@ func (t *transport) CreateThread(ctx context.Context, in *pb.CreateThreadRequest
 	t.logger.DebugContext(ctx, "CreateThread", "request", in)
 
 	if err := protocol.Validate(in); err != nil {
-		return nil, gateway.ErrInvalidArgument()
+		return nil, protocol.ErrInvalidArgument()
 	}
 
 	t.mu.Lock()
@@ -59,7 +58,7 @@ func (t *transport) CreateThread(ctx context.Context, in *pb.CreateThreadRequest
 		id, err := uuid.NewV7()
 		if err != nil {
 			t.logger.ErrorContext(ctx, "failed to create thread id", "error", err)
-			return nil, gateway.ErrInternal()
+			return nil, protocol.ErrInternal()
 		}
 
 		if _, ok := t.threads[id.String()]; ok {

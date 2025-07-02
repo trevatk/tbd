@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package dns.kademlia.v1;
 
+import "google/protobuf/timestamp.proto";
+
 option go_package = "github.com/structx/tbd/lib/protocol/dns/kademlia/v1";
 
 service KademliaService {
@@ -9,21 +11,26 @@ service KademliaService {
   rpc Store(StoreRequest) returns (StoreResponse) {}
   rpc FindNode(FindNodeRequest) returns (FindNodeResponse) {}
   rpc FindValue(FindValueRequest) returns (FindValueResponse) {}
-
-  rpc Join(JoinRequest) returns (JoinResponse) {}
 }
 
 message Node {
   string node_id = 1;
   string ip_or_domain = 2;
   uint32 port = 3;
+  google.protobuf.Timestamp last_seen = 4;
 }
 
 message Record {
   string id = 1;
   string domain = 2;
-  string record_type = 3;
-  string value = 4;
+  enum RECORDTYPE {
+    RECORDTYPE_UNSPECIFIED = 0;
+    RECORDTYPE_A = 1;
+    RECORDTYPE_CNAME = 2;
+    RECORDTYPE_DID = 4;
+  }
+  RECORDTYPE record_type = 3;
+  bytes value = 4;
   int64 ttl = 5;
 }
 
@@ -78,14 +85,4 @@ message FindValueResponse {
     Record record = 3;
     ClosestNodes closest_nodes = 4;
   }
-}
-
-message JoinRequest {
-  string ip_or_domain = 1;
-  uint32 port = 2;
-}
-
-message JoinResponse {
-  Node sender = 1;
-  Node node = 2;
 }

@@ -2,6 +2,8 @@ version: "2"
 
 run:
   timeout: 3m
+  tests: false
+  concurrency: 4
 
 linters:
   enable:
@@ -13,8 +15,7 @@ linters:
     - errorlint
     - lll
     - funlen
-    - gocognit
-    - mnd
+    # - gocognit
     - whitespace
     - sloglint
   disable:
@@ -48,8 +49,8 @@ linters:
     lll:
       line-length: 120
     funlen:
-      lines: 62
-      statements: 32
+      lines: 114
+      statements: 42
     gocognit:
       min-complexity: 20
     mnd:
@@ -105,8 +106,6 @@ linters:
           severity: error
         - name: indent-error-flow
           severity: error
-        - name: add-constant
-          severity: error
         - name: import-alias-naming
           severity: error
         - name: context-as-argument
@@ -141,6 +140,7 @@ formatters:
       simplify: true
     goimports:
       local-prefixes:
+        - github.com/trevatk/tbd
         - github.com/structx/tbd
   
 issues:

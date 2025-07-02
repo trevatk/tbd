@@ -5,7 +5,7 @@ go 1.24.4
 replace (
 	github.com/structx/tbd/lib/gateway => ../lib/go-gateway
 	github.com/structx/tbd/lib/logging => ../lib/go-logging
-	github.com/structx/tbd/lib/protocol => ../lib/protocol
+	github.com/structx/tbd/lib/protocol => ../lib/go-protocol
 	github.com/structx/tbd/lib/setup => ../lib/go-setup
 	github.com/structx/tbd/lib/wallet => ../lib/go-wallet
 )

@@ -8,7 +8,6 @@ import (
 
 	"google.golang.org/protobuf/proto"
 
-	"github.com/structx/tbd/lib/gateway"
 	"github.com/structx/tbd/lib/protocol"
 	pb "github.com/structx/tbd/lib/protocol/dns/resolver/v1"
 )
@@ -32,13 +31,13 @@ type transport struct {
 var _ pb.DNSResolverServiceServer = (*transport)(nil)
 
 // NewTransport return new resolver implementation of gateway transport
-func NewTransport(logger *slog.Logger, nameservers []string, cache Cache) gateway.Transport {
+func NewTransport(logger *slog.Logger, nameservers []string, cache Cache) protocol.Transport {
 	tr := &transport{
 		logger: logger,
 		cache:  cache,
 		ns:     nameservers,
 	}
-	return gateway.Transport{
+	return protocol.Transport{
 		ServiceDesc: &pb.DNSResolverService_ServiceDesc,
 		Service:     tr,
 	}
@@ -47,7 +46,7 @@ func NewTransport(logger *slog.Logger, nameservers []string, cache Cache) gatewa
 // Resolve
 func (t *transport) Resolve(ctx context.Context, in *pb.ResolveRequest) (*pb.ResolveResponse, error) {
 	if err := protocol.Validate(in); err != nil {
-		return nil, gateway.ErrInvalidArgument()
+		return nil, protocol.ErrInvalidArgument()
 	}
 
 	// attempt to resolve using local cache
@@ -71,7 +70,7 @@ func (t *transport) Resolve(ctx context.Context, in *pb.ResolveRequest) (*pb.Res
 		didJSON, err = resolveDID(in.DidToResolve)
 		if err != nil {
 			t.logger.ErrorContext(ctx, "failed to resolve did", slog.String(errAttr, err.Error()))
-			return nil, gateway.ErrInternal()
+			return nil, protocol.ErrInternal()
 		}
 	}
 

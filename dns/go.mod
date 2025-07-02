@@ -1,27 +1,28 @@
-module github.com/structx/tbd/dns
+module github.com/trevatk/tbd/dns
 
 go 1.24.4
 
 replace (
 	github.com/structx/tbd/lib/gateway => ../lib/go-gateway
 	github.com/structx/tbd/lib/logging => ../lib/go-logging
-	github.com/structx/tbd/lib/protocol => ../lib/protocol
+	github.com/structx/tbd/lib/protocol => ../lib/go-protocol
 	github.com/structx/tbd/lib/setup => ../lib/go-setup
 )
 
 require (
+	github.com/google/uuid v1.6.0
 	github.com/stretchr/testify v1.10.0
 	github.com/structx/tbd/lib/gateway v0.0.0-00010101000000-000000000000
 	github.com/structx/tbd/lib/logging v0.0.0-00010101000000-000000000000
 	github.com/structx/tbd/lib/protocol v0.0.0-00010101000000-000000000000
 	github.com/structx/tbd/lib/setup v0.0.0-00010101000000-000000000000
 	go.uber.org/mock v0.5.2
-	google.golang.org/grpc v1.73.0
+	golang.org/x/sync v0.12.0
 	google.golang.org/protobuf v1.36.6
 )
 
 require (
-	buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go v1.36.6-20250613105001-9f2d3c737feb.1 // indirect
+	buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go v1.36.6-20250625184727-c923a0c2a132.1 // indirect
 	buf.build/go/protovalidate v0.13.1 // indirect
 	cel.dev/expr v0.23.1 // indirect
 	github.com/antlr4-go/antlr/v4 v4.13.0 // indirect
@@ -35,5 +36,6 @@ require (
 	golang.org/x/text v0.23.0 // indirect
 	google.golang.org/genproto/googleapis/api v0.0.0-20250324211829-b45e905df463 // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20250324211829-b45e905df463 // indirect
+	google.golang.org/grpc v1.73.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )

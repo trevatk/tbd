@@ -8,6 +8,7 @@ import (
 	"google.golang.org/grpc"
 
 	"github.com/structx/tbd/lib/gateway"
+	"github.com/structx/tbd/lib/protocol"
 	pb "github.com/structx/tbd/lib/protocol/identities/v1"
 )
 
@@ -30,7 +31,7 @@ func NewTransport(logger *slog.Logger, svc *service) (*grpc.ServiceDesc, pb.Iden
 // CreateRealm
 func (g *grpcTransport) CreateRealm(ctx context.Context, in *pb.CreateRealmRequest) (*pb.CreateRealmResponse, error) {
 	if err := protovalidate.Validate(in); err != nil {
-		return nil, gateway.ErrInvalidArgument()
+		return nil, protocol.ErrInvalidArgument()
 	}
 
 	realm, err := g.svc.createRealm(ctx, realmCreate{
@@ -39,7 +40,7 @@ func (g *grpcTransport) CreateRealm(ctx context.Context, in *pb.CreateRealmReque
 	})
 	if err != nil {
 		g.log.ErrorContext(ctx, "failed to create realm", "error", err)
-		return nil, gateway.ErrInternal()
+		return nil, protocol.ErrInternal()
 	}
 
 	return newCreateRealmResponse(realm), nil
@@ -48,7 +49,7 @@ func (g *grpcTransport) CreateRealm(ctx context.Context, in *pb.CreateRealmReque
 // CreateUser
 func (g *grpcTransport) CreateUser(ctx context.Context, in *pb.CreateUserRequest) (*pb.CreateUserResponse, error) {
 	if err := protovalidate.Validate(in); err != nil {
-		return nil, gateway.ErrInvalidArgument()
+		return nil, protocol.ErrInvalidArgument()
 	}
 
 	user, err := g.svc.createUser(ctx, userCreate{
@@ -57,7 +58,7 @@ func (g *grpcTransport) CreateUser(ctx context.Context, in *pb.CreateUserRequest
 	})
 	if err != nil {
 		g.log.ErrorContext(ctx, "failed to create user", "error", err)
-		return nil, gateway.ErrInternal()
+		return nil, protocol.ErrInternal()
 	}
 
 	return newCreateUserResponse(user), nil

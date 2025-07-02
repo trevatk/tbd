@@ -1,0 +1,5 @@
+{{- if .Values.authoritative.ingress.enabled }}
+apiVersion: v1
+kind: Ingress
+
+{{- end }}
