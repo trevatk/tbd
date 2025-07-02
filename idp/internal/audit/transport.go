@@ -7,7 +7,7 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/protobuf/types/known/emptypb"
 
-	"github.com/structx/tbd/lib/gateway"
+	"github.com/structx/tbd/lib/protocol"
 	pb "github.com/structx/tbd/lib/protocol/audit/v1"
 )
 
@@ -28,14 +28,14 @@ func NewTransport(logger *slog.Logger, svc *serviceImpl) (*grpc.ServiceDesc, pb.
 }
 
 func (t *transport) Decision(ctx context.Context, in *pb.CreateDecisionRequest) (*emptypb.Empty, error) {
-	return gateway.NewEmptyResponse(), nil
+	return protocol.NewEmptyResponse(), nil
 }
 
 func (t *transport) ListDecisions(ctx context.Context, in *pb.ListDecisionsRequest) (*pb.ListDecisionsResponse, error) {
 	txs, err := t.svc.listTxs(in.Limit, in.Offset)
 	if err != nil {
 		t.logger.ErrorContext(ctx, "failed to list transactions", "error", err)
-		return nil, gateway.ErrInternal()
+		return nil, protocol.ErrInternal()
 	}
 
 	return newListDecisionsResponse(txs), nil

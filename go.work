@@ -8,7 +8,7 @@ use (
 	./lib/go-logging
 	./lib/go-setup
 	./lib/go-wallet
-	./lib/protocol
+	./lib/go-protocol
 	./tui
 	./wellknown
 )

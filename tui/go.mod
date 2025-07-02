@@ -2,7 +2,7 @@ module github.com/structx/tbd/tui
 
 go 1.24.4
 
-replace github.com/structx/tbd/lib/protocol => ../lib/protocol
+replace github.com/structx/tbd/lib/protocol => ../lib/go-protocol
 
 require (
 	github.com/charmbracelet/bubbletea v1.3.5
@@ -13,7 +13,7 @@ require (
 )
 
 require (
-	buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go v1.36.6-20250613105001-9f2d3c737feb.1 // indirect
+	buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go v1.36.6-20250625184727-c923a0c2a132.1 // indirect
 	buf.build/go/protovalidate v0.13.1 // indirect
 	cel.dev/expr v0.23.1 // indirect
 	github.com/antlr4-go/antlr/v4 v4.13.0 // indirect
@@ -25,6 +25,7 @@ require (
 	github.com/charmbracelet/x/term v0.2.1 // indirect
 	github.com/erikgeiser/coninput v0.0.0-20211004153227-1c3628e74d0f // indirect
 	github.com/go-logfmt/logfmt v0.6.0 // indirect
+	github.com/golang-jwt/jwt/v5 v5.2.2 // indirect
 	github.com/google/cel-go v0.25.0 // indirect
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
 	github.com/lucasb-eyer/go-colorful v1.2.0 // indirect

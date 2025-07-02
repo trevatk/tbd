@@ -1,0 +1,24 @@
+{{- if .Values.authoritative.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: authoritative
+  namespace: {{ .Values.namespaceOverride | default .Release.Namespace }}
+  labels:
+    app: authoritative
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: authoritative
+  template:
+    metadata:
+      labels:
+        app: authoritative
+    spec:
+      containers:
+        - name: authoritative
+          image: 
+          ports:
+            - containerPort: {{ .Values.authoritative.gateway.port }}
+{{- end }}

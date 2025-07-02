@@ -1,6 +1,8 @@
 package setup
 
-import "os"
+import (
+	"os"
+)
 
 func envLookup(key, defaultValue string) string {
 	v, ok := os.LookupEnv(key)

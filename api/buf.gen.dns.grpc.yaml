@@ -6,11 +6,11 @@ managed:
 
 plugins:
   - local: protoc-gen-go
-    out: ../lib/protocol
+    out: ../lib/go-protocol
     opt:
       - paths=source_relative
   - local: protoc-gen-go-grpc
-    out: ../lib/protocol
+    out: ../lib/go-protocol
     opt:
       - paths=source_relative
 

@@ -7,8 +7,8 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/structx/tbd/lib/gateway"
 	"github.com/structx/tbd/lib/logging"
+	"github.com/structx/tbd/lib/protocol"
 	"github.com/structx/tbd/lib/setup"
 
 	"github.com/structx/tbd/idp/internal/audit"
@@ -46,21 +46,21 @@ func realMain(ctx context.Context) error {
 
 	desc, service := audit.NewTransport(logger, svc)
 
-	trs := []gateway.Transport{
+	trs := []protocol.Transport{
 		{
 			ServiceDesc: desc,
 			Service:     service,
 		},
 	}
 
-	opts := []gateway.Option{
-		gateway.WithHost(cfg.Gateway.Host),
-		gateway.WithPort(cfg.Gateway.Port),
-		gateway.WithTransports(trs),
-		gateway.WithLogger(logger),
+	opts := []protocol.ServerOption{
+		protocol.WithHost(cfg.Gateway.Host),
+		protocol.WithPort(cfg.Gateway.Port),
+		protocol.WithTransports(trs),
+		protocol.WithLogger(logger),
 	}
 
-	s := gateway.New(opts...)
+	s := protocol.NewServer(opts...)
 
 	return s.StartAndStop(ctx)
 }

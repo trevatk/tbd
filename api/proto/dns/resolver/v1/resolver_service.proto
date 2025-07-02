@@ -54,7 +54,8 @@ message RecordData {
 message Record {
   string domain = 1;
   RecordType record_type = 2;
-  int64 ttl = 3;
+  string value = 3;
+  int64 ttl = 4;
 }
 
 message ResolveResponse {

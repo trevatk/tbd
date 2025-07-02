@@ -6,9 +6,10 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/structx/tbd/dns/internal/resolver"
-	"github.com/structx/tbd/lib/gateway"
+	"github.com/trevatk/tbd/dns/internal/resolver"
+
 	"github.com/structx/tbd/lib/logging"
+	"github.com/structx/tbd/lib/protocol"
 	"github.com/structx/tbd/lib/setup"
 )
 
@@ -37,15 +38,15 @@ func realMain(ctx context.Context) error {
 
 	ns := []string{cfg.Nameserver.NS1, cfg.Nameserver.NS2}
 	tr := resolver.NewTransport(logger, ns, cache)
-	trs := []gateway.Transport{tr}
+	trs := []protocol.Transport{tr}
 
-	opts := []gateway.Option{
-		gateway.WithHost(cfg.Gateway.Host),
-		gateway.WithPort(cfg.Gateway.Port),
-		gateway.WithTransports(trs),
-		gateway.WithLogger(logger),
+	opts := []protocol.ServerOption{
+		protocol.WithHost(cfg.Gateway.Host),
+		protocol.WithPort(cfg.Gateway.Port),
+		protocol.WithTransports(trs),
+		protocol.WithLogger(logger),
 	}
 
-	s := gateway.New(opts...)
+	s := protocol.NewServer(opts...)
 	return s.StartAndStop(ctx)
 }
