@@ -12,7 +12,6 @@ replace (
 require (
 	github.com/google/uuid v1.6.0
 	github.com/stretchr/testify v1.10.0
-	github.com/structx/tbd/lib/gateway v0.0.0-00010101000000-000000000000
 	github.com/structx/tbd/lib/logging v0.0.0-00010101000000-000000000000
 	github.com/structx/tbd/lib/protocol v0.0.0-00010101000000-000000000000
 	github.com/structx/tbd/lib/setup v0.0.0-00010101000000-000000000000
@@ -27,6 +26,7 @@ require (
 	cel.dev/expr v0.23.1 // indirect
 	github.com/antlr4-go/antlr/v4 v4.13.0 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
+	github.com/golang-jwt/jwt/v5 v5.2.2 // indirect
 	github.com/google/cel-go v0.25.0 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/stoewer/go-strcase v1.3.0 // indirect

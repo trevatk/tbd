@@ -12,7 +12,6 @@ replace (
 
 require (
 	github.com/google/uuid v1.6.0
-	github.com/structx/tbd/lib/gateway v0.0.0-00010101000000-000000000000
 	github.com/structx/tbd/lib/logging v0.0.0-00010101000000-000000000000
 	github.com/structx/tbd/lib/protocol v0.0.0-00010101000000-000000000000
 	github.com/structx/tbd/lib/setup v0.0.0-00010101000000-000000000000

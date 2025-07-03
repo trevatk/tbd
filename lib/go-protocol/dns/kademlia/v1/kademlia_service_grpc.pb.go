@@ -23,7 +23,6 @@ const (
 	KademliaService_Store_FullMethodName     = "/dns.kademlia.v1.KademliaService/Store"
 	KademliaService_FindNode_FullMethodName  = "/dns.kademlia.v1.KademliaService/FindNode"
 	KademliaService_FindValue_FullMethodName = "/dns.kademlia.v1.KademliaService/FindValue"
-	KademliaService_Join_FullMethodName      = "/dns.kademlia.v1.KademliaService/Join"
 )
 
 // KademliaServiceClient is the client API for KademliaService service.
@@ -34,7 +33,6 @@ type KademliaServiceClient interface {
 	Store(ctx context.Context, in *StoreRequest, opts ...grpc.CallOption) (*StoreResponse, error)
 	FindNode(ctx context.Context, in *FindNodeRequest, opts ...grpc.CallOption) (*FindNodeResponse, error)
 	FindValue(ctx context.Context, in *FindValueRequest, opts ...grpc.CallOption) (*FindValueResponse, error)
-	Join(ctx context.Context, in *JoinRequest, opts ...grpc.CallOption) (*JoinResponse, error)
 }
 
 type kademliaServiceClient struct {
@@ -85,16 +83,6 @@ func (c *kademliaServiceClient) FindValue(ctx context.Context, in *FindValueRequ
 	return out, nil
 }
 
-func (c *kademliaServiceClient) Join(ctx context.Context, in *JoinRequest, opts ...grpc.CallOption) (*JoinResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(JoinResponse)
-	err := c.cc.Invoke(ctx, KademliaService_Join_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 // KademliaServiceServer is the server API for KademliaService service.
 // All implementations must embed UnimplementedKademliaServiceServer
 // for forward compatibility.
@@ -103,7 +91,6 @@ type KademliaServiceServer interface {
 	Store(context.Context, *StoreRequest) (*StoreResponse, error)
 	FindNode(context.Context, *FindNodeRequest) (*FindNodeResponse, error)
 	FindValue(context.Context, *FindValueRequest) (*FindValueResponse, error)
-	Join(context.Context, *JoinRequest) (*JoinResponse, error)
 	mustEmbedUnimplementedKademliaServiceServer()
 }
 
@@ -125,9 +112,6 @@ func (UnimplementedKademliaServiceServer) FindNode(context.Context, *FindNodeReq
 }
 func (UnimplementedKademliaServiceServer) FindValue(context.Context, *FindValueRequest) (*FindValueResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method FindValue not implemented")
-}
-func (UnimplementedKademliaServiceServer) Join(context.Context, *JoinRequest) (*JoinResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Join not implemented")
 }
 func (UnimplementedKademliaServiceServer) mustEmbedUnimplementedKademliaServiceServer() {}
 func (UnimplementedKademliaServiceServer) testEmbeddedByValue()                         {}
@@ -222,24 +206,6 @@ func _KademliaService_FindValue_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
-func _KademliaService_Join_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(JoinRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(KademliaServiceServer).Join(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: KademliaService_Join_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(KademliaServiceServer).Join(ctx, req.(*JoinRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 // KademliaService_ServiceDesc is the grpc.ServiceDesc for KademliaService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -262,10 +228,6 @@ var KademliaService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "FindValue",
 			Handler:    _KademliaService_FindValue_Handler,
-		},
-		{
-			MethodName: "Join",
-			Handler:    _KademliaService_Join_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

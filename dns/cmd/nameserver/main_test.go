@@ -7,8 +7,9 @@ import (
 	"time"
 
 	"google.golang.org/protobuf/types/known/timestamppb"
-	"soft.structx.io/idp/lib/logging"
-	"soft.structx.io/idp/lib/setup"
+
+	"github.com/structx/tbd/lib/logging"
+	"github.com/structx/tbd/lib/setup"
 
 	"github.com/google/uuid"
 	"github.com/stretchr/testify/assert"
