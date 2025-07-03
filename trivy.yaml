@@ -1,2 +1,10 @@
-format: json
+format: table
+
+scan:
+  scanner:
+    - vuln
+
+vulnerability:
+  ignore-unfixed: true
+
 exit-code: 1

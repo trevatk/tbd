@@ -2,19 +2,16 @@ syntax = "proto3";
 
 package audit.v1;
 
-import "buf/validate/validate.proto";
-import "google/protobuf/empty.proto";
-
 option go_package = "github.com/structx/idp/api/audit/v1";
 
 service AuditService {
-  rpc Decision(CreateDecisionRequest) returns (google.protobuf.Empty) {}
+  rpc Decision(DecisionRequest) returns (DecisionResponse) {}
   rpc ListDecisions(ListDecisionsRequest) returns (ListDecisionsResponse) {}
 }
 
-message CreateDecisionRequest {}
+message DecisionRequest {}
 
-message CreateDecisionResponse {}
+message DecisionResponse {}
 
 message ListDecisionsRequest {
   int64 limit = 1;

@@ -7,7 +7,8 @@ import (
 	"time"
 
 	"go.uber.org/mock/gomock"
-	"soft.structx.io/idp/lib/logging"
+
+	"github.com/structx/tbd/lib/logging"
 
 	"github.com/google/uuid"
 	"github.com/stretchr/testify/assert"

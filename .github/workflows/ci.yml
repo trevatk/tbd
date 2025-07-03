@@ -1,0 +1,26 @@
+
+name: Moon CI
+
+on:
+  push:
+    branches:
+      - 'master'
+  pull_request:
+    
+jobs:
+  ci:
+    name: CI
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: moonrepo/setup-toolchain@v0
+      - name: Proto Install
+        run: proto install
+      - name: Lint
+        run: moon ci :lint
+      - name: Test
+        run: moon ci :test
+      - name: Build
+        run: moon ci :build

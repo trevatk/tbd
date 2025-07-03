@@ -764,110 +764,6 @@ func (*FindValueResponse_Record) isFindValueResponse_Result() {}
 
 func (*FindValueResponse_ClosestNodes) isFindValueResponse_Result() {}
 
-type JoinRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	IpOrDomain    string                 `protobuf:"bytes,1,opt,name=ip_or_domain,json=ipOrDomain,proto3" json:"ip_or_domain,omitempty"`
-	Port          uint32                 `protobuf:"varint,2,opt,name=port,proto3" json:"port,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *JoinRequest) Reset() {
-	*x = JoinRequest{}
-	mi := &file_dns_kademlia_v1_kademlia_service_proto_msgTypes[11]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *JoinRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*JoinRequest) ProtoMessage() {}
-
-func (x *JoinRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_dns_kademlia_v1_kademlia_service_proto_msgTypes[11]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use JoinRequest.ProtoReflect.Descriptor instead.
-func (*JoinRequest) Descriptor() ([]byte, []int) {
-	return file_dns_kademlia_v1_kademlia_service_proto_rawDescGZIP(), []int{11}
-}
-
-func (x *JoinRequest) GetIpOrDomain() string {
-	if x != nil {
-		return x.IpOrDomain
-	}
-	return ""
-}
-
-func (x *JoinRequest) GetPort() uint32 {
-	if x != nil {
-		return x.Port
-	}
-	return 0
-}
-
-type JoinResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Sender        *Node                  `protobuf:"bytes,1,opt,name=sender,proto3" json:"sender,omitempty"`
-	Node          *Node                  `protobuf:"bytes,2,opt,name=node,proto3" json:"node,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *JoinResponse) Reset() {
-	*x = JoinResponse{}
-	mi := &file_dns_kademlia_v1_kademlia_service_proto_msgTypes[12]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *JoinResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*JoinResponse) ProtoMessage() {}
-
-func (x *JoinResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_dns_kademlia_v1_kademlia_service_proto_msgTypes[12]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use JoinResponse.ProtoReflect.Descriptor instead.
-func (*JoinResponse) Descriptor() ([]byte, []int) {
-	return file_dns_kademlia_v1_kademlia_service_proto_rawDescGZIP(), []int{12}
-}
-
-func (x *JoinResponse) GetSender() *Node {
-	if x != nil {
-		return x.Sender
-	}
-	return nil
-}
-
-func (x *JoinResponse) GetNode() *Node {
-	if x != nil {
-		return x.Node
-	}
-	return nil
-}
-
 var File_dns_kademlia_v1_kademlia_service_proto protoreflect.FileDescriptor
 
 const file_dns_kademlia_v1_kademlia_service_proto_rawDesc = "" +
@@ -933,20 +829,12 @@ const file_dns_kademlia_v1_kademlia_service_proto_rawDesc = "" +
 	"request_id\x18\x02 \x01(\tR\trequestId\x121\n" +
 	"\x06record\x18\x03 \x01(\v2\x17.dns.kademlia.v1.RecordH\x00R\x06record\x12D\n" +
 	"\rclosest_nodes\x18\x04 \x01(\v2\x1d.dns.kademlia.v1.ClosestNodesH\x00R\fclosestNodesB\b\n" +
-	"\x06result\"C\n" +
-	"\vJoinRequest\x12 \n" +
-	"\fip_or_domain\x18\x01 \x01(\tR\n" +
-	"ipOrDomain\x12\x12\n" +
-	"\x04port\x18\x02 \x01(\rR\x04port\"h\n" +
-	"\fJoinResponse\x12-\n" +
-	"\x06sender\x18\x01 \x01(\v2\x15.dns.kademlia.v1.NodeR\x06sender\x12)\n" +
-	"\x04node\x18\x02 \x01(\v2\x15.dns.kademlia.v1.NodeR\x04node2\x92\x03\n" +
+	"\x06result2\xcb\x02\n" +
 	"\x0fKademliaService\x12E\n" +
 	"\x04Ping\x12\x1c.dns.kademlia.v1.PingRequest\x1a\x1d.dns.kademlia.v1.PingResponse\"\x00\x12H\n" +
 	"\x05Store\x12\x1d.dns.kademlia.v1.StoreRequest\x1a\x1e.dns.kademlia.v1.StoreResponse\"\x00\x12Q\n" +
 	"\bFindNode\x12 .dns.kademlia.v1.FindNodeRequest\x1a!.dns.kademlia.v1.FindNodeResponse\"\x00\x12T\n" +
-	"\tFindValue\x12!.dns.kademlia.v1.FindValueRequest\x1a\".dns.kademlia.v1.FindValueResponse\"\x00\x12E\n" +
-	"\x04Join\x12\x1c.dns.kademlia.v1.JoinRequest\x1a\x1d.dns.kademlia.v1.JoinResponse\"\x00B5Z3github.com/structx/tbd/lib/protocol/dns/kademlia/v1b\x06proto3"
+	"\tFindValue\x12!.dns.kademlia.v1.FindValueRequest\x1a\".dns.kademlia.v1.FindValueResponse\"\x00B5Z3github.com/structx/tbd/lib/protocol/dns/kademlia/v1b\x06proto3"
 
 var (
 	file_dns_kademlia_v1_kademlia_service_proto_rawDescOnce sync.Once
@@ -961,7 +849,7 @@ func file_dns_kademlia_v1_kademlia_service_proto_rawDescGZIP() []byte {
 }
 
 var file_dns_kademlia_v1_kademlia_service_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_dns_kademlia_v1_kademlia_service_proto_msgTypes = make([]protoimpl.MessageInfo, 13)
+var file_dns_kademlia_v1_kademlia_service_proto_msgTypes = make([]protoimpl.MessageInfo, 11)
 var file_dns_kademlia_v1_kademlia_service_proto_goTypes = []any{
 	(Record_RECORDTYPE)(0),        // 0: dns.kademlia.v1.Record.RECORDTYPE
 	(*Node)(nil),                  // 1: dns.kademlia.v1.Node
@@ -975,12 +863,10 @@ var file_dns_kademlia_v1_kademlia_service_proto_goTypes = []any{
 	(*FindValueRequest)(nil),      // 9: dns.kademlia.v1.FindValueRequest
 	(*ClosestNodes)(nil),          // 10: dns.kademlia.v1.ClosestNodes
 	(*FindValueResponse)(nil),     // 11: dns.kademlia.v1.FindValueResponse
-	(*JoinRequest)(nil),           // 12: dns.kademlia.v1.JoinRequest
-	(*JoinResponse)(nil),          // 13: dns.kademlia.v1.JoinResponse
-	(*timestamppb.Timestamp)(nil), // 14: google.protobuf.Timestamp
+	(*timestamppb.Timestamp)(nil), // 12: google.protobuf.Timestamp
 }
 var file_dns_kademlia_v1_kademlia_service_proto_depIdxs = []int32{
-	14, // 0: dns.kademlia.v1.Node.last_seen:type_name -> google.protobuf.Timestamp
+	12, // 0: dns.kademlia.v1.Node.last_seen:type_name -> google.protobuf.Timestamp
 	0,  // 1: dns.kademlia.v1.Record.record_type:type_name -> dns.kademlia.v1.Record.RECORDTYPE
 	1,  // 2: dns.kademlia.v1.PingRequest.sender:type_name -> dns.kademlia.v1.Node
 	1,  // 3: dns.kademlia.v1.PingResponse.sender:type_name -> dns.kademlia.v1.Node
@@ -995,23 +881,19 @@ var file_dns_kademlia_v1_kademlia_service_proto_depIdxs = []int32{
 	1,  // 12: dns.kademlia.v1.FindValueResponse.sender:type_name -> dns.kademlia.v1.Node
 	2,  // 13: dns.kademlia.v1.FindValueResponse.record:type_name -> dns.kademlia.v1.Record
 	10, // 14: dns.kademlia.v1.FindValueResponse.closest_nodes:type_name -> dns.kademlia.v1.ClosestNodes
-	1,  // 15: dns.kademlia.v1.JoinResponse.sender:type_name -> dns.kademlia.v1.Node
-	1,  // 16: dns.kademlia.v1.JoinResponse.node:type_name -> dns.kademlia.v1.Node
-	3,  // 17: dns.kademlia.v1.KademliaService.Ping:input_type -> dns.kademlia.v1.PingRequest
-	5,  // 18: dns.kademlia.v1.KademliaService.Store:input_type -> dns.kademlia.v1.StoreRequest
-	7,  // 19: dns.kademlia.v1.KademliaService.FindNode:input_type -> dns.kademlia.v1.FindNodeRequest
-	9,  // 20: dns.kademlia.v1.KademliaService.FindValue:input_type -> dns.kademlia.v1.FindValueRequest
-	12, // 21: dns.kademlia.v1.KademliaService.Join:input_type -> dns.kademlia.v1.JoinRequest
-	4,  // 22: dns.kademlia.v1.KademliaService.Ping:output_type -> dns.kademlia.v1.PingResponse
-	6,  // 23: dns.kademlia.v1.KademliaService.Store:output_type -> dns.kademlia.v1.StoreResponse
-	8,  // 24: dns.kademlia.v1.KademliaService.FindNode:output_type -> dns.kademlia.v1.FindNodeResponse
-	11, // 25: dns.kademlia.v1.KademliaService.FindValue:output_type -> dns.kademlia.v1.FindValueResponse
-	13, // 26: dns.kademlia.v1.KademliaService.Join:output_type -> dns.kademlia.v1.JoinResponse
-	22, // [22:27] is the sub-list for method output_type
-	17, // [17:22] is the sub-list for method input_type
-	17, // [17:17] is the sub-list for extension type_name
-	17, // [17:17] is the sub-list for extension extendee
-	0,  // [0:17] is the sub-list for field type_name
+	3,  // 15: dns.kademlia.v1.KademliaService.Ping:input_type -> dns.kademlia.v1.PingRequest
+	5,  // 16: dns.kademlia.v1.KademliaService.Store:input_type -> dns.kademlia.v1.StoreRequest
+	7,  // 17: dns.kademlia.v1.KademliaService.FindNode:input_type -> dns.kademlia.v1.FindNodeRequest
+	9,  // 18: dns.kademlia.v1.KademliaService.FindValue:input_type -> dns.kademlia.v1.FindValueRequest
+	4,  // 19: dns.kademlia.v1.KademliaService.Ping:output_type -> dns.kademlia.v1.PingResponse
+	6,  // 20: dns.kademlia.v1.KademliaService.Store:output_type -> dns.kademlia.v1.StoreResponse
+	8,  // 21: dns.kademlia.v1.KademliaService.FindNode:output_type -> dns.kademlia.v1.FindNodeResponse
+	11, // 22: dns.kademlia.v1.KademliaService.FindValue:output_type -> dns.kademlia.v1.FindValueResponse
+	19, // [19:23] is the sub-list for method output_type
+	15, // [15:19] is the sub-list for method input_type
+	15, // [15:15] is the sub-list for extension type_name
+	15, // [15:15] is the sub-list for extension extendee
+	0,  // [0:15] is the sub-list for field type_name
 }
 
 func init() { file_dns_kademlia_v1_kademlia_service_proto_init() }
@@ -1029,7 +911,7 @@ func file_dns_kademlia_v1_kademlia_service_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_dns_kademlia_v1_kademlia_service_proto_rawDesc), len(file_dns_kademlia_v1_kademlia_service_proto_rawDesc)),
 			NumEnums:      1,
-			NumMessages:   13,
+			NumMessages:   11,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

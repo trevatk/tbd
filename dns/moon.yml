@@ -15,13 +15,16 @@ tasks:
     command: golangci-lint run ./... -c ../.golangci.yml --fix
   fmt: 
     command: golangci-lint fmt ./... -c ../.golangci.yml
-  authoritative:
+  build:
+    command: docker build -t tbd/nameserver:latest -f ../docker/nameserver.Dockerfile ../
+  nameserver:
     env:
       GW_HOST: localhost
       GW_PORT: "5300"
       LOG_LEVEL: DEBUG
     command: air -c ../.air/dns.authoritative.toml
-    local: true
+    options:
+      persistent: true
   resolver:
     env:
     command: air -c .air.resolver.toml
