@@ -8,28 +8,29 @@ import (
 
 	"google.golang.org/protobuf/types/known/timestamppb"
 
-	"github.com/structx/tbd/lib/logging"
-	"github.com/structx/tbd/lib/setup"
-
 	"github.com/google/uuid"
+
+	"github.com/trevatk/tbd/lib/logging"
+	"github.com/trevatk/tbd/lib/setup"
+
 	"github.com/stretchr/testify/assert"
 
-	"github.com/structx/tbd/lib/protocol"
-	"github.com/trevatk/tbd/dns/internal/authoritative"
+	"github.com/trevatk/tbd/dns/internal/nameserver"
+	"github.com/trevatk/tbd/lib/protocol"
 
-	pb "github.com/structx/tbd/lib/protocol/dns/kademlia/v1"
+	pb "github.com/trevatk/tbd/lib/protocol/dns/kademlia/v1"
 )
 
-func TestAuthoritativeMain(t *testing.T) {
+func TestNameserverMain(t *testing.T) {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second*15)
 	defer cancel()
 
 	cfg := setup.UnmarshalConfig()
 	logger := logging.New(cfg.Logger.Level)
 
-	kv := authoritative.NewKv()
-	dht := authoritative.NewDHT(kv, cfg.Gateway.Host, cfg.Gateway.Port)
-	trs := authoritative.NewTransport(logger, dht)
+	kv := nameserver.NewKv()
+	dht := nameserver.NewDHT(kv, cfg.Gateway.Host, cfg.Gateway.Port)
+	trs := nameserver.NewTransport(logger, dht)
 
 	opts := []protocol.TestServerOption{
 		protocol.WithTestTransports(trs),

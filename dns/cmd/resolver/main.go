@@ -8,9 +8,9 @@ import (
 
 	"github.com/trevatk/tbd/dns/internal/resolver"
 
-	"github.com/structx/tbd/lib/logging"
-	"github.com/structx/tbd/lib/protocol"
-	"github.com/structx/tbd/lib/setup"
+	"github.com/trevatk/tbd/lib/logging"
+	"github.com/trevatk/tbd/lib/protocol"
+	"github.com/trevatk/tbd/lib/setup"
 )
 
 func main() {

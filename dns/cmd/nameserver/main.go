@@ -6,11 +6,10 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/trevatk/tbd/dns/internal/authoritative"
-
-	"github.com/structx/tbd/lib/logging"
-	"github.com/structx/tbd/lib/protocol"
-	"github.com/structx/tbd/lib/setup"
+	"github.com/trevatk/tbd/dns/internal/nameserver"
+	"github.com/trevatk/tbd/lib/logging"
+	"github.com/trevatk/tbd/lib/protocol"
+	"github.com/trevatk/tbd/lib/setup"
 )
 
 func main() {
@@ -32,9 +31,9 @@ func realMain(ctx context.Context) error {
 	cfg := setup.UnmarshalConfig()
 	logger := logging.New(cfg.Logger.Level)
 
-	kv := authoritative.NewKv()
-	dht := authoritative.NewDHT(kv, cfg.Gateway.Host, cfg.Gateway.Port)
-	trs := authoritative.NewTransport(logger, dht)
+	kv := nameserver.NewKv()
+	dht := nameserver.NewDHT(kv, cfg.Gateway.Host, cfg.Gateway.Port)
+	trs := nameserver.NewTransport(logger, dht)
 
 	opts := []protocol.ServerOption{
 		protocol.WithHost(cfg.Gateway.Host),

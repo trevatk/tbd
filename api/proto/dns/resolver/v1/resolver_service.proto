@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package dns.resolver.v1;
 
-option go_package = "github.com/structx/tbd/lib/protocol/dns/resolver/v1";
+option go_package = "github.com/trevatk/tbd/lib/protocol/dns/resolver/v1";
 
 service DNSResolverService {
   rpc Resolve(ResolveRequest) returns (ResolveResponse) {}

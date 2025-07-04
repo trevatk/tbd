@@ -1,7 +1,2 @@
 $schema: 'https://moonrepo.dev/schemas/toolchain.json'
 
-unstable_go:
-  version: '1.24.4'
-  tidyOnChange: true
-  workspaces: true
-  

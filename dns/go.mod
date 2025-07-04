@@ -3,18 +3,17 @@ module github.com/trevatk/tbd/dns
 go 1.24.4
 
 replace (
-	github.com/structx/tbd/lib/gateway => ../lib/go-gateway
-	github.com/structx/tbd/lib/logging => ../lib/go-logging
-	github.com/structx/tbd/lib/protocol => ../lib/go-protocol
-	github.com/structx/tbd/lib/setup => ../lib/go-setup
+	github.com/trevatk/tbd/lib/logging => ../lib/logging
+	github.com/trevatk/tbd/lib/protocol => ../lib/protocol
+	github.com/trevatk/tbd/lib/setup => ../lib/setup
 )
 
 require (
 	github.com/google/uuid v1.6.0
 	github.com/stretchr/testify v1.10.0
-	github.com/structx/tbd/lib/logging v0.0.0-00010101000000-000000000000
-	github.com/structx/tbd/lib/protocol v0.0.0-00010101000000-000000000000
-	github.com/structx/tbd/lib/setup v0.0.0-00010101000000-000000000000
+	github.com/trevatk/tbd/lib/logging v0.0.0-00010101000000-000000000000
+	github.com/trevatk/tbd/lib/protocol v0.0.0-00010101000000-000000000000
+	github.com/trevatk/tbd/lib/setup v0.0.0-00010101000000-000000000000
 	go.uber.org/mock v0.5.2
 	golang.org/x/sync v0.12.0
 	google.golang.org/protobuf v1.36.6

@@ -8,8 +8,8 @@ import (
 	"github.com/stretchr/testify/suite"
 	"google.golang.org/protobuf/proto"
 
-	"github.com/structx/tbd/idp/internal/audit/lsm"
-	pb "github.com/structx/tbd/lib/protocol/lsm/v1"
+	"github.com/trevatk/tbd/idp/internal/audit/lsm"
+	pb "github.com/trevatk/tbd/lib/protocol/lsm/v1"
 )
 
 const (

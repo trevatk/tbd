@@ -13,15 +13,12 @@ buf = "file://.plugins/buf.toml"
 golangci-lint = "file://.plugins/golangci-lint.toml"
 helm = "file://.plugins/helm.toml"
 kubectl = "file://.plugins/kubectl.toml"
-migrate = "file://.plugins/migrate.toml"
 protoc = "file://.plugins/protoc.toml"
 trivy = "file://.plugins/trivy.toml"
 
 [settings]
 auto-clean = true
-detect-strategy = "first-available"
-pin-latest = "local"
-telemetry = false
+telemetry = true
 
 [settings.http]
 allow-invalid-certs = false

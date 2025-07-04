@@ -1,4 +1,8 @@
 
+workspace:
+  inheritedTasks:
+    exclude: [ 'test' ]
+
 tasks:
   deps:
     command: |

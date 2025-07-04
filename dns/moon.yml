@@ -1,5 +1,7 @@
 $schema: 'https://moonrepo.dev/schemas/project.json'
 
+id: dns
+
 language: 'go'
 type: 'application'
 

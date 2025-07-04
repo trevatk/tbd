@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package chat.v1;
 
-option go_package = "github.com/structx/tbd/lib/protocol/chat/v1";
+option go_package = "github.com/trevatk/tbd/lib/protocol/chat/v1";
 
 service ChatService {
   rpc CreateThread(CreateThreadRequest) returns (CreateThreadResponse) {}

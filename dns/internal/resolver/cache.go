@@ -7,7 +7,7 @@ import (
 
 	"google.golang.org/protobuf/types/known/timestamppb"
 
-	pb "github.com/structx/tbd/lib/protocol/cache/v1"
+	pb "github.com/trevatk/tbd/lib/protocol/cache/v1"
 )
 
 var (

@@ -8,8 +8,8 @@ import (
 
 	"google.golang.org/protobuf/proto"
 
-	"github.com/structx/tbd/lib/protocol"
-	pb "github.com/structx/tbd/lib/protocol/dns/resolver/v1"
+	"github.com/trevatk/tbd/lib/protocol"
+	pb "github.com/trevatk/tbd/lib/protocol/dns/resolver/v1"
 )
 
 const (

@@ -7,8 +7,8 @@ import (
 	"buf.build/go/protovalidate"
 	"google.golang.org/grpc"
 
-	"github.com/structx/tbd/lib/protocol"
-	pb "github.com/structx/tbd/lib/protocol/identities/v1"
+	"github.com/trevatk/tbd/lib/protocol"
+	pb "github.com/trevatk/tbd/lib/protocol/identities/v1"
 )
 
 type grpcTransport struct {

@@ -9,8 +9,8 @@ import (
 
 	"google.golang.org/grpc/codes"
 
-	"github.com/structx/tbd/lib/protocol"
-	pb "github.com/structx/tbd/lib/protocol/identities/v1"
+	"github.com/trevatk/tbd/lib/protocol"
+	pb "github.com/trevatk/tbd/lib/protocol/identities/v1"
 )
 
 var (

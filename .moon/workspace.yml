@@ -1,14 +1,30 @@
 # https://moonrepo.dev/docs/config/workspace
 $schema: './cache/schemas/workspace.json'
 
-# extends: './shared/workspace.yml'
+telemetry: true
+
+vcs:
+  provider: github
+  defaultBranch: master
+
+runner:
+  autoCleanCache: true
+
+experiments:
+  actionPipelineV2: true
+  gitV2: true
+  disallowRunInCiMismatch: true
 
 projects:
   - api
-  - apps/chat
+  - dapp
   - dns
   - docs
   - idp
   - tui
   - wellknown
-  - lib/go-protocol
+  - lib/protocol
+  - lib/logging
+  - lib/keyvalue
+  - lib/setup
+  - lib/wallet
