@@ -17,7 +17,6 @@ tasks:
       - proto/cache/v1/cache.proto
     command: buf generate --template buf.gen.models.yaml
   dns:
-    toolchain: 'go'
     deps: 
       - ^:lint
     command: buf generate --template buf.gen.dns.grpc.yaml

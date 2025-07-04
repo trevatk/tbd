@@ -7,7 +7,6 @@ import (
 	"buf.build/go/protovalidate"
 	"google.golang.org/grpc"
 
-	"github.com/structx/tbd/lib/gateway"
 	"github.com/structx/tbd/lib/protocol"
 	pb "github.com/structx/tbd/lib/protocol/identities/v1"
 )
@@ -35,7 +34,7 @@ func (g *grpcTransport) CreateRealm(ctx context.Context, in *pb.CreateRealmReque
 	}
 
 	realm, err := g.svc.createRealm(ctx, realmCreate{
-		name: gateway.NormalizeText(in.Create.DisplayName),
+		name: protocol.NormalizeText(in.Create.DisplayName),
 		who:  whoami{},
 	})
 	if err != nil {

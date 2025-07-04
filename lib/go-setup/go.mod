@@ -1,4 +1,4 @@
-module soft.structx.io/idp/lib/setup
+module github.com/trevatk/tbd/lib/setup
 
 go 1.24.4
 

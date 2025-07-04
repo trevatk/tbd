@@ -10,7 +10,7 @@ import (
 
 	"google.golang.org/protobuf/proto"
 
-	pb "soft.structx.io/idp/api/gen/go/lsm/v1"
+	pb "github.com/trevatk/tbd/lib/protocol/lsm/v1"
 )
 
 type Store interface {

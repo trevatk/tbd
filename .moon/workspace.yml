@@ -5,9 +5,10 @@ $schema: './cache/schemas/workspace.json'
 
 projects:
   - api
-  - dapp
+  - apps/chat
   - dns
   - docs
   - idp
   - tui
   - wellknown
+  - lib/go-protocol

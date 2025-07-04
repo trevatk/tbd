@@ -1,0 +1,15 @@
+$schema: 'https://moonrepo.dev/schemas/project.json'
+
+id: protocol
+
+language: 'go'
+type: library
+
+dependsOn:
+  - api
+
+tasks:
+  tidy:
+    deps: 
+      - api:dns
+    command: go mod tidy

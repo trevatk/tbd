@@ -1,4 +1,4 @@
-module soft.structx.io/idp/lib/wallet
+module github.com/trevatk/tbd/lib/wallet
 
 go 1.24.4
 

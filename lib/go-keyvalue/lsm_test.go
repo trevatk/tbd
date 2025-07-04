@@ -7,11 +7,11 @@ import (
 
 	"github.com/stretchr/testify/suite"
 	"google.golang.org/protobuf/proto"
-	"soft.structx.io/idp/lib/keyvalue"
 
-	pb "soft.structx.io/idp/api/gen/go/lsm/v1"
+	"github.com/trevatk/tbd/lib/keyvalue"
+
+	pb "github.com/trevatk/tbd/lib/protocol/lsm/v1"
 )
-
 
 type LSMSuite struct {
 	suite.Suite
@@ -21,7 +21,6 @@ type LSMSuite struct {
 func (suite *LSMSuite) SetupSuite() {
 
 	assert := suite.Assert()
-
 
 	err := os.Mkdir("testfiles", os.ModePerm)
 	if err != nil && !errors.Is(err, os.ErrExist) {

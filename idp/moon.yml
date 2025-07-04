@@ -1,10 +1,17 @@
 $schema: 'https://moonrepo.dev/schemas/project.json'
 
+id: idp
+
 language: 'go'
 type: 'application'
 
+dependsOn:
+  - protocol
+
 tasks:
   tidy:
+    deps:
+      - ^:tidy
     command: go mod tidy
   server:
     command: air -c .air/server.toml

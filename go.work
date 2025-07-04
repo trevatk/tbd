@@ -1,14 +1,14 @@
 go 1.24.4
 
 use (
-	./dapp
+	./chat
 	./dns
 	./idp
-	./lib/go-gateway
+	./tui
+	./wellknown
 	./lib/go-logging
 	./lib/go-setup
 	./lib/go-wallet
 	./lib/go-protocol
-	./tui
-	./wellknown
+
 )

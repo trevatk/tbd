@@ -1,13 +1,13 @@
-module soft.structx.io/idp/lib/keyvalue
+module github.com/trevatk/tbd/lib/keyvalue
 
 go 1.24.4
 
-replace soft.structx.io/idp/api => ../../api
+replace github.com/trevatk/tbd/lib/protocol => ../go-protocol
 
 require (
 	github.com/stretchr/testify v1.10.0
+	github.com/trevatk/tbd/lib/protocol v0.0.0-00010101000000-000000000000
 	google.golang.org/protobuf v1.36.6
-	soft.structx.io/idp/api v0.0.0-00010101000000-000000000000
 )
 
 require (

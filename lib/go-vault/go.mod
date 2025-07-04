@@ -1,3 +1,3 @@
-module soft.structx.io/idp/lib/vault
+module github.com/trevatk/tbd/lib/vault
 
 go 1.24.4

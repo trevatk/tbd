@@ -3,7 +3,6 @@ module github.com/structx/tbd/idp
 go 1.24.4
 
 replace (
-	github.com/structx/tbd/lib/gateway => ../lib/go-gateway
 	github.com/structx/tbd/lib/logging => ../lib/go-logging
 	github.com/structx/tbd/lib/protocol => ../lib/go-protocol
 	github.com/structx/tbd/lib/setup => ../lib/go-setup
@@ -14,7 +13,6 @@ require (
 	buf.build/go/protovalidate v0.13.1
 	github.com/golang-jwt/jwt/v5 v5.2.2
 	github.com/stretchr/testify v1.10.0
-	github.com/structx/tbd/lib/gateway v0.0.0-00010101000000-000000000000
 	github.com/structx/tbd/lib/logging v0.0.0-00010101000000-000000000000
 	github.com/structx/tbd/lib/protocol v0.0.0-00010101000000-000000000000
 	github.com/structx/tbd/lib/setup v0.0.0-00010101000000-000000000000
