@@ -4,11 +4,11 @@ use (
 	./dapp
 	./dns
 	./idp
-	./lib/go-gateway
-	./lib/go-logging
-	./lib/go-setup
-	./lib/go-wallet
-	./lib/go-protocol
 	./tui
 	./wellknown
+	./lib/logging
+	./lib/setup
+	./lib/wallet
+	./lib/protocol
+	./lib/keyvalue
 )

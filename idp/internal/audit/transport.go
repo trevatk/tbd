@@ -7,8 +7,8 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/protobuf/types/known/emptypb"
 
-	"github.com/structx/tbd/lib/protocol"
-	pb "github.com/structx/tbd/lib/protocol/audit/v1"
+	"github.com/trevatk/tbd/lib/protocol"
+	pb "github.com/trevatk/tbd/lib/protocol/audit/v1"
 )
 
 type transport struct {

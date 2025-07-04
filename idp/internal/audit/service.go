@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/structx/tbd/idp/internal/audit/lsm"
-	"github.com/structx/tbd/lib/wallet"
+	"github.com/trevatk/tbd/idp/internal/audit/lsm"
+	"github.com/trevatk/tbd/lib/wallet"
 )
 
 const defaultHeight = 1

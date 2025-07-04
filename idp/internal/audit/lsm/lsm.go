@@ -10,7 +10,7 @@ import (
 
 	"google.golang.org/protobuf/proto"
 
-	pb "github.com/structx/tbd/lib/protocol/lsm/v1"
+	pb "github.com/trevatk/tbd/lib/protocol/lsm/v1"
 )
 
 const (

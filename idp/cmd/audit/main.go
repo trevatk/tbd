@@ -7,12 +7,12 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/structx/tbd/lib/logging"
-	"github.com/structx/tbd/lib/protocol"
-	"github.com/structx/tbd/lib/setup"
+	"github.com/trevatk/tbd/lib/logging"
+	"github.com/trevatk/tbd/lib/protocol"
+	"github.com/trevatk/tbd/lib/setup"
 
-	"github.com/structx/tbd/idp/internal/audit"
-	"github.com/structx/tbd/idp/internal/audit/lsm"
+	"github.com/trevatk/tbd/idp/internal/audit"
+	"github.com/trevatk/tbd/idp/internal/audit/lsm"
 )
 
 func main() {

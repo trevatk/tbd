@@ -4,7 +4,7 @@ package dns.did.v1;
 
 import "google/protobuf/timestamp.proto";
 
-option go_package = "github.com/structx/tbd/lib/protocol/dns/did/v1";
+option go_package = "github.com/trevatk/tbd/lib/protocol/dns/did/v1";
 
 message Document {
   string context = 1;

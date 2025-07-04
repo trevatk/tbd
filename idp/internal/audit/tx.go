@@ -7,7 +7,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/structx/tbd/lib/wallet"
+	"github.com/trevatk/tbd/lib/wallet"
 )
 
 const (

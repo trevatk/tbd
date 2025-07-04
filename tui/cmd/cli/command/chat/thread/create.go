@@ -7,9 +7,9 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/structx/tbd/lib/protocol"
-	pb "github.com/structx/tbd/lib/protocol/chat/v1"
 	"github.com/structx/tbd/tui/internal/pkg/logging"
+	"github.com/trevatk/tbd/lib/protocol"
+	pb "github.com/trevatk/tbd/lib/protocol/chat/v1"
 )
 
 const (

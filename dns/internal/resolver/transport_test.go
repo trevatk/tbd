@@ -9,7 +9,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	pb "github.com/structx/tbd/lib/protocol/dns/resolver/v1"
+	pb "github.com/trevatk/tbd/lib/protocol/dns/resolver/v1"
 )
 
 func TestResolve(t *testing.T) {

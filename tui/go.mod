@@ -2,13 +2,13 @@ module github.com/structx/tbd/tui
 
 go 1.24.4
 
-replace github.com/structx/tbd/lib/protocol => ../lib/go-protocol
+replace github.com/trevatk/tbd/lib/protocol => ../lib/protocol
 
 require (
 	github.com/charmbracelet/bubbletea v1.3.5
 	github.com/charmbracelet/log v0.4.2
 	github.com/spf13/cobra v1.9.1
-	github.com/structx/tbd/lib/protocol v0.0.0-00010101000000-000000000000
+	github.com/trevatk/tbd/lib/protocol v0.0.0-00010101000000-000000000000
 	google.golang.org/grpc v1.73.0
 )
 

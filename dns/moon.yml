@@ -1,15 +1,17 @@
 $schema: 'https://moonrepo.dev/schemas/project.json'
 
+id: dns
+
 language: 'go'
 type: 'application'
 
 dependsOn:
-  - api
+  - protocol
 
 tasks:
   tidy:
     deps: 
-      - api:dns
+      - ^:tidy
     command: go mod tidy
   lint: 
     command: golangci-lint run ./... -c ../.golangci.yml --fix

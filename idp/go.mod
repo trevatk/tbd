@@ -1,24 +1,22 @@
-module github.com/structx/tbd/idp
+module github.com/trevatk/tbd/idp
 
 go 1.24.4
 
 replace (
-	github.com/structx/tbd/lib/gateway => ../lib/go-gateway
-	github.com/structx/tbd/lib/logging => ../lib/go-logging
-	github.com/structx/tbd/lib/protocol => ../lib/go-protocol
-	github.com/structx/tbd/lib/setup => ../lib/go-setup
-	github.com/structx/tbd/lib/wallet => ../lib/go-wallet
+	github.com/trevatk/tbd/lib/logging => ../lib/logging
+	github.com/trevatk/tbd/lib/protocol => ../lib/protocol
+	github.com/trevatk/tbd/lib/setup => ../lib/setup
+	github.com/trevatk/tbd/lib/wallet => ../lib/wallet
 )
 
 require (
 	buf.build/go/protovalidate v0.13.1
 	github.com/golang-jwt/jwt/v5 v5.2.2
 	github.com/stretchr/testify v1.10.0
-	github.com/structx/tbd/lib/gateway v0.0.0-00010101000000-000000000000
-	github.com/structx/tbd/lib/logging v0.0.0-00010101000000-000000000000
-	github.com/structx/tbd/lib/protocol v0.0.0-00010101000000-000000000000
-	github.com/structx/tbd/lib/setup v0.0.0-00010101000000-000000000000
-	github.com/structx/tbd/lib/wallet v0.0.0-00010101000000-000000000000
+	github.com/trevatk/tbd/lib/logging v0.0.0-00010101000000-000000000000
+	github.com/trevatk/tbd/lib/protocol v0.0.0-00010101000000-000000000000
+	github.com/trevatk/tbd/lib/setup v0.0.0-00010101000000-000000000000
+	github.com/trevatk/tbd/lib/wallet v0.0.0-00010101000000-000000000000
 	google.golang.org/grpc v1.73.0
 	google.golang.org/protobuf v1.36.6
 )

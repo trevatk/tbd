@@ -4,7 +4,7 @@ package dns.kademlia.v1;
 
 import "google/protobuf/timestamp.proto";
 
-option go_package = "github.com/structx/tbd/lib/protocol/dns/kademlia/v1";
+option go_package = "github.com/trevatk/tbd/lib/protocol/dns/kademlia/v1";
 
 service KademliaService {
   rpc Ping(PingRequest) returns (PingResponse) {}
