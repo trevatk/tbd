@@ -1,6 +1,7 @@
 package protocol
 
 import (
+	"context"
 	"time"
 
 	"google.golang.org/grpc"
@@ -21,11 +22,18 @@ func RegisterHealthCheck(s *grpc.Server) *health.Server {
 }
 
 // ServeHealthCheck start health check for loop
-func ServeHealthCheck(healthcheck *health.Server, sleep int64) {
+func ServeHealthCheck(ctx context.Context, healthcheck *health.Server, sleep int64) {
 	// asynchronously inspect dependencies and toggle serving status as needed
 	next := healthpb.HealthCheckResponse_SERVING
 
 	for {
+		select {
+		case <-ctx.Done():
+			healthcheck.Shutdown()
+		default:
+			// fallthrough
+		}
+
 		healthcheck.SetServingStatus(system, next)
 
 		if next == healthpb.HealthCheckResponse_SERVING {

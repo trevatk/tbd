@@ -1,25 +1,60 @@
 package resolver
 
-import "google.golang.org/grpc/resolver"
+import (
+	"log/slog"
 
-// Builder gRPC resolver builder
-type Builder struct {
+	"google.golang.org/grpc/resolver"
+)
+
+type builder struct {
 	scheme      string
 	serviceName string
+
+	logger *slog.Logger
 }
 
+// Option
+type Option func(*builder)
+
+// Register
+// func Register(builder *builder) {
+// 	resolver.Register(builder)
+// }
+
 // NewBuilder returns new gRPC resolver builder
-func NewBuilder(scheme, serviceName string) *Builder {
-	builder := &Builder{
-		scheme:      scheme,
-		serviceName: serviceName,
+func NewBuilder(opts ...Option) *builder {
+	builder := &builder{}
+
+	for _, opt := range opts {
+		opt(builder)
 	}
-	resolver.Register(builder)
+
 	return builder
 }
 
+// WithLogger
+func WithLogger(logger *slog.Logger) Option {
+	return func(b *builder) {
+		b.logger = logger
+	}
+}
+
+// WithScheme
+func WithScheme(scheme string) Option {
+	return func(b *builder) {
+		b.scheme = scheme
+	}
+}
+
+// WithServiceName
+func WithServiceName(name string) Option {
+	return func(b *builder) {
+		b.serviceName = name
+	}
+}
+
 // Build gRPC resolver
-func (b *Builder) Build(
+func (b *builder) Build(
 	target resolver.Target,
 	oc resolver.ClientConn,
 	_ resolver.BuildOptions,
@@ -30,7 +65,7 @@ func (b *Builder) Build(
 }
 
 // Scheme getter scheme
-func (b *Builder) Scheme() string {
+func (b *builder) Scheme() string {
 	return b.scheme
 }
 

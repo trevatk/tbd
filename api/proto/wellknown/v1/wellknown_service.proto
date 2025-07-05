@@ -5,9 +5,16 @@ package wellknown.v1;
 option go_package = "github.com/trevatk/tbd/lib/protocol/wellknown/v1";
 
 service WellKnownService {
-  rpc Verify(VerifyRequest) returns (VerifyResponse) {}
+  rpc GetDIDConfiguration(GetDIDConfigurationRequest) returns (GetDIDConfigurationResponse) {}
 }
 
-message VerifyRequest {}
+message GetDIDConfigurationRequest {}
 
-message VerifyResponse {}
+message Entry {
+  string did = 1;
+  string jwt = 2;
+}
+
+message GetDIDConfigurationResponse {
+  repeated Entry entries = 1;
+}

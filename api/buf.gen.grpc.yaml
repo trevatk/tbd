@@ -13,3 +13,8 @@ plugins:
     out: ../lib/protocol
     opt:
       - paths=source_relative
+
+inputs:
+  - directory: proto
+    paths:
+      - proto/wellknown/v1/wellknown_service.proto

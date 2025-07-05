@@ -11,5 +11,5 @@ dependsOn:
 tasks:
   tidy:
     deps: 
-      - api:dns
+      - api:generate
     command: go mod tidy

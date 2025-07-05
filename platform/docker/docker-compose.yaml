@@ -5,3 +5,5 @@ services:
   nameserver:
     container_name: nameserver
     image: tbd/nameserver:latest
+    cap_drop:
+      - ALL

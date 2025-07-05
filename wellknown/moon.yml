@@ -3,8 +3,21 @@ $schema: 'https://moonrepo.dev/schemas/project.json'
 language: 'go'
 type: 'application'
 
+dependsOn:
+  - protocol
+
 tasks:
   tidy:
     command: go mod tidy
+    deps: 
+      - ^:tidy
+  dev:
+    env:
+      GW_HOST: localhost
+      GW_PORT: "8008"
+      LOG_LEVEL: DEBUG
+    command: air -c ../.air/wellknown.toml
+    options:
+      persistent: true
   lint: 
     command: golangci-lint run ./... -c ../.golangci.yml

@@ -8,8 +8,7 @@ import (
 	"github.com/spf13/cobra"
 
 	"github.com/structx/tbd/tui/internal/pkg/logging"
-	"github.com/trevatk/tbd/lib/protocol"
-	pb "github.com/trevatk/tbd/lib/protocol/chat/v1"
+	"github.com/trevatk/tbd/lib/protocol/chat"
 )
 
 const (
@@ -22,31 +21,21 @@ var (
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx := cmd.Context()
 
-			client, err := newClient(serverAddr)
+			client, err := chat.NewClient(serverAddr)
 			if err != nil {
 				return fmt.Errorf("failed to create client: %w", err)
 			}
 			timeout, cancel := context.WithTimeout(ctx, time.Millisecond*defaultTimeout)
 			defer cancel()
 
-			resp, err := client.CreateThread(timeout, &pb.CreateThreadRequest{
-				DisplayName: "hello",
-			})
+			threadID, err := client.CreateThread(timeout, "")
 			if err != nil {
 				return fmt.Errorf("failed to create thread: %w", err)
 			}
 
-			logging.FromContext(ctx).Info("thread successfully created...", "thread_id", resp.Id)
+			logging.FromContext(ctx).Info("thread successfully created...", "thread_id", threadID)
 
 			return nil
 		},
 	}
 )
-
-func newClient(target string) (pb.ChatServiceClient, error) {
-	conn, err := protocol.NewConn(target)
-	if err != nil {
-		return nil, fmt.Errorf("failed to create connection: %w", err)
-	}
-	return pb.NewChatServiceClient(conn), nil
-}

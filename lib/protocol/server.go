@@ -8,6 +8,9 @@ import (
 	"time"
 
 	"google.golang.org/grpc"
+
+	// gzip compression
+	_ "google.golang.org/grpc/encoding/gzip"
 )
 
 // Server protcol server lifecycle

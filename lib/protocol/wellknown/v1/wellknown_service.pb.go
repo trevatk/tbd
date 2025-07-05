@@ -7,12 +7,11 @@
 package v1
 
 import (
+	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
+	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
-
-	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
-	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 )
 
 const (
@@ -22,26 +21,26 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-type VerifyRequest struct {
+type GetDIDConfigurationRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *VerifyRequest) Reset() {
-	*x = VerifyRequest{}
+func (x *GetDIDConfigurationRequest) Reset() {
+	*x = GetDIDConfigurationRequest{}
 	mi := &file_wellknown_v1_wellknown_service_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *VerifyRequest) String() string {
+func (x *GetDIDConfigurationRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*VerifyRequest) ProtoMessage() {}
+func (*GetDIDConfigurationRequest) ProtoMessage() {}
 
-func (x *VerifyRequest) ProtoReflect() protoreflect.Message {
+func (x *GetDIDConfigurationRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_wellknown_v1_wellknown_service_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -53,31 +52,33 @@ func (x *VerifyRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use VerifyRequest.ProtoReflect.Descriptor instead.
-func (*VerifyRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use GetDIDConfigurationRequest.ProtoReflect.Descriptor instead.
+func (*GetDIDConfigurationRequest) Descriptor() ([]byte, []int) {
 	return file_wellknown_v1_wellknown_service_proto_rawDescGZIP(), []int{0}
 }
 
-type VerifyResponse struct {
+type Entry struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
+	Did           string                 `protobuf:"bytes,1,opt,name=did,proto3" json:"did,omitempty"`
+	Jwt           string                 `protobuf:"bytes,2,opt,name=jwt,proto3" json:"jwt,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *VerifyResponse) Reset() {
-	*x = VerifyResponse{}
+func (x *Entry) Reset() {
+	*x = Entry{}
 	mi := &file_wellknown_v1_wellknown_service_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *VerifyResponse) String() string {
+func (x *Entry) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*VerifyResponse) ProtoMessage() {}
+func (*Entry) ProtoMessage() {}
 
-func (x *VerifyResponse) ProtoReflect() protoreflect.Message {
+func (x *Entry) ProtoReflect() protoreflect.Message {
 	mi := &file_wellknown_v1_wellknown_service_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -89,20 +90,83 @@ func (x *VerifyResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use VerifyResponse.ProtoReflect.Descriptor instead.
-func (*VerifyResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use Entry.ProtoReflect.Descriptor instead.
+func (*Entry) Descriptor() ([]byte, []int) {
 	return file_wellknown_v1_wellknown_service_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *Entry) GetDid() string {
+	if x != nil {
+		return x.Did
+	}
+	return ""
+}
+
+func (x *Entry) GetJwt() string {
+	if x != nil {
+		return x.Jwt
+	}
+	return ""
+}
+
+type GetDIDConfigurationResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Entries       []*Entry               `protobuf:"bytes,1,rep,name=entries,proto3" json:"entries,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetDIDConfigurationResponse) Reset() {
+	*x = GetDIDConfigurationResponse{}
+	mi := &file_wellknown_v1_wellknown_service_proto_msgTypes[2]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetDIDConfigurationResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetDIDConfigurationResponse) ProtoMessage() {}
+
+func (x *GetDIDConfigurationResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_wellknown_v1_wellknown_service_proto_msgTypes[2]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetDIDConfigurationResponse.ProtoReflect.Descriptor instead.
+func (*GetDIDConfigurationResponse) Descriptor() ([]byte, []int) {
+	return file_wellknown_v1_wellknown_service_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *GetDIDConfigurationResponse) GetEntries() []*Entry {
+	if x != nil {
+		return x.Entries
+	}
+	return nil
 }
 
 var File_wellknown_v1_wellknown_service_proto protoreflect.FileDescriptor
 
 const file_wellknown_v1_wellknown_service_proto_rawDesc = "" +
 	"\n" +
-	"$wellknown/v1/wellknown_service.proto\x12\fwellknown.v1\"\x0f\n" +
-	"\rVerifyRequest\"\x10\n" +
-	"\x0eVerifyResponse2Y\n" +
-	"\x10WellKnownService\x12E\n" +
-	"\x06Verify\x12\x1b.wellknown.v1.VerifyRequest\x1a\x1c.wellknown.v1.VerifyResponse\"\x00B2Z0github.com/trevatk/tbd/lib/protocol/wellknown/v1b\x06proto3"
+	"$wellknown/v1/wellknown_service.proto\x12\fwellknown.v1\"\x1c\n" +
+	"\x1aGetDIDConfigurationRequest\"+\n" +
+	"\x05Entry\x12\x10\n" +
+	"\x03did\x18\x01 \x01(\tR\x03did\x12\x10\n" +
+	"\x03jwt\x18\x02 \x01(\tR\x03jwt\"L\n" +
+	"\x1bGetDIDConfigurationResponse\x12-\n" +
+	"\aentries\x18\x01 \x03(\v2\x13.wellknown.v1.EntryR\aentries2\x80\x01\n" +
+	"\x10WellKnownService\x12l\n" +
+	"\x13GetDIDConfiguration\x12(.wellknown.v1.GetDIDConfigurationRequest\x1a).wellknown.v1.GetDIDConfigurationResponse\"\x00B\xac\x01\n" +
+	"\x10com.wellknown.v1B\x15WellknownServiceProtoP\x01Z0github.com/trevatk/tbd/lib/protocol/wellknown/v1\xa2\x02\x03WXX\xaa\x02\fWellknown.V1\xca\x02\fWellknown\\V1\xe2\x02\x18Wellknown\\V1\\GPBMetadata\xea\x02\rWellknown::V1b\x06proto3"
 
 var (
 	file_wellknown_v1_wellknown_service_proto_rawDescOnce sync.Once
@@ -116,19 +180,21 @@ func file_wellknown_v1_wellknown_service_proto_rawDescGZIP() []byte {
 	return file_wellknown_v1_wellknown_service_proto_rawDescData
 }
 
-var file_wellknown_v1_wellknown_service_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
+var file_wellknown_v1_wellknown_service_proto_msgTypes = make([]protoimpl.MessageInfo, 3)
 var file_wellknown_v1_wellknown_service_proto_goTypes = []any{
-	(*VerifyRequest)(nil),  // 0: wellknown.v1.VerifyRequest
-	(*VerifyResponse)(nil), // 1: wellknown.v1.VerifyResponse
+	(*GetDIDConfigurationRequest)(nil),  // 0: wellknown.v1.GetDIDConfigurationRequest
+	(*Entry)(nil),                       // 1: wellknown.v1.Entry
+	(*GetDIDConfigurationResponse)(nil), // 2: wellknown.v1.GetDIDConfigurationResponse
 }
 var file_wellknown_v1_wellknown_service_proto_depIdxs = []int32{
-	0, // 0: wellknown.v1.WellKnownService.Verify:input_type -> wellknown.v1.VerifyRequest
-	1, // 1: wellknown.v1.WellKnownService.Verify:output_type -> wellknown.v1.VerifyResponse
-	1, // [1:2] is the sub-list for method output_type
-	0, // [0:1] is the sub-list for method input_type
-	0, // [0:0] is the sub-list for extension type_name
-	0, // [0:0] is the sub-list for extension extendee
-	0, // [0:0] is the sub-list for field type_name
+	1, // 0: wellknown.v1.GetDIDConfigurationResponse.entries:type_name -> wellknown.v1.Entry
+	0, // 1: wellknown.v1.WellKnownService.GetDIDConfiguration:input_type -> wellknown.v1.GetDIDConfigurationRequest
+	2, // 2: wellknown.v1.WellKnownService.GetDIDConfiguration:output_type -> wellknown.v1.GetDIDConfigurationResponse
+	2, // [2:3] is the sub-list for method output_type
+	1, // [1:2] is the sub-list for method input_type
+	1, // [1:1] is the sub-list for extension type_name
+	1, // [1:1] is the sub-list for extension extendee
+	0, // [0:1] is the sub-list for field type_name
 }
 
 func init() { file_wellknown_v1_wellknown_service_proto_init() }
@@ -142,7 +208,7 @@ func file_wellknown_v1_wellknown_service_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_wellknown_v1_wellknown_service_proto_rawDesc), len(file_wellknown_v1_wellknown_service_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   2,
+			NumMessages:   3,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

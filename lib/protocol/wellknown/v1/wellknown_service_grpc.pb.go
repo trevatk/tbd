@@ -19,14 +19,14 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	WellKnownService_Verify_FullMethodName = "/wellknown.v1.WellKnownService/Verify"
+	WellKnownService_GetDIDConfiguration_FullMethodName = "/wellknown.v1.WellKnownService/GetDIDConfiguration"
 )
 
 // WellKnownServiceClient is the client API for WellKnownService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type WellKnownServiceClient interface {
-	Verify(ctx context.Context, in *VerifyRequest, opts ...grpc.CallOption) (*VerifyResponse, error)
+	GetDIDConfiguration(ctx context.Context, in *GetDIDConfigurationRequest, opts ...grpc.CallOption) (*GetDIDConfigurationResponse, error)
 }
 
 type wellKnownServiceClient struct {
@@ -37,10 +37,10 @@ func NewWellKnownServiceClient(cc grpc.ClientConnInterface) WellKnownServiceClie
 	return &wellKnownServiceClient{cc}
 }
 
-func (c *wellKnownServiceClient) Verify(ctx context.Context, in *VerifyRequest, opts ...grpc.CallOption) (*VerifyResponse, error) {
+func (c *wellKnownServiceClient) GetDIDConfiguration(ctx context.Context, in *GetDIDConfigurationRequest, opts ...grpc.CallOption) (*GetDIDConfigurationResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(VerifyResponse)
-	err := c.cc.Invoke(ctx, WellKnownService_Verify_FullMethodName, in, out, cOpts...)
+	out := new(GetDIDConfigurationResponse)
+	err := c.cc.Invoke(ctx, WellKnownService_GetDIDConfiguration_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -51,7 +51,7 @@ func (c *wellKnownServiceClient) Verify(ctx context.Context, in *VerifyRequest, 
 // All implementations must embed UnimplementedWellKnownServiceServer
 // for forward compatibility.
 type WellKnownServiceServer interface {
-	Verify(context.Context, *VerifyRequest) (*VerifyResponse, error)
+	GetDIDConfiguration(context.Context, *GetDIDConfigurationRequest) (*GetDIDConfigurationResponse, error)
 	mustEmbedUnimplementedWellKnownServiceServer()
 }
 
@@ -62,8 +62,8 @@ type WellKnownServiceServer interface {
 // pointer dereference when methods are called.
 type UnimplementedWellKnownServiceServer struct{}
 
-func (UnimplementedWellKnownServiceServer) Verify(context.Context, *VerifyRequest) (*VerifyResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Verify not implemented")
+func (UnimplementedWellKnownServiceServer) GetDIDConfiguration(context.Context, *GetDIDConfigurationRequest) (*GetDIDConfigurationResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetDIDConfiguration not implemented")
 }
 func (UnimplementedWellKnownServiceServer) mustEmbedUnimplementedWellKnownServiceServer() {}
 func (UnimplementedWellKnownServiceServer) testEmbeddedByValue()                          {}
@@ -86,20 +86,20 @@ func RegisterWellKnownServiceServer(s grpc.ServiceRegistrar, srv WellKnownServic
 	s.RegisterService(&WellKnownService_ServiceDesc, srv)
 }
 
-func _WellKnownService_Verify_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(VerifyRequest)
+func _WellKnownService_GetDIDConfiguration_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetDIDConfigurationRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(WellKnownServiceServer).Verify(ctx, in)
+		return srv.(WellKnownServiceServer).GetDIDConfiguration(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: WellKnownService_Verify_FullMethodName,
+		FullMethod: WellKnownService_GetDIDConfiguration_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(WellKnownServiceServer).Verify(ctx, req.(*VerifyRequest))
+		return srv.(WellKnownServiceServer).GetDIDConfiguration(ctx, req.(*GetDIDConfigurationRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -112,8 +112,8 @@ var WellKnownService_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*WellKnownServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "Verify",
-			Handler:    _WellKnownService_Verify_Handler,
+			MethodName: "GetDIDConfiguration",
+			Handler:    _WellKnownService_GetDIDConfiguration_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

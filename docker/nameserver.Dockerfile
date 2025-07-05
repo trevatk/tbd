@@ -16,7 +16,7 @@ ENV CGO_ENABLED=0
 
 RUN go build -v -o /usr/local/bin/nameserver ./cmd/nameserver
 
-FROM scratch AS final
+FROM tbd/go-deploy:latest AS final
 
 COPY --from=builder /usr/local/bin/nameserver /
 

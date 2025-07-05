@@ -22,7 +22,7 @@ import (
 )
 
 func TestNameserverMain(t *testing.T) {
-	ctx, cancel := context.WithTimeout(context.Background(), time.Second*15)
+	ctx, cancel := context.WithTimeout(t.Context(), time.Second*15)
 	defer cancel()
 
 	cfg := setup.UnmarshalConfig()
