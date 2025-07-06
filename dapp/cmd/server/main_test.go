@@ -62,7 +62,10 @@ func createThread(ctx context.Context, client pb.ChatServiceClient) error {
 	var (
 		threadName = "helloworld"
 
-		request = &pb.CreateThreadRequest{DisplayName: threadName}
+		request = &pb.CreateThreadRequest{
+			Members:     []string{},
+			DisplayName: threadName,
+		}
 	)
 
 	resp, err := client.CreateThread(ctx, request)
@@ -70,11 +73,11 @@ func createThread(ctx context.Context, client pb.ChatServiceClient) error {
 		return fmt.Errorf("failed to execute create thread gRPC call: %w", err)
 	}
 
-	if resp.DisplayName != threadName {
-		return fmt.Errorf("unexpected thread name %s expected %s", resp.DisplayName, threadName)
+	if resp.Thread.DisplayName != threadName {
+		return fmt.Errorf("unexpected thread name %s expected %s", resp.Thread.DisplayName, threadName)
 	}
 
-	_, err = uuid.Parse(resp.Id)
+	_, err = uuid.Parse(resp.Thread.Id)
 	if err != nil {
 		return fmt.Errorf("uuid.Parse: %w", err)
 	}

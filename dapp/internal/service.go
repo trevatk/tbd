@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"sync"
+	"time"
 
 	"github.com/google/uuid"
 )
@@ -29,11 +30,11 @@ func NewService() service {
 	}
 }
 
-func (s *serviceImpl) createThread(ctx context.Context, name string) (thread, error) {
+func (s *serviceImpl) createThread(ctx context.Context, create threadCreate) (thread, error) {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 
-	if _, ok := s.threads[name]; ok {
+	if _, ok := s.threads[create.name]; ok {
 		return thread{}, errThreadExists
 	}
 
@@ -43,11 +44,14 @@ func (s *serviceImpl) createThread(ctx context.Context, name string) (thread, er
 	}
 
 	t := thread{
-		id:   uid.String(),
-		name: name,
+		id:        uid.String(),
+		name:      create.name,
+		members:   create.members,
+		createdAt: time.Now(),
+		UpdatedAt: nil,
 	}
 
-	s.threads[name] = t
+	s.threads[create.name] = t
 
 	return t, nil
 }

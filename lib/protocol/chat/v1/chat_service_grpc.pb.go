@@ -19,7 +19,11 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	ChatService_CreateThread_FullMethodName = "/chat.v1.ChatService/CreateThread"
+	ChatService_CreateThread_FullMethodName    = "/chat.v1.ChatService/CreateThread"
+	ChatService_ListThreads_FullMethodName     = "/chat.v1.ChatService/ListThreads"
+	ChatService_SendMessage_FullMethodName     = "/chat.v1.ChatService/SendMessage"
+	ChatService_ListMessages_FullMethodName    = "/chat.v1.ChatService/ListMessages"
+	ChatService_SubscribeEvents_FullMethodName = "/chat.v1.ChatService/SubscribeEvents"
 )
 
 // ChatServiceClient is the client API for ChatService service.
@@ -27,6 +31,10 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ChatServiceClient interface {
 	CreateThread(ctx context.Context, in *CreateThreadRequest, opts ...grpc.CallOption) (*CreateThreadResponse, error)
+	ListThreads(ctx context.Context, in *ListThreadsRequest, opts ...grpc.CallOption) (*ListThreadsResponse, error)
+	SendMessage(ctx context.Context, in *SendMessageRequest, opts ...grpc.CallOption) (*SendMessageResponse, error)
+	ListMessages(ctx context.Context, in *ListMessagesRequest, opts ...grpc.CallOption) (*ListMessagesResponse, error)
+	SubscribeEvents(ctx context.Context, in *SubscribeEventsRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[SubscribeEventsResponse], error)
 }
 
 type chatServiceClient struct {
@@ -47,11 +55,64 @@ func (c *chatServiceClient) CreateThread(ctx context.Context, in *CreateThreadRe
 	return out, nil
 }
 
+func (c *chatServiceClient) ListThreads(ctx context.Context, in *ListThreadsRequest, opts ...grpc.CallOption) (*ListThreadsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListThreadsResponse)
+	err := c.cc.Invoke(ctx, ChatService_ListThreads_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *chatServiceClient) SendMessage(ctx context.Context, in *SendMessageRequest, opts ...grpc.CallOption) (*SendMessageResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(SendMessageResponse)
+	err := c.cc.Invoke(ctx, ChatService_SendMessage_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *chatServiceClient) ListMessages(ctx context.Context, in *ListMessagesRequest, opts ...grpc.CallOption) (*ListMessagesResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListMessagesResponse)
+	err := c.cc.Invoke(ctx, ChatService_ListMessages_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *chatServiceClient) SubscribeEvents(ctx context.Context, in *SubscribeEventsRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[SubscribeEventsResponse], error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	stream, err := c.cc.NewStream(ctx, &ChatService_ServiceDesc.Streams[0], ChatService_SubscribeEvents_FullMethodName, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &grpc.GenericClientStream[SubscribeEventsRequest, SubscribeEventsResponse]{ClientStream: stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
+type ChatService_SubscribeEventsClient = grpc.ServerStreamingClient[SubscribeEventsResponse]
+
 // ChatServiceServer is the server API for ChatService service.
 // All implementations must embed UnimplementedChatServiceServer
 // for forward compatibility.
 type ChatServiceServer interface {
 	CreateThread(context.Context, *CreateThreadRequest) (*CreateThreadResponse, error)
+	ListThreads(context.Context, *ListThreadsRequest) (*ListThreadsResponse, error)
+	SendMessage(context.Context, *SendMessageRequest) (*SendMessageResponse, error)
+	ListMessages(context.Context, *ListMessagesRequest) (*ListMessagesResponse, error)
+	SubscribeEvents(*SubscribeEventsRequest, grpc.ServerStreamingServer[SubscribeEventsResponse]) error
 	mustEmbedUnimplementedChatServiceServer()
 }
 
@@ -64,6 +125,18 @@ type UnimplementedChatServiceServer struct{}
 
 func (UnimplementedChatServiceServer) CreateThread(context.Context, *CreateThreadRequest) (*CreateThreadResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateThread not implemented")
+}
+func (UnimplementedChatServiceServer) ListThreads(context.Context, *ListThreadsRequest) (*ListThreadsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListThreads not implemented")
+}
+func (UnimplementedChatServiceServer) SendMessage(context.Context, *SendMessageRequest) (*SendMessageResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SendMessage not implemented")
+}
+func (UnimplementedChatServiceServer) ListMessages(context.Context, *ListMessagesRequest) (*ListMessagesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListMessages not implemented")
+}
+func (UnimplementedChatServiceServer) SubscribeEvents(*SubscribeEventsRequest, grpc.ServerStreamingServer[SubscribeEventsResponse]) error {
+	return status.Errorf(codes.Unimplemented, "method SubscribeEvents not implemented")
 }
 func (UnimplementedChatServiceServer) mustEmbedUnimplementedChatServiceServer() {}
 func (UnimplementedChatServiceServer) testEmbeddedByValue()                     {}
@@ -104,6 +177,71 @@ func _ChatService_CreateThread_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ChatService_ListThreads_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListThreadsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ChatServiceServer).ListThreads(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ChatService_ListThreads_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ChatServiceServer).ListThreads(ctx, req.(*ListThreadsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ChatService_SendMessage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SendMessageRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ChatServiceServer).SendMessage(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ChatService_SendMessage_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ChatServiceServer).SendMessage(ctx, req.(*SendMessageRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ChatService_ListMessages_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListMessagesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ChatServiceServer).ListMessages(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ChatService_ListMessages_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ChatServiceServer).ListMessages(ctx, req.(*ListMessagesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ChatService_SubscribeEvents_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(SubscribeEventsRequest)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(ChatServiceServer).SubscribeEvents(m, &grpc.GenericServerStream[SubscribeEventsRequest, SubscribeEventsResponse]{ServerStream: stream})
+}
+
+// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
+type ChatService_SubscribeEventsServer = grpc.ServerStreamingServer[SubscribeEventsResponse]
+
 // ChatService_ServiceDesc is the grpc.ServiceDesc for ChatService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -115,7 +253,25 @@ var ChatService_ServiceDesc = grpc.ServiceDesc{
 			MethodName: "CreateThread",
 			Handler:    _ChatService_CreateThread_Handler,
 		},
+		{
+			MethodName: "ListThreads",
+			Handler:    _ChatService_ListThreads_Handler,
+		},
+		{
+			MethodName: "SendMessage",
+			Handler:    _ChatService_SendMessage_Handler,
+		},
+		{
+			MethodName: "ListMessages",
+			Handler:    _ChatService_ListMessages_Handler,
+		},
 	},
-	Streams:  []grpc.StreamDesc{},
+	Streams: []grpc.StreamDesc{
+		{
+			StreamName:    "SubscribeEvents",
+			Handler:       _ChatService_SubscribeEvents_Handler,
+			ServerStreams: true,
+		},
+	},
 	Metadata: "chat/v1/chat_service.proto",
 }

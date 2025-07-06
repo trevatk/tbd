@@ -12,6 +12,8 @@ const (
 
 	defaultNameserver1 = "ns1.structx.io"
 	defaultNameserver2 = "ns2.structx.io"
+
+	defaultWellknownFilepath = "/var/lib/wellknown/config.json"
 )
 
 // Config service configuration
@@ -21,6 +23,7 @@ type Config struct {
 	KeyValue   KeyValue
 	Logger     Logger
 	Nameserver Nameserver
+	Wellknown  Wellknown
 }
 
 // UnmarshalConfig read service config from env variables
@@ -42,6 +45,9 @@ func UnmarshalConfig() *Config {
 		Nameserver: Nameserver{
 			NS1: envLookup("NS_SERVER_1", defaultNameserver1),
 			NS2: envLookup("NS_SERVER_2", defaultNameserver2),
+		},
+		Wellknown: Wellknown{
+			Path: envLookup("WELLKNOWN_FILE_PATH", defaultWellknownFilepath),
 		},
 	}
 }

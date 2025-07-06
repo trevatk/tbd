@@ -8,10 +8,11 @@ import (
 	"github.com/structx/tbd/tui/cmd/cli/command"
 	_ "github.com/structx/tbd/tui/cmd/cli/command/audit"
 	_ "github.com/structx/tbd/tui/cmd/cli/command/chat"
-	_ "github.com/structx/tbd/tui/cmd/cli/command/chat/thread"
 	_ "github.com/structx/tbd/tui/cmd/cli/command/realm"
 	_ "github.com/structx/tbd/tui/cmd/cli/command/server"
 	_ "github.com/structx/tbd/tui/cmd/cli/command/user"
+	_ "github.com/structx/tbd/tui/cmd/cli/command/wallet"
+	_ "github.com/structx/tbd/tui/cmd/cli/command/wellknown"
 	"github.com/structx/tbd/tui/internal/pkg/logging"
 )
 

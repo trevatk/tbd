@@ -19,9 +19,6 @@ var (
 	// RootCmd base cobra cli command
 	RootCmd = &cobra.Command{
 		Use: "zero",
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return nil
-		},
 	}
 )
 

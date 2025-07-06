@@ -18,3 +18,4 @@ inputs:
   - directory: proto
     paths:
       - proto/wellknown/v1/wellknown_service.proto
+      - proto/chat/v1/chat_service.proto

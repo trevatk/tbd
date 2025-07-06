@@ -2,17 +2,93 @@ syntax = "proto3";
 
 package chat.v1;
 
+import "google/protobuf/timestamp.proto";
+
 option go_package = "github.com/trevatk/tbd/lib/protocol/chat/v1";
 
 service ChatService {
   rpc CreateThread(CreateThreadRequest) returns (CreateThreadResponse) {}
+  rpc ListThreads(ListThreadsRequest) returns (ListThreadsResponse) {}
+
+  rpc SendMessage(SendMessageRequest) returns (SendMessageResponse) {}
+  rpc ListMessages(ListMessagesRequest) returns (ListMessagesResponse) {}
+
+  rpc SubscribeEvents(SubscribeEventsRequest) returns (stream SubscribeEventsResponse) {}
 }
 
 message CreateThreadRequest {
   string display_name = 1;
+  repeated string members = 2;
+}
+
+message Thread {
+  string id = 1;
+  string display_name = 2;
+  repeated string members = 3;
+  google.protobuf.Timestamp created_at = 4;
+  google.protobuf.Timestamp updated_at = 5;
 }
 
 message CreateThreadResponse {
+  Thread thread = 1;
+}
+
+message ListThreadsRequest {}
+
+message ThreadPartial {
   string id = 1;
   string display_name = 2;
+  google.protobuf.Timestamp updated_at = 3;
+}
+
+message ListThreadsResponse {
+  repeated ThreadPartial partials = 1;
+}
+
+message SubscribeEventsRequest {}
+
+message Event {
+  enum EVENTTYPE {
+    EVENTTYPE_UNSPECIFIED = 0;
+    EVENTTYPE_MSG_NOTE = 1;
+    EVENTTYPE_NEW_THREAD = 2;
+  }
+
+  string thread_id = 1;
+  EVENTTYPE event_type = 2;
+  string short_desc = 3;
+}
+
+message SubscribeEventsResponse {
+  Event event = 1;
+}
+
+message NewMessage {
+  string thread_id = 1;
+  bytes contents = 2;
+  string sender = 3;
+}
+
+message SendMessageRequest {
+  NewMessage new_message = 1;
+}
+
+message Message {
+  string id = 1;
+  string thread_id = 2;
+  bytes contents = 3;
+  string sender = 4;
+  google.protobuf.Timestamp sent_at = 5;
+}
+
+message SendMessageResponse {
+  Message msg = 1;
+}
+
+message ListMessagesRequest {
+  string thread_id = 1;
+}
+
+message ListMessagesResponse {
+  repeated Message messages = 1;
 }
