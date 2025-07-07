@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+package did.v1;
+
+option go_package = "github.com/trevatk/tbd/lib/protocol/did";
+
+message Document {
+  string context = 1;
+  string id = 2;
+  repeated string controller = 3;
+  repeated string also_known_as = 4;
+  Service service = 5;
+  VerificationMethod verification_method = 6;
+  repeated Authentication authentication = 7;
+  repeated string assertion_method = 8;
+  repeated string key_agreement = 9;
+  repeated string capability_invocation = 10;
+  repeated string capability_delegation = 11;
+}
+
+message Service {
+  string id = 1;
+  string type = 2;
+  string service_endpoint = 3;
+}
+
+message VerificationMethod {
+  string id = 1;
+  string type = 2;
+  string controller = 3;
+  string public_key_multibase = 4;
+  string public_key_jwk = 5;
+}
+
+message Authentication {
+  oneof method_ref {
+    string method = 1;
+    Service reference = 2;
+  }
+}

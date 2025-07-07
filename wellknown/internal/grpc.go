@@ -17,7 +17,14 @@ type transport struct {
 // interface compliance
 var _ pb.WellKnownServiceServer = (*transport)(nil)
 
-// NewTransport
+// used for testing
+func newGrpcTransport(logger *slog.Logger) pb.WellKnownServiceServer {
+	return &transport{
+		logger: logger,
+	}
+}
+
+// NewTransport return new gRPC transport
 func NewTransport(logger *slog.Logger) protocol.Transport {
 	tr := &transport{
 		logger: logger,

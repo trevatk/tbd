@@ -1,5 +1,7 @@
 
 tasks:
+  tidy:
+    command: go mod tidy
   lint:
     command: golangci-lint run ./...
   fix:

@@ -1,6 +1,8 @@
 package chat
 
 import (
+	"context"
+	"errors"
 	"fmt"
 	"log/slog"
 
@@ -10,6 +12,8 @@ import (
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
 	"github.com/spf13/cobra"
+
+	"github.com/trevatk/tbd/lib/protocol/chat"
 
 	"github.com/structx/tbd/tui/cmd/cli/command"
 	"github.com/structx/tbd/tui/internal/pkg/logging"
@@ -33,9 +37,31 @@ var (
 	// ChatCmd chase cobra cli command
 	ChatCmd = &cobra.Command{
 		Use: "chat",
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			ctx := cmd.Context()
+			client, err := chat.NewClient("did:grpc", "")
+			if err != nil {
+				return fmt.Errorf("failed to create chat cient: %w", err)
+			}
+			ctx = context.WithValue(ctx, "chatClient", client)
+			cmd.SetContext(ctx)
+			return nil
+		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx := cmd.Context()
-			p := tea.NewProgram(newMainModel())
+
+			cc, ok := ctx.Value("chatClient").(chat.Client)
+			if !ok {
+				return errors.New("chat client not set")
+			}
+
+			eventCh, err := cc.Subscribe(ctx)
+			if err != nil {
+				return fmt.Errorf("failed to create subscription: %w", err)
+			}
+			_ = eventCh
+
+			p := tea.NewProgram(newMainModel(), tea.WithAltScreen())
 			if _, err := p.Run(); err != nil {
 				logging.FromContext(ctx).ErrorContext(ctx, "tea program", slog.String("error", err.Error()))
 			}
@@ -55,6 +81,8 @@ var (
 				BorderStyle(lipgloss.NormalBorder()).
 				BorderForeground(lipgloss.Color("69"))
 	helpStyle = lipgloss.NewStyle().Foreground(lipgloss.Color("241"))
+
+	docStyle = lipgloss.NewStyle().Margin(1, 2)
 )
 
 type (
@@ -197,7 +225,7 @@ func (m mainModel) View() string {
 	// if m.state == sidebarView {
 	s += lipgloss.JoinHorizontal(
 		lipgloss.Center,
-		focusedModelStyle.Render(fmt.Sprintf("%4s", m.sidebar.View())),
+		docStyle.Render(m.sidebar.View()),
 		fmt.Sprintf(
 			"%s%s%s",
 			m.viewport.View(),

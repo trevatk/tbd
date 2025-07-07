@@ -59,7 +59,11 @@ func (b *builder) Build(
 	oc resolver.ClientConn,
 	_ resolver.BuildOptions,
 ) (resolver.Resolver, error) {
-	r := &nameResolver{}
+	r := &nameResolver{
+		target:    target,
+		cc:        oc,
+		addrStore: make(map[string][]string),
+	}
 	r.start()
 	return r, nil
 }

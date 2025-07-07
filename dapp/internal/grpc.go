@@ -10,6 +10,7 @@ import (
 
 	"github.com/trevatk/tbd/lib/protocol"
 	pb "github.com/trevatk/tbd/lib/protocol/chat/v1"
+	wellknown "github.com/trevatk/tbd/lib/protocol/wellknown/v1"
 )
 
 type (
@@ -32,6 +33,7 @@ type (
 
 	transport struct {
 		pb.UnimplementedChatServiceServer
+		wellknown.UnimplementedWellKnownServiceServer
 
 		logger *slog.Logger
 		svc    service

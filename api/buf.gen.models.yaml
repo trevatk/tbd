@@ -9,3 +9,8 @@ plugins:
     out: ../lib/protocol
     opt:
       - paths=source_relative
+
+inputs:
+  - directory: proto
+    paths:
+      - proto/did/v1/document.proto

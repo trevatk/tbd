@@ -14,7 +14,10 @@ require (
 	github.com/charmbracelet/log v0.4.2
 	github.com/spf13/cobra v1.9.1
 	github.com/trevatk/tbd/lib/protocol v0.0.0-00010101000000-000000000000
+	github.com/trevatk/tbd/lib/wallet v0.0.0-00010101000000-000000000000
+	go.dedis.ch/kyber/v4 v4.0.0-pre2
 	google.golang.org/grpc v1.73.0
+	google.golang.org/protobuf v1.36.6
 )
 
 require (
@@ -45,6 +48,8 @@ require (
 	github.com/spf13/pflag v1.0.6 // indirect
 	github.com/stoewer/go-strcase v1.3.0 // indirect
 	github.com/xo/terminfo v0.0.0-20220910002029-abceb7e1c41e // indirect
+	go.dedis.ch/fixbuf v1.0.3 // indirect
+	golang.org/x/crypto v0.36.0 // indirect
 	golang.org/x/exp v0.0.0-20240325151524-a685a6edb6d8 // indirect
 	golang.org/x/net v0.38.0 // indirect
 	golang.org/x/sync v0.13.0 // indirect
@@ -52,5 +57,4 @@ require (
 	golang.org/x/text v0.23.0 // indirect
 	google.golang.org/genproto/googleapis/api v0.0.0-20250324211829-b45e905df463 // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20250324211829-b45e905df463 // indirect
-	google.golang.org/protobuf v1.36.6 // indirect
 )

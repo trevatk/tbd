@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package wellknown.v1;
 
+import "did/v1/document.proto";
+
 option go_package = "github.com/trevatk/tbd/lib/protocol/wellknown/v1";
 
 service WellKnownService {
@@ -10,11 +12,6 @@ service WellKnownService {
 
 message GetDIDConfigurationRequest {}
 
-message Entry {
-  string did = 1;
-  string jwt = 2;
-}
-
 message GetDIDConfigurationResponse {
-  repeated Entry entries = 1;
+  did.v1.Document doc = 1;
 }

@@ -112,7 +112,9 @@ func (c *clientV1) CreateThread(ctx context.Context, name string, members []stri
 }
 
 // ListThreads
-func (c *clientV1) ListThreads(context.Context, string) ([]Thread, error)
+func (c *clientV1) ListThreads(context.Context, string) ([]Thread, error) {
+	return nil, nil
+}
 
 // SendMessage
 func (c *clientV1) SendMessage(ctx context.Context, send MessageSend) (Message, error) {
@@ -145,7 +147,9 @@ func (c *clientV1) SendMessage(ctx context.Context, send MessageSend) (Message, 
 }
 
 // ListMessages
-func (c *clientV1) ListMessages(context.Context, string) ([]Message, error)
+func (c *clientV1) ListMessages(context.Context, string) ([]Message, error) {
+	return nil, nil
+}
 
 // Subscribe
 func (c *clientV1) Subscribe(ctx context.Context) (chan Event, error) {

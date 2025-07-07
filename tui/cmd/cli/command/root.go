@@ -2,11 +2,12 @@ package command
 
 import (
 	"context"
-	"fmt"
-	"os"
+	"log/slog"
 	"time"
 
 	"github.com/spf13/cobra"
+
+	"github.com/structx/tbd/tui/internal/pkg/logging"
 )
 
 const (
@@ -32,6 +33,6 @@ func Execute(ctx context.Context) {
 	defer cancel()
 
 	if err := RootCmd.ExecuteContext(timeout); err != nil {
-		_, _ = fmt.Fprintf(os.Stderr, "failed to execute cli %v\n", err)
+		logging.FromContext(ctx).ErrorContext(ctx, "failed to execute command", slog.String("error", err.Error()))
 	}
 }

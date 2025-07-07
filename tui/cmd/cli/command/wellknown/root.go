@@ -12,9 +12,15 @@ var (
 		Aliases: []string{"w"},
 		Short:   "wellknown configuration tool",
 	}
+
+	output      string
+	alsoKnownAs []string
 )
 
 func init() {
+	generateCmd.PersistentFlags().StringVarP(&output, "output", "o", ".", "set output")
+	generateCmd.PersistentFlags().StringArrayVarP(&alsoKnownAs, "also known as", "a", []string{}, "set also known as")
+
 	wellknownCmd.AddCommand(generateCmd)
 	command.RootCmd.AddCommand(wellknownCmd)
 }
