@@ -1,0 +1,19 @@
+{
+    "context": "https://www.w3.org/ns/did/v1",
+    "id": "structx.local",
+    "verification_method": [
+        {
+            "id": "structx.local#key-1",
+            "type": "JsonWebKey",
+            "controller": "structx.local",
+            "public_key_jwk": {
+                "alg": "ES224",
+                "crv": "P-256",
+                "kid": "key-1",
+                "kty": "EC",
+                "x": "16718537793773273244227242968202773890861801107260720695043176289702",
+                "y": "6998709599570724348988588606074603625087148403302413478054604781592"
+            }
+        }
+    ]
+}

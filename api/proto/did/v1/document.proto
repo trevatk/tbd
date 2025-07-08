@@ -9,8 +9,8 @@ message Document {
   string id = 2;
   repeated string controller = 3;
   repeated string also_known_as = 4;
-  Service service = 5;
-  VerificationMethod verification_method = 6;
+  repeated Service service = 5;
+  repeated VerificationMethod verification_method = 6;
   repeated Authentication authentication = 7;
   repeated string assertion_method = 8;
   repeated string key_agreement = 9;
@@ -29,7 +29,8 @@ message VerificationMethod {
   string type = 2;
   string controller = 3;
   string public_key_multibase = 4;
-  string public_key_jwk = 5;
+  map<string, string> public_key_jwk = 5;
+  map<string, string> secret_key_jwk = 6;
 }
 
 message Authentication {

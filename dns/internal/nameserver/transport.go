@@ -165,6 +165,16 @@ func (t *grpcTransport) Resolve(ctx context.Context, in *pbr.ResolveRequest) (*p
 	return newResolveResponse(), nil
 }
 
+// CreateRecord
+func (t *grpcTransport) CreateRecord(context.Context, *pba.CreateRecordRequest) (*pba.CreateRecordResponse, error) {
+	return nil, nil
+}
+
+// CreateZone
+func (t *grpcTransport) CreateZone(context.Context, *pba.CreateZoneRequest) (*pba.CreateZoneResponse, error) {
+	return nil, nil
+}
+
 func newFindNodeResponse(ns []*node, sender *node, requestID string) *pbk.FindNodeResponse {
 	closestNodes := make([]*pbk.Node, 0, len(ns))
 	for _, n := range ns {

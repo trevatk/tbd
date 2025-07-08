@@ -27,8 +27,8 @@ type Document struct {
 	Id                   string                 `protobuf:"bytes,2,opt,name=id,proto3" json:"id,omitempty"`
 	Controller           []string               `protobuf:"bytes,3,rep,name=controller,proto3" json:"controller,omitempty"`
 	AlsoKnownAs          []string               `protobuf:"bytes,4,rep,name=also_known_as,json=alsoKnownAs,proto3" json:"also_known_as,omitempty"`
-	Service              *Service               `protobuf:"bytes,5,opt,name=service,proto3" json:"service,omitempty"`
-	VerificationMethod   *VerificationMethod    `protobuf:"bytes,6,opt,name=verification_method,json=verificationMethod,proto3" json:"verification_method,omitempty"`
+	Service              []*Service             `protobuf:"bytes,5,rep,name=service,proto3" json:"service,omitempty"`
+	VerificationMethod   []*VerificationMethod  `protobuf:"bytes,6,rep,name=verification_method,json=verificationMethod,proto3" json:"verification_method,omitempty"`
 	Authentication       []*Authentication      `protobuf:"bytes,7,rep,name=authentication,proto3" json:"authentication,omitempty"`
 	AssertionMethod      []string               `protobuf:"bytes,8,rep,name=assertion_method,json=assertionMethod,proto3" json:"assertion_method,omitempty"`
 	KeyAgreement         []string               `protobuf:"bytes,9,rep,name=key_agreement,json=keyAgreement,proto3" json:"key_agreement,omitempty"`
@@ -96,14 +96,14 @@ func (x *Document) GetAlsoKnownAs() []string {
 	return nil
 }
 
-func (x *Document) GetService() *Service {
+func (x *Document) GetService() []*Service {
 	if x != nil {
 		return x.Service
 	}
 	return nil
 }
 
-func (x *Document) GetVerificationMethod() *VerificationMethod {
+func (x *Document) GetVerificationMethod() []*VerificationMethod {
 	if x != nil {
 		return x.VerificationMethod
 	}
@@ -211,7 +211,8 @@ type VerificationMethod struct {
 	Type               string                 `protobuf:"bytes,2,opt,name=type,proto3" json:"type,omitempty"`
 	Controller         string                 `protobuf:"bytes,3,opt,name=controller,proto3" json:"controller,omitempty"`
 	PublicKeyMultibase string                 `protobuf:"bytes,4,opt,name=public_key_multibase,json=publicKeyMultibase,proto3" json:"public_key_multibase,omitempty"`
-	PublicKeyJwk       string                 `protobuf:"bytes,5,opt,name=public_key_jwk,json=publicKeyJwk,proto3" json:"public_key_jwk,omitempty"`
+	PublicKeyJwk       map[string]string      `protobuf:"bytes,5,rep,name=public_key_jwk,json=publicKeyJwk,proto3" json:"public_key_jwk,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	SecretKeyJwk       map[string]string      `protobuf:"bytes,6,rep,name=secret_key_jwk,json=secretKeyJwk,proto3" json:"secret_key_jwk,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
 	unknownFields      protoimpl.UnknownFields
 	sizeCache          protoimpl.SizeCache
 }
@@ -274,11 +275,18 @@ func (x *VerificationMethod) GetPublicKeyMultibase() string {
 	return ""
 }
 
-func (x *VerificationMethod) GetPublicKeyJwk() string {
+func (x *VerificationMethod) GetPublicKeyJwk() map[string]string {
 	if x != nil {
 		return x.PublicKeyJwk
 	}
-	return ""
+	return nil
+}
+
+func (x *VerificationMethod) GetSecretKeyJwk() map[string]string {
+	if x != nil {
+		return x.SecretKeyJwk
+	}
+	return nil
 }
 
 type Authentication struct {
@@ -375,8 +383,8 @@ const file_did_v1_document_proto_rawDesc = "" +
 	"controller\x18\x03 \x03(\tR\n" +
 	"controller\x12\"\n" +
 	"\ralso_known_as\x18\x04 \x03(\tR\valsoKnownAs\x12)\n" +
-	"\aservice\x18\x05 \x01(\v2\x0f.did.v1.ServiceR\aservice\x12K\n" +
-	"\x13verification_method\x18\x06 \x01(\v2\x1a.did.v1.VerificationMethodR\x12verificationMethod\x12>\n" +
+	"\aservice\x18\x05 \x03(\v2\x0f.did.v1.ServiceR\aservice\x12K\n" +
+	"\x13verification_method\x18\x06 \x03(\v2\x1a.did.v1.VerificationMethodR\x12verificationMethod\x12>\n" +
 	"\x0eauthentication\x18\a \x03(\v2\x16.did.v1.AuthenticationR\x0eauthentication\x12)\n" +
 	"\x10assertion_method\x18\b \x03(\tR\x0fassertionMethod\x12#\n" +
 	"\rkey_agreement\x18\t \x03(\tR\fkeyAgreement\x123\n" +
@@ -386,15 +394,22 @@ const file_did_v1_document_proto_rawDesc = "" +
 	"\aService\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
 	"\x04type\x18\x02 \x01(\tR\x04type\x12)\n" +
-	"\x10service_endpoint\x18\x03 \x01(\tR\x0fserviceEndpoint\"\xb0\x01\n" +
+	"\x10service_endpoint\x18\x03 \x01(\tR\x0fserviceEndpoint\"\xb4\x03\n" +
 	"\x12VerificationMethod\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
 	"\x04type\x18\x02 \x01(\tR\x04type\x12\x1e\n" +
 	"\n" +
 	"controller\x18\x03 \x01(\tR\n" +
 	"controller\x120\n" +
-	"\x14public_key_multibase\x18\x04 \x01(\tR\x12publicKeyMultibase\x12$\n" +
-	"\x0epublic_key_jwk\x18\x05 \x01(\tR\fpublicKeyJwk\"i\n" +
+	"\x14public_key_multibase\x18\x04 \x01(\tR\x12publicKeyMultibase\x12R\n" +
+	"\x0epublic_key_jwk\x18\x05 \x03(\v2,.did.v1.VerificationMethod.PublicKeyJwkEntryR\fpublicKeyJwk\x12R\n" +
+	"\x0esecret_key_jwk\x18\x06 \x03(\v2,.did.v1.VerificationMethod.SecretKeyJwkEntryR\fsecretKeyJwk\x1a?\n" +
+	"\x11PublicKeyJwkEntry\x12\x10\n" +
+	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
+	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\x1a?\n" +
+	"\x11SecretKeyJwkEntry\x12\x10\n" +
+	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
+	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"i\n" +
 	"\x0eAuthentication\x12\x18\n" +
 	"\x06method\x18\x01 \x01(\tH\x00R\x06method\x12/\n" +
 	"\treference\x18\x02 \x01(\v2\x0f.did.v1.ServiceH\x00R\treferenceB\f\n" +
@@ -413,23 +428,27 @@ func file_did_v1_document_proto_rawDescGZIP() []byte {
 	return file_did_v1_document_proto_rawDescData
 }
 
-var file_did_v1_document_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
+var file_did_v1_document_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
 var file_did_v1_document_proto_goTypes = []any{
 	(*Document)(nil),           // 0: did.v1.Document
 	(*Service)(nil),            // 1: did.v1.Service
 	(*VerificationMethod)(nil), // 2: did.v1.VerificationMethod
 	(*Authentication)(nil),     // 3: did.v1.Authentication
+	nil,                        // 4: did.v1.VerificationMethod.PublicKeyJwkEntry
+	nil,                        // 5: did.v1.VerificationMethod.SecretKeyJwkEntry
 }
 var file_did_v1_document_proto_depIdxs = []int32{
 	1, // 0: did.v1.Document.service:type_name -> did.v1.Service
 	2, // 1: did.v1.Document.verification_method:type_name -> did.v1.VerificationMethod
 	3, // 2: did.v1.Document.authentication:type_name -> did.v1.Authentication
-	1, // 3: did.v1.Authentication.reference:type_name -> did.v1.Service
-	4, // [4:4] is the sub-list for method output_type
-	4, // [4:4] is the sub-list for method input_type
-	4, // [4:4] is the sub-list for extension type_name
-	4, // [4:4] is the sub-list for extension extendee
-	0, // [0:4] is the sub-list for field type_name
+	4, // 3: did.v1.VerificationMethod.public_key_jwk:type_name -> did.v1.VerificationMethod.PublicKeyJwkEntry
+	5, // 4: did.v1.VerificationMethod.secret_key_jwk:type_name -> did.v1.VerificationMethod.SecretKeyJwkEntry
+	1, // 5: did.v1.Authentication.reference:type_name -> did.v1.Service
+	6, // [6:6] is the sub-list for method output_type
+	6, // [6:6] is the sub-list for method input_type
+	6, // [6:6] is the sub-list for extension type_name
+	6, // [6:6] is the sub-list for extension extendee
+	0, // [0:6] is the sub-list for field type_name
 }
 
 func init() { file_did_v1_document_proto_init() }
@@ -447,7 +466,7 @@ func file_did_v1_document_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_did_v1_document_proto_rawDesc), len(file_did_v1_document_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   4,
+			NumMessages:   6,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

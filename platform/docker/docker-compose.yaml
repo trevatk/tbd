@@ -7,3 +7,35 @@ services:
     image: tbd/nameserver:latest
     cap_drop:
       - ALL
+    cap_add:
+      - NET_BIND_SERVICE
+    environment:
+      - GW_HOST=127.0.0.1
+      - GW_PORT=50051
+    healthcheck:
+      test: ["CMD", "grpc_health_probe", "-addr=127.0.0.1:50051"]
+      interval: 1m30s
+      timeout: 30s
+      retries: 5
+      start_period: 30s
+
+  wellknown:
+    container_name: wellknown
+    image: tbd/wellknown:latest
+    cap_drop:
+      - ALL
+    cap_add:
+      - NET_BIND_SERVICE
+    environment:
+      - GW_HOST=127.0.0.1
+      - GW_PORT=50051
+    healthcheck:
+      test: ["CMD", "grpc_health_probe", "-addr=127.0.0.1:50051"]
+      interval: 1m30s
+      timeout: 30s
+      retries: 5
+      start_period: 30s
+
+networks:
+  default:
+    name: tbd-network

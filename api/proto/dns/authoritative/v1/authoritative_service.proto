@@ -2,17 +2,63 @@ syntax = "proto3";
 
 package dns.authoritative.v1;
 
+import "google/protobuf/timestamp.proto";
+
 option go_package = "github.structx/tbd/lib/protocol/dns/authoritative/v1";
 
 service AuthoritativeService {
   rpc CreateZone(CreateZoneRequest) returns (CreateZoneResponse) {}
+
   rpc CreateRecord(CreateRecordRequest) returns (CreateRecordResponse) {}
+  rpc GetRecord(GetRecordRequest) returns (GetRecordResponse) {}
+  // rpc ListRecords(ListRecordsRequest) returns (ListRecordsResponse) {}
+  // rpc UpdateRecord(UpdateRecordRequest) returns (UpdateRecordRespnse) {}
+  // rpc DeleteRecord(DeleteRecordRequest) returns (DeleteRecordResponse) {}
 }
 
-message CreateZoneRequest {}
+message CreateZoneRequest {
+  string domain_or_namespace = 1;
+  string admin_email = 2;
+}
 
-message CreateZoneResponse {}
+message Zone {
+  string domain_or_namespace = 1;
+  google.protobuf.Timestamp created_at = 2;
+}
 
-message CreateRecordRequest {}
+message CreateZoneResponse {
+  Zone zone = 1;
+}
 
-message CreateRecordResponse {}
+message Record {
+  string id = 1;
+  string domain = 2;
+  enum RECORDTYPE {
+    RECORDTYPE_UNSPECIFIED = 0;
+    RECORDTYPE_A = 1;
+    RECORDTYPE_CNAME = 2;
+    RECORDTYPE_DID = 4;
+  }
+  RECORDTYPE record_type = 3; // if did jwe or jws
+  bytes value = 4;
+  int64 ttl = 5;
+}
+
+message CreateRecordRequest {
+  string zone_name = 1;
+  Record record = 2;
+}
+
+message CreateRecordResponse {
+  enum STATUS {
+    STATUS_UNSPECIFIED = 0;
+    STATUS_SUCCESS = 1;
+    STATUS_ERROR = 2;
+  }
+  string message = 1;
+  STATUS status = 2;
+}
+
+message GetRecordRequest {}
+
+message GetRecordResponse {}

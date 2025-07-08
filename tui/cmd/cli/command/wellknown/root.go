@@ -13,6 +13,8 @@ var (
 		Short:   "wellknown configuration tool",
 	}
 
+	didArg string
+
 	output      string
 	alsoKnownAs []string
 )
@@ -20,6 +22,7 @@ var (
 func init() {
 	generateCmd.PersistentFlags().StringVarP(&output, "output", "o", ".", "set output")
 	generateCmd.PersistentFlags().StringArrayVarP(&alsoKnownAs, "also known as", "a", []string{}, "set also known as")
+	generateCmd.PersistentFlags().StringVarP(&didArg, "did", "d", "", "decentralized identifier")
 
 	wellknownCmd.AddCommand(generateCmd)
 	command.RootCmd.AddCommand(wellknownCmd)

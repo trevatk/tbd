@@ -31,7 +31,7 @@ func realMain(ctx context.Context) error {
 	cfg := setup.UnmarshalConfig()
 	logger := logging.New(cfg.Logger.Level)
 
-	tr := wellknown.NewTransport(logger)
+	tr := wellknown.NewTransport(logger, cfg.Wellknown.Path)
 	trs := []protocol.Transport{tr}
 
 	opts := []protocol.ServerOption{

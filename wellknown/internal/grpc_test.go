@@ -20,7 +20,7 @@ func TestGetDIDConfiguration(t *testing.T) {
 
 	cfg := setup.UnmarshalConfig()
 	logger := logging.New(cfg.Logger.Level)
-	g := newGrpcTransport(logger)
+	g := newGrpcTransport(logger, "testfiles/structx.local.wellknown")
 	t.Run("success", func(t *testing.T) {
 		var (
 			expected error = nil

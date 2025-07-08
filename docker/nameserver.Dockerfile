@@ -14,7 +14,7 @@ COPY dns/ ./
 
 ENV CGO_ENABLED=0 
 
-RUN go build -v -o /usr/local/bin/nameserver ./cmd/nameserver
+RUN go build -ldflags="-s -w" -trimpath -v -o /usr/local/bin/nameserver ./cmd/nameserver
 
 FROM tbd/go-deploy:latest AS final
 
