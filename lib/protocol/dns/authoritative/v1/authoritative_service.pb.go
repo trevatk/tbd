@@ -9,6 +9,7 @@ package v1
 import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
@@ -21,10 +22,113 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+type Record_RECORDTYPE int32
+
+const (
+	Record_RECORDTYPE_UNSPECIFIED Record_RECORDTYPE = 0
+	Record_RECORDTYPE_A           Record_RECORDTYPE = 1
+	Record_RECORDTYPE_CNAME       Record_RECORDTYPE = 2
+	Record_RECORDTYPE_DID         Record_RECORDTYPE = 4
+)
+
+// Enum value maps for Record_RECORDTYPE.
+var (
+	Record_RECORDTYPE_name = map[int32]string{
+		0: "RECORDTYPE_UNSPECIFIED",
+		1: "RECORDTYPE_A",
+		2: "RECORDTYPE_CNAME",
+		4: "RECORDTYPE_DID",
+	}
+	Record_RECORDTYPE_value = map[string]int32{
+		"RECORDTYPE_UNSPECIFIED": 0,
+		"RECORDTYPE_A":           1,
+		"RECORDTYPE_CNAME":       2,
+		"RECORDTYPE_DID":         4,
+	}
+)
+
+func (x Record_RECORDTYPE) Enum() *Record_RECORDTYPE {
+	p := new(Record_RECORDTYPE)
+	*p = x
+	return p
+}
+
+func (x Record_RECORDTYPE) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (Record_RECORDTYPE) Descriptor() protoreflect.EnumDescriptor {
+	return file_dns_authoritative_v1_authoritative_service_proto_enumTypes[0].Descriptor()
+}
+
+func (Record_RECORDTYPE) Type() protoreflect.EnumType {
+	return &file_dns_authoritative_v1_authoritative_service_proto_enumTypes[0]
+}
+
+func (x Record_RECORDTYPE) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use Record_RECORDTYPE.Descriptor instead.
+func (Record_RECORDTYPE) EnumDescriptor() ([]byte, []int) {
+	return file_dns_authoritative_v1_authoritative_service_proto_rawDescGZIP(), []int{3, 0}
+}
+
+type CreateRecordResponse_STATUS int32
+
+const (
+	CreateRecordResponse_STATUS_UNSPECIFIED CreateRecordResponse_STATUS = 0
+	CreateRecordResponse_STATUS_SUCCESS     CreateRecordResponse_STATUS = 1
+	CreateRecordResponse_STATUS_ERROR       CreateRecordResponse_STATUS = 2
+)
+
+// Enum value maps for CreateRecordResponse_STATUS.
+var (
+	CreateRecordResponse_STATUS_name = map[int32]string{
+		0: "STATUS_UNSPECIFIED",
+		1: "STATUS_SUCCESS",
+		2: "STATUS_ERROR",
+	}
+	CreateRecordResponse_STATUS_value = map[string]int32{
+		"STATUS_UNSPECIFIED": 0,
+		"STATUS_SUCCESS":     1,
+		"STATUS_ERROR":       2,
+	}
+)
+
+func (x CreateRecordResponse_STATUS) Enum() *CreateRecordResponse_STATUS {
+	p := new(CreateRecordResponse_STATUS)
+	*p = x
+	return p
+}
+
+func (x CreateRecordResponse_STATUS) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (CreateRecordResponse_STATUS) Descriptor() protoreflect.EnumDescriptor {
+	return file_dns_authoritative_v1_authoritative_service_proto_enumTypes[1].Descriptor()
+}
+
+func (CreateRecordResponse_STATUS) Type() protoreflect.EnumType {
+	return &file_dns_authoritative_v1_authoritative_service_proto_enumTypes[1]
+}
+
+func (x CreateRecordResponse_STATUS) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use CreateRecordResponse_STATUS.Descriptor instead.
+func (CreateRecordResponse_STATUS) EnumDescriptor() ([]byte, []int) {
+	return file_dns_authoritative_v1_authoritative_service_proto_rawDescGZIP(), []int{5, 0}
+}
+
 type CreateZoneRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state             protoimpl.MessageState `protogen:"open.v1"`
+	DomainOrNamespace string                 `protobuf:"bytes,1,opt,name=domain_or_namespace,json=domainOrNamespace,proto3" json:"domain_or_namespace,omitempty"`
+	AdminEmail        string                 `protobuf:"bytes,2,opt,name=admin_email,json=adminEmail,proto3" json:"admin_email,omitempty"`
+	unknownFields     protoimpl.UnknownFields
+	sizeCache         protoimpl.SizeCache
 }
 
 func (x *CreateZoneRequest) Reset() {
@@ -57,15 +161,82 @@ func (*CreateZoneRequest) Descriptor() ([]byte, []int) {
 	return file_dns_authoritative_v1_authoritative_service_proto_rawDescGZIP(), []int{0}
 }
 
+func (x *CreateZoneRequest) GetDomainOrNamespace() string {
+	if x != nil {
+		return x.DomainOrNamespace
+	}
+	return ""
+}
+
+func (x *CreateZoneRequest) GetAdminEmail() string {
+	if x != nil {
+		return x.AdminEmail
+	}
+	return ""
+}
+
+type Zone struct {
+	state             protoimpl.MessageState `protogen:"open.v1"`
+	DomainOrNamespace string                 `protobuf:"bytes,1,opt,name=domain_or_namespace,json=domainOrNamespace,proto3" json:"domain_or_namespace,omitempty"`
+	CreatedAt         *timestamppb.Timestamp `protobuf:"bytes,2,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	unknownFields     protoimpl.UnknownFields
+	sizeCache         protoimpl.SizeCache
+}
+
+func (x *Zone) Reset() {
+	*x = Zone{}
+	mi := &file_dns_authoritative_v1_authoritative_service_proto_msgTypes[1]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Zone) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Zone) ProtoMessage() {}
+
+func (x *Zone) ProtoReflect() protoreflect.Message {
+	mi := &file_dns_authoritative_v1_authoritative_service_proto_msgTypes[1]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Zone.ProtoReflect.Descriptor instead.
+func (*Zone) Descriptor() ([]byte, []int) {
+	return file_dns_authoritative_v1_authoritative_service_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *Zone) GetDomainOrNamespace() string {
+	if x != nil {
+		return x.DomainOrNamespace
+	}
+	return ""
+}
+
+func (x *Zone) GetCreatedAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.CreatedAt
+	}
+	return nil
+}
+
 type CreateZoneResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
+	Zone          *Zone                  `protobuf:"bytes,1,opt,name=zone,proto3" json:"zone,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *CreateZoneResponse) Reset() {
 	*x = CreateZoneResponse{}
-	mi := &file_dns_authoritative_v1_authoritative_service_proto_msgTypes[1]
+	mi := &file_dns_authoritative_v1_authoritative_service_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -77,7 +248,7 @@ func (x *CreateZoneResponse) String() string {
 func (*CreateZoneResponse) ProtoMessage() {}
 
 func (x *CreateZoneResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_dns_authoritative_v1_authoritative_service_proto_msgTypes[1]
+	mi := &file_dns_authoritative_v1_authoritative_service_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -90,18 +261,103 @@ func (x *CreateZoneResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateZoneResponse.ProtoReflect.Descriptor instead.
 func (*CreateZoneResponse) Descriptor() ([]byte, []int) {
-	return file_dns_authoritative_v1_authoritative_service_proto_rawDescGZIP(), []int{1}
+	return file_dns_authoritative_v1_authoritative_service_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *CreateZoneResponse) GetZone() *Zone {
+	if x != nil {
+		return x.Zone
+	}
+	return nil
+}
+
+type Record struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Domain        string                 `protobuf:"bytes,2,opt,name=domain,proto3" json:"domain,omitempty"`
+	RecordType    Record_RECORDTYPE      `protobuf:"varint,3,opt,name=record_type,json=recordType,proto3,enum=dns.authoritative.v1.Record_RECORDTYPE" json:"record_type,omitempty"` // if did jwe or jws
+	Value         []byte                 `protobuf:"bytes,4,opt,name=value,proto3" json:"value,omitempty"`
+	Ttl           int64                  `protobuf:"varint,5,opt,name=ttl,proto3" json:"ttl,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *Record) Reset() {
+	*x = Record{}
+	mi := &file_dns_authoritative_v1_authoritative_service_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Record) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Record) ProtoMessage() {}
+
+func (x *Record) ProtoReflect() protoreflect.Message {
+	mi := &file_dns_authoritative_v1_authoritative_service_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Record.ProtoReflect.Descriptor instead.
+func (*Record) Descriptor() ([]byte, []int) {
+	return file_dns_authoritative_v1_authoritative_service_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *Record) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *Record) GetDomain() string {
+	if x != nil {
+		return x.Domain
+	}
+	return ""
+}
+
+func (x *Record) GetRecordType() Record_RECORDTYPE {
+	if x != nil {
+		return x.RecordType
+	}
+	return Record_RECORDTYPE_UNSPECIFIED
+}
+
+func (x *Record) GetValue() []byte {
+	if x != nil {
+		return x.Value
+	}
+	return nil
+}
+
+func (x *Record) GetTtl() int64 {
+	if x != nil {
+		return x.Ttl
+	}
+	return 0
 }
 
 type CreateRecordRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
+	ZoneName      string                 `protobuf:"bytes,1,opt,name=zone_name,json=zoneName,proto3" json:"zone_name,omitempty"`
+	Record        *Record                `protobuf:"bytes,2,opt,name=record,proto3" json:"record,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *CreateRecordRequest) Reset() {
 	*x = CreateRecordRequest{}
-	mi := &file_dns_authoritative_v1_authoritative_service_proto_msgTypes[2]
+	mi := &file_dns_authoritative_v1_authoritative_service_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -113,7 +369,7 @@ func (x *CreateRecordRequest) String() string {
 func (*CreateRecordRequest) ProtoMessage() {}
 
 func (x *CreateRecordRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_dns_authoritative_v1_authoritative_service_proto_msgTypes[2]
+	mi := &file_dns_authoritative_v1_authoritative_service_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -126,18 +382,34 @@ func (x *CreateRecordRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateRecordRequest.ProtoReflect.Descriptor instead.
 func (*CreateRecordRequest) Descriptor() ([]byte, []int) {
-	return file_dns_authoritative_v1_authoritative_service_proto_rawDescGZIP(), []int{2}
+	return file_dns_authoritative_v1_authoritative_service_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *CreateRecordRequest) GetZoneName() string {
+	if x != nil {
+		return x.ZoneName
+	}
+	return ""
+}
+
+func (x *CreateRecordRequest) GetRecord() *Record {
+	if x != nil {
+		return x.Record
+	}
+	return nil
 }
 
 type CreateRecordResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
+	state         protoimpl.MessageState      `protogen:"open.v1"`
+	Message       string                      `protobuf:"bytes,1,opt,name=message,proto3" json:"message,omitempty"`
+	Status        CreateRecordResponse_STATUS `protobuf:"varint,2,opt,name=status,proto3,enum=dns.authoritative.v1.CreateRecordResponse_STATUS" json:"status,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *CreateRecordResponse) Reset() {
 	*x = CreateRecordResponse{}
-	mi := &file_dns_authoritative_v1_authoritative_service_proto_msgTypes[3]
+	mi := &file_dns_authoritative_v1_authoritative_service_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -149,7 +421,7 @@ func (x *CreateRecordResponse) String() string {
 func (*CreateRecordResponse) ProtoMessage() {}
 
 func (x *CreateRecordResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_dns_authoritative_v1_authoritative_service_proto_msgTypes[3]
+	mi := &file_dns_authoritative_v1_authoritative_service_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -162,22 +434,140 @@ func (x *CreateRecordResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateRecordResponse.ProtoReflect.Descriptor instead.
 func (*CreateRecordResponse) Descriptor() ([]byte, []int) {
-	return file_dns_authoritative_v1_authoritative_service_proto_rawDescGZIP(), []int{3}
+	return file_dns_authoritative_v1_authoritative_service_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *CreateRecordResponse) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+func (x *CreateRecordResponse) GetStatus() CreateRecordResponse_STATUS {
+	if x != nil {
+		return x.Status
+	}
+	return CreateRecordResponse_STATUS_UNSPECIFIED
+}
+
+type GetRecordRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetRecordRequest) Reset() {
+	*x = GetRecordRequest{}
+	mi := &file_dns_authoritative_v1_authoritative_service_proto_msgTypes[6]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetRecordRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetRecordRequest) ProtoMessage() {}
+
+func (x *GetRecordRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_dns_authoritative_v1_authoritative_service_proto_msgTypes[6]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetRecordRequest.ProtoReflect.Descriptor instead.
+func (*GetRecordRequest) Descriptor() ([]byte, []int) {
+	return file_dns_authoritative_v1_authoritative_service_proto_rawDescGZIP(), []int{6}
+}
+
+type GetRecordResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetRecordResponse) Reset() {
+	*x = GetRecordResponse{}
+	mi := &file_dns_authoritative_v1_authoritative_service_proto_msgTypes[7]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetRecordResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetRecordResponse) ProtoMessage() {}
+
+func (x *GetRecordResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_dns_authoritative_v1_authoritative_service_proto_msgTypes[7]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetRecordResponse.ProtoReflect.Descriptor instead.
+func (*GetRecordResponse) Descriptor() ([]byte, []int) {
+	return file_dns_authoritative_v1_authoritative_service_proto_rawDescGZIP(), []int{7}
 }
 
 var File_dns_authoritative_v1_authoritative_service_proto protoreflect.FileDescriptor
 
 const file_dns_authoritative_v1_authoritative_service_proto_rawDesc = "" +
 	"\n" +
-	"0dns/authoritative/v1/authoritative_service.proto\x12\x14dns.authoritative.v1\"\x13\n" +
-	"\x11CreateZoneRequest\"\x14\n" +
-	"\x12CreateZoneResponse\"\x15\n" +
-	"\x13CreateRecordRequest\"\x16\n" +
-	"\x14CreateRecordResponse2\xe2\x01\n" +
+	"0dns/authoritative/v1/authoritative_service.proto\x12\x14dns.authoritative.v1\x1a\x1fgoogle/protobuf/timestamp.proto\"d\n" +
+	"\x11CreateZoneRequest\x12.\n" +
+	"\x13domain_or_namespace\x18\x01 \x01(\tR\x11domainOrNamespace\x12\x1f\n" +
+	"\vadmin_email\x18\x02 \x01(\tR\n" +
+	"adminEmail\"q\n" +
+	"\x04Zone\x12.\n" +
+	"\x13domain_or_namespace\x18\x01 \x01(\tR\x11domainOrNamespace\x129\n" +
+	"\n" +
+	"created_at\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\"D\n" +
+	"\x12CreateZoneResponse\x12.\n" +
+	"\x04zone\x18\x01 \x01(\v2\x1a.dns.authoritative.v1.ZoneR\x04zone\"\x88\x02\n" +
+	"\x06Record\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x16\n" +
+	"\x06domain\x18\x02 \x01(\tR\x06domain\x12H\n" +
+	"\vrecord_type\x18\x03 \x01(\x0e2'.dns.authoritative.v1.Record.RECORDTYPER\n" +
+	"recordType\x12\x14\n" +
+	"\x05value\x18\x04 \x01(\fR\x05value\x12\x10\n" +
+	"\x03ttl\x18\x05 \x01(\x03R\x03ttl\"d\n" +
+	"\n" +
+	"RECORDTYPE\x12\x1a\n" +
+	"\x16RECORDTYPE_UNSPECIFIED\x10\x00\x12\x10\n" +
+	"\fRECORDTYPE_A\x10\x01\x12\x14\n" +
+	"\x10RECORDTYPE_CNAME\x10\x02\x12\x12\n" +
+	"\x0eRECORDTYPE_DID\x10\x04\"h\n" +
+	"\x13CreateRecordRequest\x12\x1b\n" +
+	"\tzone_name\x18\x01 \x01(\tR\bzoneName\x124\n" +
+	"\x06record\x18\x02 \x01(\v2\x1c.dns.authoritative.v1.RecordR\x06record\"\xc3\x01\n" +
+	"\x14CreateRecordResponse\x12\x18\n" +
+	"\amessage\x18\x01 \x01(\tR\amessage\x12I\n" +
+	"\x06status\x18\x02 \x01(\x0e21.dns.authoritative.v1.CreateRecordResponse.STATUSR\x06status\"F\n" +
+	"\x06STATUS\x12\x16\n" +
+	"\x12STATUS_UNSPECIFIED\x10\x00\x12\x12\n" +
+	"\x0eSTATUS_SUCCESS\x10\x01\x12\x10\n" +
+	"\fSTATUS_ERROR\x10\x02\"\x12\n" +
+	"\x10GetRecordRequest\"\x13\n" +
+	"\x11GetRecordResponse2\xc2\x02\n" +
 	"\x14AuthoritativeService\x12a\n" +
 	"\n" +
 	"CreateZone\x12'.dns.authoritative.v1.CreateZoneRequest\x1a(.dns.authoritative.v1.CreateZoneResponse\"\x00\x12g\n" +
-	"\fCreateRecord\x12).dns.authoritative.v1.CreateRecordRequest\x1a*.dns.authoritative.v1.CreateRecordResponse\"\x00B6Z4github.structx/tbd/lib/protocol/dns/authoritative/v1b\x06proto3"
+	"\fCreateRecord\x12).dns.authoritative.v1.CreateRecordRequest\x1a*.dns.authoritative.v1.CreateRecordResponse\"\x00\x12^\n" +
+	"\tGetRecord\x12&.dns.authoritative.v1.GetRecordRequest\x1a'.dns.authoritative.v1.GetRecordResponse\"\x00B6Z4github.structx/tbd/lib/protocol/dns/authoritative/v1b\x06proto3"
 
 var (
 	file_dns_authoritative_v1_authoritative_service_proto_rawDescOnce sync.Once
@@ -191,23 +581,38 @@ func file_dns_authoritative_v1_authoritative_service_proto_rawDescGZIP() []byte 
 	return file_dns_authoritative_v1_authoritative_service_proto_rawDescData
 }
 
-var file_dns_authoritative_v1_authoritative_service_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
+var file_dns_authoritative_v1_authoritative_service_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
+var file_dns_authoritative_v1_authoritative_service_proto_msgTypes = make([]protoimpl.MessageInfo, 8)
 var file_dns_authoritative_v1_authoritative_service_proto_goTypes = []any{
-	(*CreateZoneRequest)(nil),    // 0: dns.authoritative.v1.CreateZoneRequest
-	(*CreateZoneResponse)(nil),   // 1: dns.authoritative.v1.CreateZoneResponse
-	(*CreateRecordRequest)(nil),  // 2: dns.authoritative.v1.CreateRecordRequest
-	(*CreateRecordResponse)(nil), // 3: dns.authoritative.v1.CreateRecordResponse
+	(Record_RECORDTYPE)(0),           // 0: dns.authoritative.v1.Record.RECORDTYPE
+	(CreateRecordResponse_STATUS)(0), // 1: dns.authoritative.v1.CreateRecordResponse.STATUS
+	(*CreateZoneRequest)(nil),        // 2: dns.authoritative.v1.CreateZoneRequest
+	(*Zone)(nil),                     // 3: dns.authoritative.v1.Zone
+	(*CreateZoneResponse)(nil),       // 4: dns.authoritative.v1.CreateZoneResponse
+	(*Record)(nil),                   // 5: dns.authoritative.v1.Record
+	(*CreateRecordRequest)(nil),      // 6: dns.authoritative.v1.CreateRecordRequest
+	(*CreateRecordResponse)(nil),     // 7: dns.authoritative.v1.CreateRecordResponse
+	(*GetRecordRequest)(nil),         // 8: dns.authoritative.v1.GetRecordRequest
+	(*GetRecordResponse)(nil),        // 9: dns.authoritative.v1.GetRecordResponse
+	(*timestamppb.Timestamp)(nil),    // 10: google.protobuf.Timestamp
 }
 var file_dns_authoritative_v1_authoritative_service_proto_depIdxs = []int32{
-	0, // 0: dns.authoritative.v1.AuthoritativeService.CreateZone:input_type -> dns.authoritative.v1.CreateZoneRequest
-	2, // 1: dns.authoritative.v1.AuthoritativeService.CreateRecord:input_type -> dns.authoritative.v1.CreateRecordRequest
-	1, // 2: dns.authoritative.v1.AuthoritativeService.CreateZone:output_type -> dns.authoritative.v1.CreateZoneResponse
-	3, // 3: dns.authoritative.v1.AuthoritativeService.CreateRecord:output_type -> dns.authoritative.v1.CreateRecordResponse
-	2, // [2:4] is the sub-list for method output_type
-	0, // [0:2] is the sub-list for method input_type
-	0, // [0:0] is the sub-list for extension type_name
-	0, // [0:0] is the sub-list for extension extendee
-	0, // [0:0] is the sub-list for field type_name
+	10, // 0: dns.authoritative.v1.Zone.created_at:type_name -> google.protobuf.Timestamp
+	3,  // 1: dns.authoritative.v1.CreateZoneResponse.zone:type_name -> dns.authoritative.v1.Zone
+	0,  // 2: dns.authoritative.v1.Record.record_type:type_name -> dns.authoritative.v1.Record.RECORDTYPE
+	5,  // 3: dns.authoritative.v1.CreateRecordRequest.record:type_name -> dns.authoritative.v1.Record
+	1,  // 4: dns.authoritative.v1.CreateRecordResponse.status:type_name -> dns.authoritative.v1.CreateRecordResponse.STATUS
+	2,  // 5: dns.authoritative.v1.AuthoritativeService.CreateZone:input_type -> dns.authoritative.v1.CreateZoneRequest
+	6,  // 6: dns.authoritative.v1.AuthoritativeService.CreateRecord:input_type -> dns.authoritative.v1.CreateRecordRequest
+	8,  // 7: dns.authoritative.v1.AuthoritativeService.GetRecord:input_type -> dns.authoritative.v1.GetRecordRequest
+	4,  // 8: dns.authoritative.v1.AuthoritativeService.CreateZone:output_type -> dns.authoritative.v1.CreateZoneResponse
+	7,  // 9: dns.authoritative.v1.AuthoritativeService.CreateRecord:output_type -> dns.authoritative.v1.CreateRecordResponse
+	9,  // 10: dns.authoritative.v1.AuthoritativeService.GetRecord:output_type -> dns.authoritative.v1.GetRecordResponse
+	8,  // [8:11] is the sub-list for method output_type
+	5,  // [5:8] is the sub-list for method input_type
+	5,  // [5:5] is the sub-list for extension type_name
+	5,  // [5:5] is the sub-list for extension extendee
+	0,  // [0:5] is the sub-list for field type_name
 }
 
 func init() { file_dns_authoritative_v1_authoritative_service_proto_init() }
@@ -220,13 +625,14 @@ func file_dns_authoritative_v1_authoritative_service_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_dns_authoritative_v1_authoritative_service_proto_rawDesc), len(file_dns_authoritative_v1_authoritative_service_proto_rawDesc)),
-			NumEnums:      0,
-			NumMessages:   4,
+			NumEnums:      2,
+			NumMessages:   8,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
 		GoTypes:           file_dns_authoritative_v1_authoritative_service_proto_goTypes,
 		DependencyIndexes: file_dns_authoritative_v1_authoritative_service_proto_depIdxs,
+		EnumInfos:         file_dns_authoritative_v1_authoritative_service_proto_enumTypes,
 		MessageInfos:      file_dns_authoritative_v1_authoritative_service_proto_msgTypes,
 	}.Build()
 	File_dns_authoritative_v1_authoritative_service_proto = out.File

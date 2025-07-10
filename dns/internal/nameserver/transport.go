@@ -2,6 +2,7 @@ package nameserver
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"log/slog"
 	"strings"
@@ -166,13 +167,67 @@ func (t *grpcTransport) Resolve(ctx context.Context, in *pbr.ResolveRequest) (*p
 }
 
 // CreateRecord
-func (t *grpcTransport) CreateRecord(context.Context, *pba.CreateRecordRequest) (*pba.CreateRecordResponse, error) {
-	return nil, nil
+func (t *grpcTransport) CreateRecord(
+	ctx context.Context,
+	in *pba.CreateRecordRequest,
+) (*pba.CreateRecordResponse, error) {
+	if err := protocol.Validate(in); err != nil {
+		return nil, protocol.ErrInvalidArgument()
+	}
+
+	zoneRecord, err := t.dht.getValue(in.ZoneName)
+	if err != nil {
+		if errors.Is(err, errKeyNotFound) {
+			return nil, protocol.ErrNotFound()
+		}
+		return nil, protocol.ErrInternal()
+	}
+
+	key := fmt.Sprintf("%s.%s", in.Record.Domain, zoneRecord.domain)
+
+	if err := t.dht.setValue(key, &record{
+		domain: key,
+		// recordType: pbToRecordType(in.Record.RecordType),
+		value: in.Record.Value,
+		ttl:   in.Record.Ttl,
+	}); err != nil {
+		t.logger.ErrorContext(ctx, "failed to set value", slog.String("error", err.Error()))
+		return nil, protocol.ErrInternal()
+	}
+
+	return newCreateRecordResponse(), nil
 }
 
 // CreateZone
-func (t *grpcTransport) CreateZone(context.Context, *pba.CreateZoneRequest) (*pba.CreateZoneResponse, error) {
-	return nil, nil
+func (t *grpcTransport) CreateZone(ctx context.Context, in *pba.CreateZoneRequest) (*pba.CreateZoneResponse, error) {
+	if err := protocol.Validate(in); err != nil {
+		return nil, protocol.ErrInvalidArgument()
+	}
+
+	r := &record{
+		// TODO
+		// fill in to resemble zone
+		// this object maybe be changed to zone
+		domain: in.DomainOrNamespace,
+		// recordType: ,
+	}
+
+	// TODO
+	// retrieve well known configuration
+	// from domain
+	//
+	// this will verify ownership
+
+	if err := t.dht.setValue(in.DomainOrNamespace, r); err != nil {
+		if errors.Is(err, errKeyExists) {
+			return nil, protocol.ErrAlreadyExists()
+		}
+
+		t.logger.ErrorContext(ctx, "failed to set value", slog.String("", err.Error()))
+		return nil, protocol.ErrInternal()
+	}
+
+	return newCreateZoneResponse(r.domain), nil
 }
 
 func newFindNodeResponse(ns []*node, sender *node, requestID string) *pbk.FindNodeResponse {
@@ -242,6 +297,22 @@ func newResolveResponse() *pbr.ResolveResponse {
 	return &pbr.ResolveResponse{
 		Status:              pbr.ResolveResponse_RESPONSE_STATUS_SUCCESS,
 		AuthoritativeAnswer: true,
+	}
+}
+
+func newCreateRecordResponse() *pba.CreateRecordResponse {
+	return &pba.CreateRecordResponse{
+		Message: "success",
+		Status:  pba.CreateRecordResponse_STATUS_SUCCESS,
+	}
+}
+
+func newCreateZoneResponse(name string) *pba.CreateZoneResponse {
+	return &pba.CreateZoneResponse{
+		Zone: &pba.Zone{
+			DomainOrNamespace: name,
+			CreatedAt:         timestamppb.Now(),
+		},
 	}
 }
 

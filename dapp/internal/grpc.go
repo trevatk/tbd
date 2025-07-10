@@ -72,17 +72,22 @@ func (t *transport) CreateThread(ctx context.Context, in *pb.CreateThreadRequest
 	return newCreateThreadResponse(thread), nil
 }
 
+// ListMessages
 func (t *transport) ListMessages(context.Context, *pb.ListMessagesRequest) (*pb.ListMessagesResponse, error) {
 	return nil, nil
 }
 
+// ListThreads
 func (t *transport) ListThreads(context.Context, *pb.ListThreadsRequest) (*pb.ListThreadsResponse, error) {
 	return nil, nil
 }
+
+// SendMessage
 func (t *transport) SendMessage(context.Context, *pb.SendMessageRequest) (*pb.SendMessageResponse, error) {
 	return nil, nil
 }
 
+// SubscribeEvents
 func (t *transport) SubscribeEvents(
 	*pb.SubscribeEventsRequest,
 	grpc.ServerStreamingServer[pb.SubscribeEventsResponse],

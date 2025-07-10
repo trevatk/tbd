@@ -2,7 +2,7 @@ $schema: 'https://moonrepo.dev/schemas/project.json'
 
 id: protocol
 
-language: 'go'
+language: go
 type: library
 
 dependsOn:

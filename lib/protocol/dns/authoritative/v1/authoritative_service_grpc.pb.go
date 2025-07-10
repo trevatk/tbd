@@ -21,6 +21,7 @@ const _ = grpc.SupportPackageIsVersion9
 const (
 	AuthoritativeService_CreateZone_FullMethodName   = "/dns.authoritative.v1.AuthoritativeService/CreateZone"
 	AuthoritativeService_CreateRecord_FullMethodName = "/dns.authoritative.v1.AuthoritativeService/CreateRecord"
+	AuthoritativeService_GetRecord_FullMethodName    = "/dns.authoritative.v1.AuthoritativeService/GetRecord"
 )
 
 // AuthoritativeServiceClient is the client API for AuthoritativeService service.
@@ -29,6 +30,7 @@ const (
 type AuthoritativeServiceClient interface {
 	CreateZone(ctx context.Context, in *CreateZoneRequest, opts ...grpc.CallOption) (*CreateZoneResponse, error)
 	CreateRecord(ctx context.Context, in *CreateRecordRequest, opts ...grpc.CallOption) (*CreateRecordResponse, error)
+	GetRecord(ctx context.Context, in *GetRecordRequest, opts ...grpc.CallOption) (*GetRecordResponse, error)
 }
 
 type authoritativeServiceClient struct {
@@ -59,12 +61,23 @@ func (c *authoritativeServiceClient) CreateRecord(ctx context.Context, in *Creat
 	return out, nil
 }
 
+func (c *authoritativeServiceClient) GetRecord(ctx context.Context, in *GetRecordRequest, opts ...grpc.CallOption) (*GetRecordResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetRecordResponse)
+	err := c.cc.Invoke(ctx, AuthoritativeService_GetRecord_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AuthoritativeServiceServer is the server API for AuthoritativeService service.
 // All implementations must embed UnimplementedAuthoritativeServiceServer
 // for forward compatibility.
 type AuthoritativeServiceServer interface {
 	CreateZone(context.Context, *CreateZoneRequest) (*CreateZoneResponse, error)
 	CreateRecord(context.Context, *CreateRecordRequest) (*CreateRecordResponse, error)
+	GetRecord(context.Context, *GetRecordRequest) (*GetRecordResponse, error)
 	mustEmbedUnimplementedAuthoritativeServiceServer()
 }
 
@@ -80,6 +93,9 @@ func (UnimplementedAuthoritativeServiceServer) CreateZone(context.Context, *Crea
 }
 func (UnimplementedAuthoritativeServiceServer) CreateRecord(context.Context, *CreateRecordRequest) (*CreateRecordResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateRecord not implemented")
+}
+func (UnimplementedAuthoritativeServiceServer) GetRecord(context.Context, *GetRecordRequest) (*GetRecordResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetRecord not implemented")
 }
 func (UnimplementedAuthoritativeServiceServer) mustEmbedUnimplementedAuthoritativeServiceServer() {}
 func (UnimplementedAuthoritativeServiceServer) testEmbeddedByValue()                              {}
@@ -138,6 +154,24 @@ func _AuthoritativeService_CreateRecord_Handler(srv interface{}, ctx context.Con
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AuthoritativeService_GetRecord_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetRecordRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthoritativeServiceServer).GetRecord(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AuthoritativeService_GetRecord_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthoritativeServiceServer).GetRecord(ctx, req.(*GetRecordRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // AuthoritativeService_ServiceDesc is the grpc.ServiceDesc for AuthoritativeService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -152,6 +186,10 @@ var AuthoritativeService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CreateRecord",
 			Handler:    _AuthoritativeService_CreateRecord_Handler,
+		},
+		{
+			MethodName: "GetRecord",
+			Handler:    _AuthoritativeService_GetRecord_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

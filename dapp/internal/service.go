@@ -10,17 +10,17 @@ import (
 	"github.com/google/uuid"
 )
 
-var (
-	errThreadExists = errors.New("thread already exists")
-)
-
 type serviceImpl struct {
 	mu      sync.RWMutex
 	threads map[string]thread
 }
 
-// interface compliance
-var _ service = (*serviceImpl)(nil)
+var (
+	errThreadExists = errors.New("thread already exists")
+
+	// interface copmliance
+	_ service = (*serviceImpl)(nil)
+)
 
 // NewService
 func NewService() service {

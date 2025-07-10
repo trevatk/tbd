@@ -1,0 +1,21 @@
+$schema: 'https://moonrepo.dev/schemas/project.json'
+
+id: dapp
+
+language: 'go'
+type: 'application'
+
+dependsOn:
+  - protocol
+
+tasks:
+  build:
+    command: docker build -t tbd/dapp:latest -f ../docker/dapp.Dockerfile ../
+  dev:
+    env:
+      GW_HOST: localhost
+      GW_PORT: "50051"
+      LOG_LEVEL: DEBUG
+    command: air -c ../.air/dapp.toml
+    options:
+      persistent: true

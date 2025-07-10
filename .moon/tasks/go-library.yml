@@ -1,0 +1,9 @@
+$schema: 'https://moonrepo.dev/schemas/tasks.json'
+
+tasks:
+  tidy:
+    command: go mod tidy
+  lint:
+    command: golangci-lint run ./...
+  fix:
+    command: golangci-lint run ./...

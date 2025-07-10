@@ -16,6 +16,16 @@ func ErrInternal() error {
 	return status.Error(codes.Internal, codes.Internal.String())
 }
 
+// ErrAlreadyExists ...
+func ErrAlreadyExists() error {
+	return status.Error(codes.AlreadyExists, codes.AlreadyExists.String())
+}
+
+// ErrNotFound ...
+func ErrNotFound() error {
+	return status.Error(codes.NotFound, codes.NotFound.String())
+}
+
 // NewEmptyResponse ...
 func NewEmptyResponse() *emptypb.Empty {
 	return &emptypb.Empty{}

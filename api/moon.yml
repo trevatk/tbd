@@ -1,4 +1,8 @@
 
+id: api
+
+type: automation
+
 workspace:
   inheritedTasks:
     exclude: [ 'test' ]
