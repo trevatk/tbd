@@ -1,0 +1,10 @@
+{
+    "records": [
+        {
+            "domain": "structx.io",
+            "record_type": "A",
+            "value": "MTI3LjAuMC4x", 
+            "ttl": 60
+        }
+    ]
+}

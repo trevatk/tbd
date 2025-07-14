@@ -10,6 +10,8 @@ dependsOn:
 
 tasks:
   build:
+    command: go build -ldflags="-s -w" -trimpath -v -o bin/nameserver ./cmd/nameserver 
+  docker:
     command: docker build -t tbd/nameserver:latest -f ../docker/nameserver.Dockerfile ../
   dev:
     env:

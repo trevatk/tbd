@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"log/slog"
 	"os/signal"
 	"syscall"
@@ -35,6 +36,15 @@ func realMain(ctx context.Context) error {
 	dht := nameserver.NewDHT(kv, cfg.Gateway.Host, cfg.Gateway.Port)
 	trs := nameserver.NewTransport(logger, dht)
 
+	as, err := nameserver.NewAuthoritativeServer(logger, dht)
+	if err != nil {
+		return fmt.Errorf("failed to create authoritative server: %w", err)
+	}
+
+	if err = nameserver.AddRecordsFromJson(cfg.Records.JsonPath, logger, dht); err != nil {
+		return fmt.Errorf("failed to add records from json: %w", err)
+	}
+
 	opts := []protocol.ServerOption{
 		protocol.WithHost(cfg.Gateway.Host),
 		protocol.WithPort(cfg.Gateway.Port),
@@ -42,6 +52,11 @@ func realMain(ctx context.Context) error {
 		protocol.WithLogger(logger),
 	}
 
-	s := protocol.NewServer(opts...)
-	return s.StartAndStop(ctx)
+	_ = protocol.NewServer(opts...)
+
+	// start udp server
+	return as.Listen(ctx)
+
+	// start gRPC server
+	// return s.StartAndStop(ctx)
 }

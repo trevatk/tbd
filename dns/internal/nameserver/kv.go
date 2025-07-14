@@ -5,13 +5,6 @@ import (
 	"sync"
 )
 
-type record struct {
-	domain     string
-	recordType string // CNAME, A, MX etc...
-	value      []byte // IP address, CNAME value
-	ttl        int64
-}
-
 //go:generate mockgen -destination mock_kv_test.go -package nameserver . kv
 type kv interface {
 	get(string) (*record, error)

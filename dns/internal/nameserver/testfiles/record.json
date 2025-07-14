@@ -1,0 +1,10 @@
+{
+  "records": [
+    {
+      "domain": "dedis.pink",
+      "record_type": "A",
+      "value": "",
+      "ttl": 5
+    }
+  ]
+}

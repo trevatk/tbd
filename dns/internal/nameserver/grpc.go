@@ -142,10 +142,10 @@ func (t *grpcTransport) Store(ctx context.Context, in *pbk.StoreRequest) (*pbk.S
 	t.logger.DebugContext(ctx, "store_value", slog.Any("request", in))
 
 	if err := t.dht.setValue(in.Record.Id, &record{
-		domain:     in.Record.Domain,
-		recordType: in.Record.RecordType.String(),
-		value:      in.Record.Value,
-		ttl:        in.Record.Ttl,
+		Domain:     in.Record.Domain,
+		RecordType: in.Record.RecordType.String(),
+		Value:      in.Record.Value,
+		Ttl:        in.Record.Ttl,
 	}); err != nil {
 		t.logger.ErrorContext(ctx, "kv set value", slog.String("error", err.Error()))
 		return nil, protocol.ErrInternal()
@@ -183,13 +183,13 @@ func (t *grpcTransport) CreateRecord(
 		return nil, protocol.ErrInternal()
 	}
 
-	key := fmt.Sprintf("%s.%s", in.Record.Domain, zoneRecord.domain)
+	key := fmt.Sprintf("%s.%s", in.Record.Domain, zoneRecord.Domain)
 
 	if err := t.dht.setValue(key, &record{
-		domain: key,
-		// recordType: pbToRecordType(in.Record.RecordType),
-		value: in.Record.Value,
-		ttl:   in.Record.Ttl,
+		Domain:     key,
+		RecordType: in.Record.RecordType.String(),
+		Value:      in.Record.Value,
+		Ttl:        in.Record.Ttl,
 	}); err != nil {
 		t.logger.ErrorContext(ctx, "failed to set value", slog.String("error", err.Error()))
 		return nil, protocol.ErrInternal()
@@ -208,7 +208,7 @@ func (t *grpcTransport) CreateZone(ctx context.Context, in *pba.CreateZoneReques
 		// TODO
 		// fill in to resemble zone
 		// this object maybe be changed to zone
-		domain: in.DomainOrNamespace,
+		Domain: in.DomainOrNamespace,
 		// recordType: ,
 	}
 
@@ -227,7 +227,7 @@ func (t *grpcTransport) CreateZone(ctx context.Context, in *pba.CreateZoneReques
 		return nil, protocol.ErrInternal()
 	}
 
-	return newCreateZoneResponse(r.domain), nil
+	return newCreateZoneResponse(r.Domain), nil
 }
 
 func newFindNodeResponse(ns []*node, sender *node, requestID string) *pbk.FindNodeResponse {
@@ -246,10 +246,10 @@ func newFindValueResponseWithRecord(n *node, r *record, requestID string) *pbk.F
 		Sender: nodeToSender(n),
 		Result: &pbk.FindValueResponse_Record{
 			Record: &pbk.Record{
-				Domain:     r.domain,
-				RecordType: recordTypeToPb(r.recordType),
-				Value:      r.value,
-				Ttl:        r.ttl,
+				Domain:     r.Domain,
+				RecordType: recordTypeToPb(r.RecordType),
+				Value:      r.Value,
+				Ttl:        r.Ttl,
 			},
 		},
 		RequestId: requestID,

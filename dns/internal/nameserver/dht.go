@@ -547,10 +547,10 @@ func findValueRPC(ctx context.Context, sender *node, key, target string) (*recor
 		return nil, ns, nil
 	case *pb.FindValueResponse_Record:
 		return &record{
-			domain:     result.Record.Domain,
-			recordType: pbToRecordType(result.Record.RecordType),
-			value:      result.Record.Value,
-			ttl:        result.Record.Ttl,
+			Domain:     result.Record.Domain,
+			RecordType: pbToRecordType(result.Record.RecordType),
+			Value:      result.Record.Value,
+			Ttl:        result.Record.Ttl,
 		}, nil, nil
 	default:
 		return nil, nil, errors.New("unsupported response type")
