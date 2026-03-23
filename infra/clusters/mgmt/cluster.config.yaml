@@ -1,0 +1,45 @@
+apiVersion: k3d.io/v1alpha5
+kind: Simple
+metadata:
+  name: mgmt
+servers: 1
+agents: 0
+image: docker.io/rancher/k3s:v1.35.2-k3s1
+network: mgmt-network
+volumes:
+  - volume: ${PWD}/infra/clusters/mgmt/volumes:/var/lib/rancher/k3s/storage
+    nodeFilters:
+      - server:*
+ports:
+  - port: 80:8080
+    nodeFilters:
+      - loadbalancer
+  - port: 443:8443
+    nodeFilters:
+      - loadbalancer
+  - port: 23231:23231
+    nodeFilters:
+      - loadbalancer
+options:
+  k3s:
+    extraArgs:
+      - arg: --flannel-backend=none
+        nodeFilters:
+          - server:*
+      - arg: --disable-network-policy
+        nodeFilters:
+          - server:*
+      - arg: --disable=traefik
+        nodeFilters:
+          - server:*
+      - arg: --kubelet-arg=feature-gates=KubeletInUserNamespace=true
+        nodeFilters:
+          - server:*
+      - arg: --kubelet-arg=make-iptables-util-chains=false
+        nodeFilters:
+          - server:*
+  kubeconfig:
+    updateDefaultKubeconfig: true
+    switchCurrentContext: true
+  k3d:
+    wait: true
